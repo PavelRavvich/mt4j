@@ -29,9 +29,9 @@ public class SignalRequest {
     @JsonProperty("scenarioSysName")
     private String scenarioSysName;
 
-    @NotNull(message = "sequences required")
-    @NotEmpty(message = "sequences can't be empty")
-    @JsonProperty("sequences")
-    private List<Sequence> sequences;
+    @NotNull(message = "indicators required")
+    @NotEmpty(message = "indicators can't be empty")
+    @JsonProperty("indicators")
+    private List<Indicator> indicators;
 
 }

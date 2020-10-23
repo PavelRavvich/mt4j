@@ -1,8 +1,8 @@
 package pro.laplacelab.bridge.service;
 
-import pro.laplacelab.bridge.model.Signal;
 import pro.laplacelab.bridge.model.SignalRequest;
+import pro.laplacelab.bridge.model.SignalResponse;
 
 public interface SignalService {
-    Signal get(SignalRequest request);
+    SignalResponse get(SignalRequest request);
 }

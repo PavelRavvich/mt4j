@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
 import pro.laplacelab.bridge.model.Config;
-import pro.laplacelab.bridge.model.Sequence;
-import pro.laplacelab.bridge.model.Signal;
+import pro.laplacelab.bridge.model.Indicator;
+import pro.laplacelab.bridge.model.SignalResponse;
 
 import java.util.List;
 
@@ -17,9 +17,9 @@ public class SimpleScenario implements Scenario {
     private final String sysName = "simple";
 
     @Override
-    public Signal apply(final Config config, final List<Sequence> sequences) {
+    public SignalResponse apply(final Config config, final List<Indicator> indicators) {
         // TODO: 23.10.2020 analytic strategy sequences implementation
-        return new Signal();
+        return new SignalResponse();
     }
 
 }
