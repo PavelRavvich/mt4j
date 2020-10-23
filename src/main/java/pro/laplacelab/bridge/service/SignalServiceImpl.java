@@ -22,7 +22,6 @@ public class SignalServiceImpl implements SignalService {
 
     private final ConfigService configService;
 
-    // Advisor UUID to Scenario
     private final List<Scenario> scenarios = new CopyOnWriteArrayList<>();
 
     @PostConstruct
