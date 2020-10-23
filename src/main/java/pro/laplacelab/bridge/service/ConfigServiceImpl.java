@@ -1,25 +1,28 @@
 package pro.laplacelab.bridge.service;
 
 import org.springframework.stereotype.Service;
+import pro.laplacelab.bridge.model.Config;
 
-import java.util.Arrays;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class ConfigServiceImpl implements ConfigService {
 
-    private final Map<String, String> cache = new ConcurrentHashMap<>();
+    //
+    private final Map<UUID, Config> configs = new ConcurrentHashMap<>();
 
     @Override
-    public void configure(final String config) {
-        Arrays.stream(config.split("\n"))
-                .map(keyValue -> keyValue.split("="))
-                .forEach(keyValue -> cache.put(keyValue[0], keyValue[1]));
+    public UUID configure(final String conSrc) {
+        Config config = new Config(conSrc);
+        UUID uuid = UUID.randomUUID();
+        configs.put(uuid, config);
+        return uuid;
     }
 
     @Override
-    public String get(final String key) {
-        return cache.get(key);
+    public Config get(final UUID uuid) {
+        return configs.get(uuid);
     }
 }

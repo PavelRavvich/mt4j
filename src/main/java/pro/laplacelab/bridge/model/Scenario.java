@@ -1,23 +1,28 @@
 package pro.laplacelab.bridge.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.MongoId;
 import pro.laplacelab.bridge.enums.ScenarioType;
 
 import java.util.UUID;
 
-@Document
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Scenario {
-    @MongoId
-    private UUID uuid;
 
+    @JsonProperty("id")
+    private UUID id;
+
+    @JsonProperty("name")
     private String name;
 
+    @JsonProperty("type")
     private ScenarioType type;
 }

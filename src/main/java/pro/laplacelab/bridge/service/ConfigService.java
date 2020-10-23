@@ -1,6 +1,11 @@
 package pro.laplacelab.bridge.service;
 
+import pro.laplacelab.bridge.model.Config;
+
+import java.util.UUID;
+
 public interface ConfigService {
-    void configure(String config);
-    String get(String key);
+    UUID configure(String config);
+
+    Config get(UUID uuid);
 }
