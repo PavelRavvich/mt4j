@@ -13,8 +13,8 @@ public class Config {
         Arrays.stream(config.split("\n"))
                 .map(keyValue -> keyValue.split("="))
                 .forEach(keyValue -> {
-                    if (Objects.isNull(keyValue[1])
-                            || Objects.isNull(keyValue[0]) || keyValue[0].isEmpty()) {
+                    if (Objects.isNull(keyValue[0]) || keyValue[0].isEmpty()
+                            || Objects.isNull(keyValue[1]) || keyValue[1].isEmpty()) {
                         throw new RuntimeException("Invalid config content");
                     }
                     map.put(keyValue[0], keyValue[1]);
