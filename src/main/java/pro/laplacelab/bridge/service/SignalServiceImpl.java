@@ -31,21 +31,18 @@ public class SignalServiceImpl implements SignalService {
 
     @Override
     public SignalResponse get(final SignalRequest request) {
-        log.debug("Request: {request}");
+        log.debug("Request: {}", request);
         Config config = configService.get(request.getAdvisorId());
         if (Objects.isNull(config)) {
             throw new RuntimeException("Advisor config not found");
         }
-
         Scenario scenario = scenarios.stream()
                 .filter(item -> request.getScenarioSysName().equals(item.getSysName()))
                 .findFirst()
                 .orElseThrow(RuntimeException::new);
-
         List<Indicator> indicators = request.getIndicators();
-
         SignalResponse response = scenario.apply(config, indicators);
-        log.debug("Response: {response}\n");
+        log.debug("Response: {}", response);
         return response;
     }
 
