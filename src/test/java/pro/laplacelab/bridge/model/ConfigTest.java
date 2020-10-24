@@ -15,7 +15,7 @@ public class ConfigTest {
 
 
     @Test(expected = RuntimeException.class)
-    public void whenConfigBuildFail() {
+    public void whenConfigBuildFailThenThrowException() {
         new Config("key1=\nkey2=val2");
     }
 

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pro.laplacelab.bridge.service.ConfigService;
 
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -18,7 +19,8 @@ public class ConfigController {
     private final ConfigService configService;
 
     @PostMapping
-    public ResponseEntity<UUID> set(@RequestBody String config) {
-        return ResponseEntity.ok(configService.configure(config));
+    public ResponseEntity<UUID> set(@RequestBody Map<String, String> request) {
+        return ResponseEntity.ok(configService.add(request.get("config")));
     }
+
 }
