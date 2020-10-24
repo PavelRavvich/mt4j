@@ -1,4 +1,4 @@
-package pro.laplacelab.bridge.scenario;
+package pro.laplacelab.bridge.strategy;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class SimpleScenario implements Scenario {
+public class SimpleStrategy implements Strategy {
 
     @Getter
     private final String sysName = "simple";

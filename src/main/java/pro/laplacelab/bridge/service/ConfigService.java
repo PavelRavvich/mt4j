@@ -6,6 +6,5 @@ import java.util.UUID;
 
 public interface ConfigService {
     UUID add(String config);
-
     Config get(UUID uuid);
 }

@@ -24,10 +24,10 @@ public class SignalRequest {
     @JsonProperty("advisorId")
     private UUID advisorId;
 
-    @NotNull(message = "scenarioSysName required")
-    @NotBlank(message = "scenarioSysName can't be blank")
-    @JsonProperty("scenarioSysName")
-    private String scenarioSysName;
+    @NotNull(message = "strategySysName required")
+    @NotBlank(message = "strategySysName can't be blank")
+    @JsonProperty("strategySysName")
+    private String strategySysName;
 
     @NotNull(message = "indicators required")
     @NotEmpty(message = "indicators can't be empty")

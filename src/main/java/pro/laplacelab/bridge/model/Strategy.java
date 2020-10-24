@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import pro.laplacelab.bridge.enums.ScenarioType;
+import pro.laplacelab.bridge.enums.StrategyType;
 
 import java.util.UUID;
 
@@ -15,7 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @EqualsAndHashCode
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Scenario {
+public class Strategy {
 
     @JsonProperty("id")
     private UUID id;
@@ -24,5 +24,5 @@ public class Scenario {
     private String name;
 
     @JsonProperty("type")
-    private ScenarioType type;
+    private StrategyType type;
 }
