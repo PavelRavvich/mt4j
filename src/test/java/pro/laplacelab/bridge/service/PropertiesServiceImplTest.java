@@ -1,34 +1,51 @@
 package pro.laplacelab.bridge.service;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import pro.laplacelab.bridge.enums.PropertyType;
+import pro.laplacelab.bridge.model.Properties;
+import pro.laplacelab.bridge.model.Property;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.UUID;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @SpringBootTest
 @WebAppConfiguration
 @RunWith(SpringRunner.class)
 public class PropertiesServiceImplTest {
 
-//    @Autowired
-//    AdvisorConfigService advisorConfigService;
-//
-//    @Test
-//    public void whenRegisterSuccessThenReturnConfigUUID() {
-//        assertNotNull(advisorConfigService.add("key1=val1\nkey2=val2"));
-//    }
-//
-//    @Test(expected = RuntimeException.class)
-//    public void whenRegisterFailThenThrowException() {
-//        assertNotNull(advisorConfigService.add("key"));
-//    }
-//
-//    @Test
-//    public void whenRegisterSuccessThenConfigSaved() {
-//        UUID uuid = advisorConfigService.add("key1=val1\nkey2=val2");
-//        Properties config = advisorConfigService.get(uuid);
-//        assertEquals("val1", config.findByName("key1"));
-//        assertEquals("val2", config.findByName("key2"));
-//    }
+    @Autowired
+    PropertyService propertyService;
+
+    @Test
+    public void whenRegisterSuccessThenReturnConfigUUID() {
+        UUID uuid = propertyService.add(List.of(
+                new Property("key1", "val", PropertyType.STRING),
+                new Property("key2", "val", PropertyType.STRING)));
+        assertNotNull(uuid);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void whenRegisterFailThenThrowException() {
+        propertyService.add(List.of(new Property("", "val", PropertyType.STRING)));
+    }
+
+    @Test
+    public void whenAddSuccessThenPropertiesSaved() {
+        UUID uuid = propertyService.add(List.of(
+                new Property("key1", "val", PropertyType.STRING),
+                new Property("key2", "1", PropertyType.NUMBER)));
+        Properties properties = propertyService.get(uuid).orElseThrow();
+        assertEquals("val", properties.findByName("key1").orElseThrow().getStringValue());
+        assertEquals(new BigDecimal("1"), properties.findByName("key2").orElseThrow().getBigDecimalValue());
+    }
 
 }
