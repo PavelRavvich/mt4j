@@ -60,5 +60,12 @@ _Response:_
 ```
 
 
+**Contribution**
+
+    1. For bug reports welcome to GitHub Issue.
+    2. Pull Request should be supported GitHub Issue.
+    
+
+
 [webrequest]: https://www.mql5.com/en/docs/network/webrequest
 [settings]:https://www.metatrader5.com/en/terminal/help/startworking/settings
