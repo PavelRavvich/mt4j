@@ -2,23 +2,24 @@ package pro.laplacelab.bridge.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import pro.laplacelab.bridge.enums.SignalType;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Signal {
 
+    @NotNull
     @JsonProperty("type")
     private SignalType type;
+
+    @JsonProperty("orderId")
+    private Long orderId;
 
     @JsonProperty("lot")
     private BigDecimal lot;
@@ -28,5 +29,31 @@ public class Signal {
 
     @JsonProperty("takeProfit")
     private BigDecimal takeProfit;
+
+    public Signal(final SignalType type) {
+        if (type != SignalType.NOTHING) {
+            throw new RuntimeException();
+        }
+        this.type = type;
+    }
+
+    public Signal(final SignalType type, final Long orderId) {
+        if (type != SignalType.CLOSE) {
+            throw new RuntimeException();
+        }
+        this.type = type;
+        this.orderId = orderId;
+    }
+
+    public Signal(final SignalType type,
+                  final BigDecimal lot, final BigDecimal stopLoss, final BigDecimal takeProfit) {
+        if (type != SignalType.BUY && type != SignalType.SELL) {
+            throw new RuntimeException();
+        }
+        this.lot = lot;
+        this.type = type;
+        this.stopLoss = stopLoss;
+        this.takeProfit = takeProfit;
+    }
 
 }
