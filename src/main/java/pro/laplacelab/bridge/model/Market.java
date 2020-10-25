@@ -19,7 +19,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @EqualsAndHashCode
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SignalRequest {
+public class Market {
 
     @NotNull(message = "advisorId required")
     @JsonProperty("advisorId")

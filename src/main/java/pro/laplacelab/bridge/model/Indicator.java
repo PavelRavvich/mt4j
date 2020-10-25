@@ -20,6 +20,10 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Indicator {
 
+    @NotNull(message = "number required")
+    @JsonProperty("number")
+    private Integer number;
+
     @NotNull(message = "type required")
     @JsonProperty("type")
     private IndicatorType type;
@@ -31,6 +35,6 @@ public class Indicator {
     @Min(value = 2, message = "minimum buffer size equals 2")
     @NotNull(message = "buffer required")
     @JsonProperty("buffer")
-    private List<Tick> buffer;
+    private List<Bar> buffer;
 
 }

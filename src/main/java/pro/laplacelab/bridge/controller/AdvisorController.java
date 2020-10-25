@@ -2,28 +2,26 @@ package pro.laplacelab.bridge.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import pro.laplacelab.bridge.model.Property;
-import pro.laplacelab.bridge.service.PropertyService;
+import org.springframework.web.bind.annotation.*;
+import pro.laplacelab.bridge.model.Input;
+import pro.laplacelab.bridge.model.Ticket;
+import pro.laplacelab.bridge.service.InputService;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/advisor")
 public class AdvisorController {
 
-    private final PropertyService propertyService;
+    private final InputService inputService;
 
-    @GetMapping("/connect")
-    public ResponseEntity<Map<String, UUID>> connect(@RequestBody @Valid final List<Property> req) {
-        return ResponseEntity.ok(Map.of("id", propertyService.add(req)));
+    @GetMapping("/{magic}/ticket")
+    public ResponseEntity<Ticket> save(@PathVariable @NotNull final long magic,
+                                       @RequestBody @Valid final List<Input> inputs) {
+        return ResponseEntity.ok(inputService.save(magic, inputs));
     }
 
 }

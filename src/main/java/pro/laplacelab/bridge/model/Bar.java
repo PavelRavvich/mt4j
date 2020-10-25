@@ -6,27 +6,24 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import pro.laplacelab.bridge.enums.SignalType;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SignalResponse {
+public class Bar {
 
-    @JsonProperty("type")
-    private SignalType type;
+    @NotNull(message = "value required")
+    @JsonProperty("value")
+    private BigDecimal value;
 
-    @JsonProperty("lot")
-    private BigDecimal lot;
-
-    @JsonProperty("stopLoss")
-    private BigDecimal stopLoss;
-
-    @JsonProperty("takeProfit")
-    private BigDecimal takeProfit;
+    @NotNull(message = "date required")
+    @JsonProperty("date")
+    private Date date;
 
 }

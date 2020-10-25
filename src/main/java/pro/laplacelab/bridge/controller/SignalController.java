@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pro.laplacelab.bridge.model.SignalRequest;
-import pro.laplacelab.bridge.model.SignalResponse;
+import pro.laplacelab.bridge.model.Market;
+import pro.laplacelab.bridge.model.Signal;
 import pro.laplacelab.bridge.service.SignalService;
 
 import javax.validation.Valid;
@@ -20,8 +20,8 @@ public class SignalController {
     private final SignalService signalService;
 
     @GetMapping
-    public ResponseEntity<SignalResponse> signal(@RequestBody @Valid final SignalRequest req) {
-        return ResponseEntity.ok(signalService.get(req));
+    public ResponseEntity<Signal> signal(@RequestBody @Valid final Market market) {
+        return ResponseEntity.ok(signalService.analyze(market));
     }
 
 }

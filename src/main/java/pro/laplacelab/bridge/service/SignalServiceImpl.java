@@ -1,11 +1,11 @@
 package pro.laplacelab.bridge.service;
 
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pro.laplacelab.bridge.model.Properties;
-import pro.laplacelab.bridge.model.SignalRequest;
-import pro.laplacelab.bridge.model.SignalResponse;
+import pro.laplacelab.bridge.model.Inputs;
+import pro.laplacelab.bridge.model.Market;
+import pro.laplacelab.bridge.model.Signal;
 import pro.laplacelab.bridge.strategy.Strategy;
 
 import javax.validation.constraints.NotNull;
@@ -14,29 +14,31 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 @Slf4j
 @Service
-@AllArgsConstructor
 public class SignalServiceImpl implements SignalService {
 
-    private final PropertyService propertyService;
+    private final InputService inputService;
 
-    private final List<Strategy> strategies = new CopyOnWriteArrayList<>();
+    private final List<Strategy> strategies;
+
+    @Autowired
+    public SignalServiceImpl(final List<Strategy> strategies,
+                             final InputService inputService) {
+        this.strategies = new CopyOnWriteArrayList<>(strategies);
+        this.inputService = inputService;
+    }
 
     @Override
-    public SignalResponse get(final @NotNull SignalRequest request) {
+    public Signal analyze(final @NotNull Market request) {
         log.debug("Request: {}", request);
-        Properties properties = propertyService
+        Inputs inputs = inputService
                 .get(request.getAdvisorId())
                 .orElseThrow(RuntimeException::new);
         Strategy strategy = strategies.stream()
                 .filter(item -> item.getType().equals(request.getStrategyType()))
                 .findFirst().orElseThrow(RuntimeException::new);
-        SignalResponse response = strategy.apply(properties, request.getIndicators());
+        Signal response = strategy.apply(inputs, request.getIndicators());
         log.debug("Response: {}", response);
         return response;
-    }
-
-    public void addStrategy(final @NotNull Strategy strategy) {
-        strategies.add(strategy);
     }
 
 }

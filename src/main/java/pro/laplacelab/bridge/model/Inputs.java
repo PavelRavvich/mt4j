@@ -9,20 +9,23 @@ import java.util.*;
 @Data
 @EqualsAndHashCode
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Properties {
+public class Inputs {
+
+    private final long magic;
 
     private final UUID id = UUID.randomUUID();
 
-    private final Map<String, Property> properties = new HashMap<>();
+    private final Map<String, Input> properties = new HashMap<>();
 
-    public Properties(final List<Property> properties) {
+    public Inputs(final long magic, final List<Input> properties) {
         if (properties.size() != new HashSet<>(properties).size()) {
             throw new RuntimeException();
         }
         properties.forEach(item -> this.properties.put(item.getKey(), item));
+        this.magic = magic;
     }
 
-    public Optional<Property> findByName(final String name) {
+    public Optional<Input> findByName(final String name) {
         return Optional.of(properties.get(name));
     }
 
