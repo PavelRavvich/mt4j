@@ -7,10 +7,13 @@ MetaTrader 5 required permission in settings for send http requests to localhost
 
 Endpoints:
 
-**POST** `/api/config` - set advisor config (Advisor bootstrap sync with a local server)
+**POST** `/api/advisor/connect` - caching advisor properties (Advisor bootstrap sync with a local server)
 ```json
 {
-    "config": "key_1=value_1\nkey_2=value_2"
+    "properties": [
+        { "key": "propName1", "value": "str", "type": "STRING" },
+        { "key": "propName2", "value": 10, "type": "NUMBER" }
+    ] 
 }
 ```
 
@@ -19,7 +22,7 @@ Endpoints:
 ```json
 {
     "advisorId": "c4eb34e4-c9c3-4b7e-856d-d5d00588464d",
-    "scenarioSysName": "simple",
+    "strategyType": "SIMPLE",
     "indicators": [
         {
             "id": "42897b00-4d16-469f-81d0-def62b34606b",

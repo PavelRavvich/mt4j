@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import pro.laplacelab.bridge.enums.StrategyType;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -24,10 +25,10 @@ public class SignalRequest {
     @JsonProperty("advisorId")
     private UUID advisorId;
 
-    @NotNull(message = "strategySysName required")
-    @NotBlank(message = "strategySysName can't be blank")
-    @JsonProperty("strategySysName")
-    private String strategySysName;
+    @NotNull(message = "strategyType required")
+    @NotBlank(message = "strategyType can't be blank")
+    @JsonProperty("strategyType")
+    private StrategyType strategyType;
 
     @NotNull(message = "indicators required")
     @NotEmpty(message = "indicators can't be empty")

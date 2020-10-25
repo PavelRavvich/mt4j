@@ -23,4 +23,5 @@ public class SignalController {
     public ResponseEntity<SignalResponse> get(@RequestBody @Valid SignalRequest request) {
         return ResponseEntity.ok(signalService.get(request));
     }
+
 }

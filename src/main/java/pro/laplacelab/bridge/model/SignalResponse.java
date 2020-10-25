@@ -1,6 +1,7 @@
 package pro.laplacelab.bridge.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,12 +17,16 @@ import java.math.BigDecimal;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SignalResponse {
 
+    @JsonProperty("type")
     private SignalType type;
 
-    private BigDecimal value;
+    @JsonProperty("lot")
+    private BigDecimal lot;
 
+    @JsonProperty("stopLoss")
     private BigDecimal stopLoss;
 
+    @JsonProperty("takeProfit")
     private BigDecimal takeProfit;
 
 }

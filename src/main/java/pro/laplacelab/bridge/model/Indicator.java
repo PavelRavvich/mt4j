@@ -9,8 +9,9 @@ import lombok.NoArgsConstructor;
 import pro.laplacelab.bridge.enums.IndicatorType;
 import pro.laplacelab.bridge.enums.Timeframe;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.UUID;
 
 @Data
 @EqualsAndHashCode
@@ -19,15 +20,16 @@ import java.util.UUID;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Indicator {
 
-    @JsonProperty("id")
-    private UUID id;
-
+    @NotNull(message = "type required")
     @JsonProperty("type")
     private IndicatorType type;
 
+    @NotNull(message = "timeframe required")
     @JsonProperty("timeframe")
     private Timeframe timeframe;
 
+    @Min(value = 2, message = "minimum buffer size equals 2")
+    @NotNull(message = "buffer required")
     @JsonProperty("buffer")
     private List<Tick> buffer;
 
