@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pro.laplacelab.bridge.model.Property;
 import pro.laplacelab.bridge.service.PropertyService;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -21,8 +22,8 @@ public class AdvisorController {
     private final PropertyService propertyService;
 
     @GetMapping("/connect")
-    public ResponseEntity<Map<String, UUID>> set(@RequestBody List<Property> properties) {
-        return ResponseEntity.ok(Map.of("id", propertyService.add(properties)));
+    public ResponseEntity<Map<String, UUID>> connect(@RequestBody @Valid final List<Property> req) {
+        return ResponseEntity.ok(Map.of("id", propertyService.add(req)));
     }
 
 }

@@ -7,15 +7,17 @@
     <module name="FileLength">
         <property name="max" value="150"/>
     </module>
-    <module name="MethodLength">
-        <property name="tokens" value="METHOD_DEF"/>
-        <property name="max" value="25"/>
-    </module>
-    <module name="FinalLocalVariable">
-        <property name="tokens" value="PARAMETER_DEF"/>
-    </module>
-    <module name="ParameterNumber">
-        <property name="max" value="3"/>
-        <property name="tokens" value="METHOD_DEF"/>
+    <module name="TreeWalker">
+        <module name="ParameterNumber">
+            <property name="max" value="3"/>
+            <property name="tokens" value="METHOD_DEF"/>
+        </module>
+        <module name="MethodLength">
+            <property name="tokens" value="METHOD_DEF"/>
+            <property name="max" value="25"/>
+        </module>
+        <module name="FinalLocalVariable">
+            <property name="tokens" value="PARAMETER_DEF"/>
+        </module>
     </module>
 </module>

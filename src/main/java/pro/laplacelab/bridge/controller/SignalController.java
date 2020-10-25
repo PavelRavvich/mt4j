@@ -20,8 +20,8 @@ public class SignalController {
     private final SignalService signalService;
 
     @GetMapping
-    public ResponseEntity<SignalResponse> get(@RequestBody @Valid SignalRequest request) {
-        return ResponseEntity.ok(signalService.get(request));
+    public ResponseEntity<SignalResponse> signal(@RequestBody @Valid final SignalRequest req) {
+        return ResponseEntity.ok(signalService.get(req));
     }
 
 }
