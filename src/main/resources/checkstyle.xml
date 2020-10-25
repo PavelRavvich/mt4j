@@ -3,6 +3,19 @@
         "-//Puppy Crawl//DTD Check Configuration 1.3//EN"
         "http://www.puppycrawl.com/dtds/configuration_1_3.dtd">
 <module name="Checker">
-
     <module name="SuppressWarningsFilter"/>
+    <module name="FileLength">
+        <property name="max" value="150"/>
+    </module>
+    <module name="MethodLength">
+        <property name="tokens" value="METHOD_DEF"/>
+        <property name="max" value="25"/>
+    </module>
+    <module name="FinalLocalVariable">
+        <property name="tokens" value="PARAMETER_DEF"/>
+    </module>
+    <module name="ParameterNumber">
+        <property name="max" value="3"/>
+        <property name="tokens" value="METHOD_DEF"/>
+    </module>
 </module>
