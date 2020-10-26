@@ -15,6 +15,8 @@ import java.util.function.BiFunction;
  * 1. Add unique key to StrategyType enum and return them in getType().
  * 2. Implement strategy logic inside apply method.
  * 3. Strategy implementation is Spring component, @Service or @Component required.
+ *
+ * @see pro.laplacelab.bridge.strategy.Example
  */
 public interface Strategy extends BiFunction<Advisor, List<Indicator>, Signal> {
     Signal apply(Advisor advisor, List<Indicator> indicators);
