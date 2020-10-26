@@ -3,10 +3,8 @@ package pro.laplacelab.bridge.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pro.laplacelab.bridge.model.Advisor;
-import pro.laplacelab.bridge.model.Input;
 
 import javax.validation.constraints.NotNull;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -19,12 +17,12 @@ public class AdvisorServiceImpl implements AdvisorService {
     private final Map<UUID, Advisor> advisors = new ConcurrentHashMap<>();
 
     @Override
-    public Advisor add(final long magic, final @NotNull List<Input> inputs) {
-        log.debug("Attempt to build Advisor with inputs: {}", inputs);
-        final Advisor advisor = new Advisor(magic, inputs);
-        advisors.put(advisor.getId(), advisor);
-        log.debug("Add advisor: {}", advisor);
-        return advisor;
+    public Advisor add(final Advisor advisor) {
+        log.debug("Attempt to build Advisor from source: {}", advisor);
+        final Advisor save = new Advisor(advisor.getMagic(), advisor.getInputs());
+        advisors.put(save.getId(), save);
+        log.debug("Add advisor: {}", save);
+        return save;
     }
 
     @Override

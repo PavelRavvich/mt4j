@@ -26,26 +26,40 @@ public class AdvisorServiceImplTest {
 
     @Test
     public void whenSaveSuccessThenReturnAdvisor() {
-        Advisor advisor = advisorService.add(1, List.of(
-                new Input("key1", "val", InputType.STRING),
-                new Input("key2", "val", InputType.STRING)));
+        Advisor advisor = advisorService.add(
+                new Advisor(1L, List.of(
+                        new Input("key1", "val", InputType.STRING),
+                        new Input("key2", "val", InputType.STRING)
+                ))
+        );
         assertNotNull(advisor);
         assertNotNull(advisor.getId());
     }
 
     @Test(expected = RuntimeException.class)
     public void whenSaveFailThenThrowException() {
-        advisorService.add(1, List.of(new Input("", "val", InputType.STRING)));
+        advisorService.add(
+                new Advisor(1L, List.of(
+                        new Input("", "val", InputType.STRING)
+                ))
+        );
     }
 
     @Test
     public void whenAddSuccessThenAdvisorSaved() {
-        Advisor save = advisorService.add(1, List.of(
-                new Input("key1", "val", InputType.STRING),
-                new Input("key2", "1", InputType.NUMBER)));
+        Advisor save = advisorService.add(
+                new Advisor(1L, List.of(
+                        new Input("key1", "val", InputType.STRING),
+                        new Input("key2", "1", InputType.NUMBER)
+                ))
+        );
         Advisor advisor = advisorService.get(save.getId()).orElseThrow();
+        assertEquals(InputType.STRING,
+                advisor.getInput("key1").orElseThrow().getType());
         assertEquals("val",
                 advisor.getInput("key1").orElseThrow().getStringValue());
+        assertEquals(InputType.NUMBER,
+                advisor.getInput("key2").orElseThrow().getType());
         assertEquals(new BigDecimal("1"),
                 advisor.getInput("key2").orElseThrow().getBigDecimalValue());
     }

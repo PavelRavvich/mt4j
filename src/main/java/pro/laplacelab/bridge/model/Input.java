@@ -50,8 +50,8 @@ public class Input {
             throw new InvalidInputException();
         }
         this.key = key;
-        this.value = value;
         this.type = type;
+        this.value = value;
     }
 
 }

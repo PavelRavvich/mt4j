@@ -1,6 +1,5 @@
 package pro.laplacelab.bridge.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -8,7 +7,9 @@ import lombok.EqualsAndHashCode;
 import pro.laplacelab.bridge.exception.DuplicateInputException;
 
 import javax.validation.constraints.NotNull;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Data
 @EqualsAndHashCode
@@ -16,24 +17,25 @@ import java.util.*;
 public class Advisor {
 
     @JsonProperty("id")
-    private final UUID id = UUID.randomUUID();
+    private final UUID id;
 
-    @JsonIgnore
+    @JsonProperty("magic")
     private final Long magic;
 
-    @JsonIgnore
-    private final Map<String, Input> inputs = new HashMap<>();
+    @JsonProperty("inputs")
+    private final List<Input> inputs;
 
-    public Advisor(final @NotNull Long magic, final @NotNull List<Input> inputList) {
-        if (inputList.size() != new HashSet<>(inputList).size()) {
+    public Advisor(final @NotNull Long magic, final @NotNull List<Input> inputs) {
+        if (inputs.size() != inputs.stream().map(Input::getKey).count()) {
             throw new DuplicateInputException();
         }
-        inputList.forEach(item -> inputs.put(item.getKey(), item));
+        this.id = UUID.randomUUID();
+        this.inputs = inputs;
         this.magic = magic;
     }
 
-    public Optional<Input> getInput(final @NotNull String name) {
-        return Optional.of(inputs.get(name));
+    public Optional<Input> getInput(final @NotNull String key) {
+        return inputs.stream().filter(item -> key.equals(item.getKey())).findFirst();
     }
 
 }
