@@ -18,6 +18,5 @@ import java.util.function.BiFunction;
  */
 public interface Strategy extends BiFunction<Advisor, List<Indicator>, Signal> {
     Signal apply(Advisor advisor, List<Indicator> indicators);
-
     StrategyType getType();
 }
