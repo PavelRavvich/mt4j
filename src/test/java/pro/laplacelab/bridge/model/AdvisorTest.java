@@ -11,7 +11,7 @@ import static org.junit.Assert.assertEquals;
 public class AdvisorTest {
 
     @Test
-    public void whenInputsBuildSuccessfullyDataSaved() {
+    public void whenAdvisorBuildSuccessfullyDataSaved() {
         Advisor advisor = new Advisor(1L, List.of(
                 new Input("key1", "val", InputType.STRING),
                 new Input("key2", "1", InputType.NUMBER)));
@@ -24,7 +24,7 @@ public class AdvisorTest {
 
 
     @Test(expected = RuntimeException.class)
-    public void whenInputsBuildFailThenThrowRuntimeException() {
+    public void whenAdvisorBuildFailThenThrowRuntimeException() {
         new Input("", "val", InputType.STRING);
     }
 

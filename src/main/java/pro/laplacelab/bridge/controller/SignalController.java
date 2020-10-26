@@ -21,7 +21,7 @@ public class SignalController {
 
     @GetMapping
     public ResponseEntity<Signal> signal(@RequestBody @Valid final Market market) {
-        return ResponseEntity.ok(signalService.analyze(market));
+        return ResponseEntity.ok(signalService.onTick(market));
     }
 
 }

@@ -3,12 +3,12 @@ package pro.laplacelab.bridge.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pro.laplacelab.bridge.Strategy;
 import pro.laplacelab.bridge.exception.AdvisorNotFoundException;
 import pro.laplacelab.bridge.exception.StrategyNotFoundException;
 import pro.laplacelab.bridge.model.Advisor;
 import pro.laplacelab.bridge.model.Market;
 import pro.laplacelab.bridge.model.Signal;
-import pro.laplacelab.bridge.strategy.Strategy;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -30,7 +30,7 @@ public class SignalServiceImpl implements SignalService {
     }
 
     @Override
-    public Signal analyze(final @NotNull Market market) {
+    public Signal onTick(final @NotNull Market market) {
         log.debug("Market request: {}", market);
         Advisor advisor = advisorService
                 .get(market.getAdvisorId())

@@ -2,7 +2,7 @@ package pro.laplacelab.bridge.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +18,7 @@ public class AdvisorController {
 
     private final AdvisorService advisorService;
 
-    @GetMapping("/add")
+    @PostMapping("/add")
     public ResponseEntity<Advisor> add(@RequestBody @Valid final Advisor advisor) {
         return ResponseEntity.ok(advisorService.add(advisor));
     }

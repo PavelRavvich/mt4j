@@ -7,7 +7,7 @@ MetaTrader 5 required permission in settings for send http requests to localhost
 
 Endpoints:
 
-**GET** `http://127.0. 0.1/api/advisor/add` - save advisor and get UUID identifier.
+**POST** `http://127.0. 0.1/api/advisor/add` - save advisor and get UUID identifier.
 
 _Request:_
 ```json

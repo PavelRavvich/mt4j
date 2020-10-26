@@ -25,7 +25,7 @@ public class AdvisorServiceImplTest {
     AdvisorService advisorService;
 
     @Test
-    public void whenSaveSuccessThenReturnAdvisor() {
+    public void whenAddSuccessThenReturnAdvisorWithId() {
         Advisor advisor = advisorService.add(
                 new Advisor(1L, List.of(
                         new Input("key1", "val", InputType.STRING),
@@ -37,7 +37,7 @@ public class AdvisorServiceImplTest {
     }
 
     @Test(expected = RuntimeException.class)
-    public void whenSaveFailThenThrowException() {
+    public void whenAddFailThenThrowException() {
         advisorService.add(
                 new Advisor(1L, List.of(
                         new Input("", "val", InputType.STRING)
@@ -46,7 +46,7 @@ public class AdvisorServiceImplTest {
     }
 
     @Test
-    public void whenAddSuccessThenAdvisorSaved() {
+    public void whenAddSuccessThenAdvisorInputsSaved() {
         Advisor save = advisorService.add(
                 new Advisor(1L, List.of(
                         new Input("key1", "val", InputType.STRING),

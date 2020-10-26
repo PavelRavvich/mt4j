@@ -3,6 +3,7 @@ package pro.laplacelab.bridge.strategy;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
+import pro.laplacelab.bridge.Strategy;
 import pro.laplacelab.bridge.enums.SignalType;
 import pro.laplacelab.bridge.enums.StrategyType;
 import pro.laplacelab.bridge.model.Advisor;
