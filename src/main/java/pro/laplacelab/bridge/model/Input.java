@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import pro.laplacelab.bridge.enums.InputType;
+import pro.laplacelab.bridge.exception.InvalidInputException;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -43,8 +44,10 @@ public class Input {
     }
 
     public Input(final String key, final String value, final InputType type) {
-        if (Objects.isNull(key) || key.isEmpty() || Objects.isNull(value) || value.isEmpty() || Objects.isNull(type)) {
-            throw new RuntimeException();
+        if (Objects.isNull(key) || key.isEmpty() ||
+                Objects.isNull(value) || value.isEmpty() ||
+                Objects.isNull(type)) {
+            throw new InvalidInputException();
         }
         this.key = key;
         this.value = value;

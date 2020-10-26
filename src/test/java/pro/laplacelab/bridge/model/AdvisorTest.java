@@ -8,18 +8,18 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-public class InputsTest {
+public class AdvisorTest {
 
     @Test
     public void whenInputsBuildSuccessfullyDataSaved() {
-        Inputs inputs = new Inputs(1, List.of(
+        Advisor advisor = new Advisor(1L, List.of(
                 new Input("key1", "val", InputType.STRING),
                 new Input("key2", "1", InputType.NUMBER)));
-        assertEquals(1, inputs.getMagic());
+        assertEquals(Long.valueOf(1), advisor.getMagic());
         assertEquals("val",
-                inputs.findByName("key1").orElseThrow().getStringValue());
+                advisor.getInput("key1").orElseThrow().getStringValue());
         assertEquals(new BigDecimal("1"),
-                inputs.findByName("key2").orElseThrow().getBigDecimalValue());
+                advisor.getInput("key2").orElseThrow().getBigDecimalValue());
     }
 
 

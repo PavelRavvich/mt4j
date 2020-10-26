@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import pro.laplacelab.bridge.enums.SignalType;
+import pro.laplacelab.bridge.exception.InvalidSignalException;
 
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -32,14 +33,14 @@ public class Signal {
 
     public Signal(final SignalType type) {
         if (type != SignalType.NOTHING) {
-            throw new RuntimeException();
+            throw new InvalidSignalException();
         }
         this.type = type;
     }
 
     public Signal(final SignalType type, final Long orderId) {
         if (type != SignalType.CLOSE) {
-            throw new RuntimeException();
+            throw new InvalidSignalException();
         }
         this.type = type;
         this.orderId = orderId;
@@ -48,7 +49,7 @@ public class Signal {
     public Signal(final SignalType type,
                   final BigDecimal lot, final BigDecimal stopLoss, final BigDecimal takeProfit) {
         if (type != SignalType.BUY && type != SignalType.SELL) {
-            throw new RuntimeException();
+            throw new InvalidSignalException();
         }
         this.lot = lot;
         this.type = type;

@@ -7,7 +7,7 @@ MetaTrader 5 required permission in settings for send http requests to localhost
 
 Endpoints:
 
-**GET** `http://127.0. 0.1/api/advisor/{magic}/ticket` - save advisor inputs and take UUID ticket for sync with a local server.
+**GET** `http://127.0. 0.1/api/advisor/add/{magic}` - save advisor and take UUID ticket for sync with a local server.
 
 _Request:_
 ```json
