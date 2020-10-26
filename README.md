@@ -58,7 +58,8 @@ _Request:_
 _Response:_
 ```json
 {
-    "type": "OPEN",
+    "type": "CLOSE",
+    "orderId": 100000,
     "lot": 0.01,
     "stopLoss": 100,
     "takeProfit": 100
