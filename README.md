@@ -66,11 +66,21 @@ _Response:_
     "takeProfit": 100
 }
 ```
+###### Update Position Signal Response:
+```json
+{
+    "type": "UPDATE",
+    "positionId": 10000000,
+    "lot": 0.01,
+    "stopLoss": 100,
+    "takeProfit": 100
+}
+```
 ###### Close Position Signal Response:
 ```json
 {
     "type": "CLOSE",
-    "orderId": 1000000000
+    "positionId": 1000000000
 }
 ```
 ###### No Action Signal Response:

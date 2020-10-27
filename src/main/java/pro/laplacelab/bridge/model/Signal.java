@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import pro.laplacelab.bridge.enums.SignalType;
 import pro.laplacelab.bridge.exception.InvalidSignalException;
 
@@ -11,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Data
+@NoArgsConstructor
 @EqualsAndHashCode
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Signal {
@@ -19,8 +21,8 @@ public class Signal {
     @JsonProperty("type")
     private SignalType type;
 
-    @JsonProperty("orderId")
-    private Long orderId;
+    @JsonProperty("positionId")
+    private Long positionId;
 
     @JsonProperty("lot")
     private BigDecimal lot;
@@ -38,12 +40,12 @@ public class Signal {
         this.type = type;
     }
 
-    public Signal(final SignalType type, final Long orderId) {
+    public Signal(final SignalType type, final Long positionId) {
         if (type != SignalType.CLOSE) {
             throw new InvalidSignalException();
         }
         this.type = type;
-        this.orderId = orderId;
+        this.positionId = positionId;
     }
 
     public Signal(final SignalType type,
@@ -53,6 +55,18 @@ public class Signal {
         }
         this.lot = lot;
         this.type = type;
+        this.stopLoss = stopLoss;
+        this.takeProfit = takeProfit;
+    }
+
+    public Signal(final SignalType type, final Long positionId,
+                  final BigDecimal lot, final BigDecimal stopLoss, final BigDecimal takeProfit) {
+        if (type != SignalType.UPDATE) {
+            throw new InvalidSignalException();
+        }
+        this.lot = lot;
+        this.type = type;
+        this.positionId = positionId;
         this.stopLoss = stopLoss;
         this.takeProfit = takeProfit;
     }

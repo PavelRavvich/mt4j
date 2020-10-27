@@ -1,15 +1,15 @@
 package pro.laplacelab.bridge.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import pro.laplacelab.bridge.exception.DuplicateInputException;
 
 import javax.validation.constraints.NotNull;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Data
 @EqualsAndHashCode
@@ -25,6 +25,14 @@ public class Advisor {
     @JsonProperty("inputs")
     private final List<Input> inputs;
 
+    @Getter
+    @JsonIgnore
+    private final transient LinkedList<Position> history = new LinkedList<>();
+
+    @Getter
+    @JsonIgnore
+    private final transient LinkedList<Position> positions = new LinkedList<>();
+
     public Advisor(final @NotNull Long magic, final @NotNull List<Input> inputs) {
         if (inputs.size() != inputs.stream().map(Input::getKey).count()) {
             throw new DuplicateInputException();
@@ -37,5 +45,48 @@ public class Advisor {
     public Optional<Input> getInput(final @NotNull String key) {
         return inputs.stream().filter(item -> key.equals(item.getKey())).findFirst();
     }
+
+    public void addPosition(final @NotNull Position position) {
+        positions.add(position);
+    }
+
+    public void addHistory(final @NotNull Position position) {
+        positions.stream()
+                .filter(item -> item.getPositionId().equals(position.getPositionId()))
+                .findFirst()
+                .ifPresent(positions::remove);
+        history.add(position);
+        if (history.size() == 1_000) {
+            final List<Position> swap = new ArrayList<>(100);
+            final Iterator<Position> iterator = history.descendingIterator();
+            int copy = 0;
+            while (++copy != 100) {
+                swap.add(iterator.next());
+            }
+            history.clear();
+            history.addAll(swap);
+        }
+    }
+
+    public void updatePosition(final @NotNull Position position) {
+        final Position candidate = positions.stream()
+                .filter(item -> item.getPositionId().equals(position.getPositionId()))
+                .findFirst().orElseThrow();
+        candidate.setLot(position.getLot());
+        candidate.setProfit(position.getProfit());
+        candidate.setStopLoss(position.getStopLoss());
+        candidate.setTakeProfit(position.getTakeProfit());
+    }
+
+    // Открытые позиции
+    // 1. Храняться в попядке добавления (в порядке открытия от старого к свежему)
+    // 2. Возможность итерироваться в обе стороны.
+    // 3. Получение по индексу
+
+    // История
+    // Храняться в порядке добавления (закрытия от строго к свежему)
+    // Возможность итерироваться от свежих с старым
+    // Получение последних N сохраняя порядок
+
 
 }
