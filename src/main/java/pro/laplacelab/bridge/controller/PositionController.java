@@ -29,7 +29,6 @@ public class PositionController {
         return ResponseEntity.ok(positionService.update(position));
     }
 
-
     @PostMapping("/history")
     public ResponseEntity<Position> history(@RequestBody @Valid final Position position) {
         return ResponseEntity.ok(positionService.history(position));
