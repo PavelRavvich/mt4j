@@ -1,0 +1,93 @@
+package pro.laplacelab.bridge.model;
+
+import org.junit.Test;
+import pro.laplacelab.bridge.enums.SignalType;
+import pro.laplacelab.bridge.exception.InvalidSignalException;
+
+import java.math.BigDecimal;
+import java.util.UUID;
+
+import static org.junit.Assert.assertEquals;
+
+public class SignalTest {
+
+    protected final UUID advisorId = UUID.randomUUID();
+
+    protected final Long positionId = 1_000_000L;
+
+    protected final BigDecimal lot = new BigDecimal("0.01");
+
+    protected final BigDecimal stopLoss = new BigDecimal("100");
+
+    protected final BigDecimal takeProfit = new BigDecimal("50");
+
+    @Test
+    public void whenSignalNoActionBuildSuccessfulThenStateSaved() {
+        Signal signal = new Signal(advisorId, SignalType.NO_ACTION);
+        assertEquals(SignalType.NO_ACTION, signal.getType());
+        assertEquals(advisorId, signal.getAdvisorId());
+    }
+
+    @Test(expected = InvalidSignalException.class)
+    public void whenSignalNoActionBuildWithWrongSignalTypeThenThrowException() {
+        new Signal(advisorId, SignalType.BUY);
+    }
+
+    @Test
+    public void whenSignalCloseBuildSuccessfulThenStateSaved() {
+        Signal signal = new Signal(advisorId, SignalType.CLOSE, positionId);
+        assertEquals(SignalType.CLOSE, signal.getType());
+        assertEquals(positionId, signal.getPositionId());
+        assertEquals(advisorId, signal.getAdvisorId());
+    }
+
+    @Test(expected = InvalidSignalException.class)
+    public void whenSignalCloseBuildWithWrongSignalTypeThenThrowException() {
+        new Signal(advisorId, SignalType.BUY);
+    }
+
+    @Test
+    public void whenSignalBuyBuildSuccessfulThenStateSaved() {
+        Signal signal = new Signal(advisorId, SignalType.BUY, lot, stopLoss, takeProfit);
+        assertEquals(SignalType.BUY, signal.getType());
+        assertEquals(advisorId, signal.getAdvisorId());
+        assertEquals(stopLoss, signal.getStopLoss());
+        assertEquals(takeProfit, signal.getTakeProfit());
+    }
+
+    @Test(expected = InvalidSignalException.class)
+    public void whenSignalBuyBuildWithWrongSignalTypeThenThrowException() {
+        new Signal(advisorId, SignalType.CLOSE, lot, stopLoss, takeProfit);
+    }
+
+    @Test
+    public void whenSignalSellBuildSuccessfulThenStateSaved() {
+        Signal signal = new Signal(advisorId, SignalType.SELL, lot, stopLoss, takeProfit);
+        assertEquals(SignalType.SELL, signal.getType());
+        assertEquals(advisorId, signal.getAdvisorId());
+        assertEquals(stopLoss, signal.getStopLoss());
+        assertEquals(takeProfit, signal.getTakeProfit());
+    }
+
+    @Test(expected = InvalidSignalException.class)
+    public void whenSignalSellBuildWithWrongSignalTypeThenThrowException() {
+        new Signal(advisorId, SignalType.CLOSE, lot, stopLoss, takeProfit);
+    }
+
+    @Test
+    public void whenSignalUpdateBuildSuccessfulThenStateSaved() {
+        Signal signal = new Signal(advisorId, SignalType.UPDATE,
+                positionId, lot, stopLoss, takeProfit);
+        assertEquals(SignalType.UPDATE, signal.getType());
+        assertEquals(positionId, signal.getPositionId());
+        assertEquals(takeProfit, signal.getTakeProfit());
+        assertEquals(advisorId, signal.getAdvisorId());
+        assertEquals(stopLoss, signal.getStopLoss());
+        assertEquals(lot, signal.getLot());
+    }
+
+    @Test(expected = InvalidSignalException.class)
+    public void whenSignalUpdateBuildWithWrongSignalTypeThenThrowException() {
+        new Signal(advisorId, SignalType.BUY, positionId, lot, stopLoss, takeProfit);
+    }
+}

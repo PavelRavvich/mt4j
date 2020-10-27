@@ -20,23 +20,23 @@ public class Signal {
 
     @NotNull(message = "type required")
     @JsonProperty("type")
-    private SignalType type;
+    protected SignalType type;
 
     @NotNull(message = "advisorId required")
     @JsonProperty("advisorId")
-    private UUID advisorId;
+    protected UUID advisorId;
 
     @JsonProperty("positionId")
-    private Long positionId;
+    protected Long positionId;
 
     @JsonProperty("lot")
-    private BigDecimal lot;
+    protected BigDecimal lot;
 
     @JsonProperty("stopLoss")
-    private BigDecimal stopLoss;
+    protected BigDecimal stopLoss;
 
     @JsonProperty("takeProfit")
-    private BigDecimal takeProfit;
+    protected BigDecimal takeProfit;
 
     public Signal(final @NotNull UUID advisorId, final @NotNull SignalType type) {
         if (type != SignalType.NO_ACTION) {
