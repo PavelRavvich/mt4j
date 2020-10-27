@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import pro.laplacelab.bridge.enums.StrategyType;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -25,10 +24,10 @@ public class Market {
     @JsonProperty("advisorId")
     private UUID advisorId;
 
-    @NotNull(message = "strategyType required")
-    @NotBlank(message = "strategyType can't be blank")
-    @JsonProperty("strategyType")
-    private StrategyType strategyType;
+    @NotNull(message = "strategyName required")
+    @NotBlank(message = "strategyName can't be blank")
+    @JsonProperty("strategyName")
+    private String strategyName;
 
     @NotNull(message = "indicators required")
     @NotEmpty(message = "indicators can't be empty")

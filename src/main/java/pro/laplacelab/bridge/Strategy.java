@@ -1,6 +1,5 @@
 package pro.laplacelab.bridge;
 
-import pro.laplacelab.bridge.enums.StrategyType;
 import pro.laplacelab.bridge.model.Advisor;
 import pro.laplacelab.bridge.model.Indicator;
 import pro.laplacelab.bridge.model.Signal;
@@ -16,9 +15,10 @@ import java.util.function.BiFunction;
  * 2. Implement strategy logic inside apply method.
  * 3. Strategy implementation is Spring component, @Service or @Component required.
  *
- * @see pro.laplacelab.bridge.strategy.Example
+ * @see pro.laplacelab.bridge.example.Example
  */
 public interface Strategy extends BiFunction<Advisor, List<Indicator>, Signal> {
     Signal apply(Advisor advisor, List<Indicator> indicators);
-    StrategyType getType();
+
+    String getName();
 }

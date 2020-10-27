@@ -39,7 +39,7 @@ _Request:_
 ```json
 {
     "advisorId": "c4eb34e4-c9c3-4b7e-856d-d5d00588464d",
-    "strategyType": "SIMPLE",
+    "strategyName": "EXAMPLE",
     "indicators": [
         {
             "number": 1,
@@ -56,13 +56,27 @@ _Request:_
 ```
 
 _Response:_
+
+###### Open Position Signal Response:
 ```json
 {
-    "type": "CLOSE",
-    "orderId": 100000,
+    "type": "BUY | SELL",
     "lot": 0.01,
     "stopLoss": 100,
     "takeProfit": 100
+}
+```
+###### Close Position Signal Response:
+```json
+{
+    "type": "CLOSE",
+    "orderId": 1000000000
+}
+```
+###### No Action Signal Response:
+```json
+{
+    "type": "NO_ACTION"
 }
 ```
 

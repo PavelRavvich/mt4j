@@ -32,7 +32,7 @@ public class Signal {
     private BigDecimal takeProfit;
 
     public Signal(final SignalType type) {
-        if (type != SignalType.NOTHING) {
+        if (type != SignalType.NO_ACTION) {
             throw new InvalidSignalException();
         }
         this.type = type;

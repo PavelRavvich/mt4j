@@ -36,7 +36,7 @@ public class SignalServiceImpl implements SignalService {
                 .get(market.getAdvisorId())
                 .orElseThrow(AdvisorNotFoundException::new);
         Strategy strategy = strategies.stream()
-                .filter(item -> item.getType().equals(market.getStrategyType()))
+                .filter(item -> market.getStrategyName().equals(item.getName()))
                 .findFirst().orElseThrow(StrategyNotFoundException::new);
         Signal signal = strategy.apply(advisor, market.getIndicators());
         log.debug("Signal response: {}", signal);
