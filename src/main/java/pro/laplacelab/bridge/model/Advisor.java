@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import pro.laplacelab.bridge.exception.DuplicateInputException;
+import pro.laplacelab.bridge.exception.PositionNotFoundException;
 
 import javax.validation.constraints.NotNull;
 import java.util.*;
@@ -50,7 +51,10 @@ public class Advisor {
         positions.add(position);
     }
 
-    public void addHistory(final @NotNull Position position) {
+    public void toHistory(final @NotNull Position position) {
+        if (!positions.contains(position)) {
+            throw new PositionNotFoundException();
+        }
         positions.stream()
                 .filter(item -> item.getPositionId().equals(position.getPositionId()))
                 .findFirst()
@@ -60,7 +64,7 @@ public class Advisor {
             final List<Position> swap = new ArrayList<>(100);
             final Iterator<Position> iterator = history.descendingIterator();
             int copy = 0;
-            while (++copy != 100) {
+            while (copy++ != 100) {
                 swap.add(iterator.next());
             }
             history.clear();
@@ -78,15 +82,13 @@ public class Advisor {
         candidate.setTakeProfit(position.getTakeProfit());
     }
 
-    // Открытые позиции
-    // 1. Храняться в попядке добавления (в порядке открытия от старого к свежему)
-    // 2. Возможность итерироваться в обе стороны.
-    // 3. Получение по индексу
-
-    // История
-    // Храняться в порядке добавления (закрытия от строго к свежему)
-    // Возможность итерироваться от свежих с старым
-    // Получение последних N сохраняя порядок
-
+    public int countDropdown() {
+        int counter = 0;
+        final Iterator<Position> iterator = history.descendingIterator();
+        while (iterator.hasNext() && iterator.next().getProfit().signum() < 0) {
+            counter++;
+        }
+        return counter;
+    }
 
 }

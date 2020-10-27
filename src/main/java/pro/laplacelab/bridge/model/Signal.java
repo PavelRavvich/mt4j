@@ -10,6 +10,7 @@ import pro.laplacelab.bridge.exception.InvalidSignalException;
 
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -17,9 +18,13 @@ import java.math.BigDecimal;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Signal {
 
-    @NotNull
+    @NotNull(message = "type required")
     @JsonProperty("type")
     private SignalType type;
+
+    @NotNull(message = "advisorId required")
+    @JsonProperty("advisorId")
+    private UUID advisorId;
 
     @JsonProperty("positionId")
     private Long positionId;
@@ -33,42 +38,54 @@ public class Signal {
     @JsonProperty("takeProfit")
     private BigDecimal takeProfit;
 
-    public Signal(final SignalType type) {
+    public Signal(final @NotNull UUID advisorId, final @NotNull SignalType type) {
         if (type != SignalType.NO_ACTION) {
             throw new InvalidSignalException();
         }
         this.type = type;
+        this.advisorId = advisorId;
+
     }
 
-    public Signal(final SignalType type, final Long positionId) {
+    public Signal(final @NotNull UUID advisorId,
+                  final @NotNull SignalType type,
+                  final @NotNull(message = "positionId required") Long positionId) {
         if (type != SignalType.CLOSE) {
             throw new InvalidSignalException();
         }
         this.type = type;
+        this.advisorId = advisorId;
         this.positionId = positionId;
     }
 
-    public Signal(final SignalType type,
-                  final BigDecimal lot, final BigDecimal stopLoss, final BigDecimal takeProfit) {
+    public Signal(final @NotNull UUID advisorId, @NotNull final SignalType type,
+                  final @NotNull(message = "lot required") BigDecimal lot,
+                  final @NotNull(message = "stopLoss required") BigDecimal stopLoss,
+                  final @NotNull(message = "takeProfit required") BigDecimal takeProfit) {
         if (type != SignalType.BUY && type != SignalType.SELL) {
             throw new InvalidSignalException();
         }
         this.lot = lot;
         this.type = type;
         this.stopLoss = stopLoss;
+        this.advisorId = advisorId;
         this.takeProfit = takeProfit;
     }
 
-    public Signal(final SignalType type, final Long positionId,
-                  final BigDecimal lot, final BigDecimal stopLoss, final BigDecimal takeProfit) {
+    public Signal(final UUID advisorId, final SignalType type,
+                  final @NotNull(message = "positionId required") Long positionId,
+                  final @NotNull(message = "lot required") BigDecimal lot,
+                  final @NotNull(message = "stopLoss required") BigDecimal stopLoss,
+                  final @NotNull(message = "takeProfit required") BigDecimal takeProfit) {
         if (type != SignalType.UPDATE) {
             throw new InvalidSignalException();
         }
         this.lot = lot;
         this.type = type;
+        this.advisorId = advisorId;
         this.positionId = positionId;
-        this.stopLoss = stopLoss;
         this.takeProfit = takeProfit;
+        this.stopLoss = stopLoss;
     }
 
 }

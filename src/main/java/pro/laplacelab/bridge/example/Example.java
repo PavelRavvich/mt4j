@@ -21,7 +21,7 @@ public class Example implements Strategy {
     @Override
     public Signal apply(final Advisor advisor, final List<Indicator> indicators) {
         // TODO: 23.10.2020 analytic strategy sequences implementation
-        return new Signal(SignalType.NO_ACTION);
+        return new Signal(advisor.getId(), SignalType.NO_ACTION);
     }
 
 }

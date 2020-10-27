@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>pro.laplacelab</groupId>
 	<artifactId>bridge</artifactId>
-	<version>1.0</version>
+	<version>1.0.LATEST</version>
 	<name>bridge</name>
 	<description>Demo project for Spring Boot</description>
 
@@ -83,12 +83,6 @@
 			<artifactId>maven-checkstyle-plugin</artifactId>
 			<version>${checkstyle.version}</version>
 			<type>maven-plugin</type>
-		</dependency>
-		<dependency>
-			<groupId>org.jetbrains</groupId>
-			<artifactId>annotations</artifactId>
-			<version>RELEASE</version>
-			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 

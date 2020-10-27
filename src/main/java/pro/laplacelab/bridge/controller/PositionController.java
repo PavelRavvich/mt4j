@@ -3,33 +3,36 @@ package pro.laplacelab.bridge.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import pro.laplacelab.bridge.model.Position;
+import pro.laplacelab.bridge.service.PositionService;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/position")
 public class PositionController {
 
+    private final PositionService positionService;
 
     @PostMapping("/add")
     public ResponseEntity<Position> add(@RequestBody @Valid final Position position) {
-        return ResponseEntity.ok(new Position());
+        return ResponseEntity.ok(positionService.add(position));
     }
 
-    @PostMapping("/{id}/update")
-    public ResponseEntity<Position> update(@PathVariable @NotNull final Long id,
-                                           @RequestBody @Valid final Position position) {
-        return ResponseEntity.ok(new Position());
+    @PostMapping("/update")
+    public ResponseEntity<Position> update(@RequestBody @Valid final Position position) {
+        return ResponseEntity.ok(positionService.update(position));
     }
 
 
-    @PostMapping("/{id}/delete")
-    public ResponseEntity<Position> delete(@PathVariable @NotNull final Long id) {
-        return ResponseEntity.ok(new Position());
+    @PostMapping("/history")
+    public ResponseEntity<Position> history(@RequestBody @Valid final Position position) {
+        return ResponseEntity.ok(positionService.history(position));
     }
 
 }

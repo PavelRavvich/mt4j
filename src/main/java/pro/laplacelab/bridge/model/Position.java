@@ -13,9 +13,9 @@ import java.math.BigDecimal;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Position extends Signal implements Comparable<Long> {
+public class Position extends Signal {
 
     @JsonProperty("openAt")
     private Long openAt;
@@ -25,11 +25,6 @@ public class Position extends Signal implements Comparable<Long> {
 
     @JsonProperty("profit")
     private BigDecimal profit;
-
-    @Override
-    public int compareTo(final Long closeAt) {
-        return this.closeAt.hashCode() - closeAt.hashCode();
-    }
 
 }
 
