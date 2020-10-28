@@ -10,11 +10,11 @@ import static org.junit.Assert.assertEquals;
 
 public class PositionTest extends SignalTest {
 
-    private final Long openAt = System.currentTimeMillis();
+    protected final Long openAt = System.currentTimeMillis();
 
-    private final Long closeAt = System.currentTimeMillis();
+    protected final Long closeAt = System.currentTimeMillis();
 
-    private final BigDecimal profit = new BigDecimal("1");
+    protected final BigDecimal profit = new BigDecimal("1");
 
     @Test
     public void whenPositionConstructedSuccessfulThenStateSaved() {

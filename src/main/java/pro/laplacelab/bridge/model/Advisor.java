@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import pro.laplacelab.bridge.exception.DuplicateInputException;
+import pro.laplacelab.bridge.exception.DuplicatePositionException;
 import pro.laplacelab.bridge.exception.PositionNotFoundException;
 
 import javax.validation.constraints.NotNull;
@@ -48,7 +49,22 @@ public class Advisor {
     }
 
     public void addPosition(final @NotNull Position position) {
+        if (positions.contains(position)) {
+            throw new DuplicatePositionException();
+        }
         positions.add(position);
+    }
+
+    public Optional<Position> findPositionById(final @NotNull Long positionId) {
+        return positions.stream()
+                .filter(item -> positionId.equals(item.getPositionId()))
+                .findFirst();
+    }
+
+    public Optional<Position> findHistoryById(final @NotNull Long positionId) {
+        return history.stream()
+                .filter(item -> positionId.equals(item.getPositionId()))
+                .findFirst();
     }
 
     public void toHistory(final @NotNull Position position) {
@@ -75,9 +91,10 @@ public class Advisor {
     public void updatePosition(final @NotNull Position position) {
         final Position candidate = positions.stream()
                 .filter(item -> item.getPositionId().equals(position.getPositionId()))
-                .findFirst().orElseThrow();
+                .findFirst().orElseThrow(PositionNotFoundException::new);
         candidate.setLot(position.getLot());
         candidate.setProfit(position.getProfit());
+        candidate.setCloseAt(position.getCloseAt());
         candidate.setStopLoss(position.getStopLoss());
         candidate.setTakeProfit(position.getTakeProfit());
     }
