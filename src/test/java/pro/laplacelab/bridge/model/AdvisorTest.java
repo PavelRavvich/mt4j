@@ -28,4 +28,6 @@ public class AdvisorTest {
         new Input("", "val", InputType.STRING);
     }
 
+    // TODO: 28.10.2020 #13
+
 }
