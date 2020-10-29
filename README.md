@@ -1,4 +1,7 @@
 # Bridge
+
+![Build](https://github.com/triodjangopiter/bridge/workflows/Build/badge.svg)
+
 The local server based on Tomcat is the bridge between Java and Meta Trader 5 via HTTP requests.
 
 Port `80`. Port can't be changed by specific Meta Trader 5 reason, see more in MQL5 documentation: [https://www.mql5.com/en/docs/network/webrequest][webrequest].
