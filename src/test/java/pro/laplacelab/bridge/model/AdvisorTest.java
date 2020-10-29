@@ -22,9 +22,9 @@ public class AdvisorTest extends PositionTest {
                 new Input("key2", "1", InputType.NUMBER)));
         assertEquals(Long.valueOf(1), advisor.getMagic());
         assertEquals("val",
-                advisor.getInput("key1").orElseThrow().valueAsString());
+                advisor.getInput("key1").orElseThrow().asString());
         assertEquals(new BigDecimal("1"),
-                advisor.getInput("key2").orElseThrow().valueAsDecimal());
+                advisor.getInput("key2").orElseThrow().asDecimal());
     }
 
 
