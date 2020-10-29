@@ -34,6 +34,7 @@ public class PositionServiceImpl implements PositionService {
     public Position history(final @NotNull Position position) {
         final Advisor advisor = advisorService.get(position.getAdvisorId())
                 .orElseThrow(AdvisorNotFoundException::new);
+        advisor.updatePosition(position);
         advisor.toHistory(position);
         return position;
     }
