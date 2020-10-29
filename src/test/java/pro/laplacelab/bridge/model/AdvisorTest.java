@@ -7,6 +7,7 @@ import pro.laplacelab.bridge.exception.DuplicatePositionException;
 import pro.laplacelab.bridge.exception.PositionNotFoundException;
 
 import java.math.BigDecimal;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,12 +20,16 @@ public class AdvisorTest extends PositionTest {
     public void whenAdvisorBuildSuccessfullyDataSaved() {
         final Advisor advisor = new Advisor(1L, List.of(
                 new Input("key1", "val", InputType.STRING),
-                new Input("key2", "1", InputType.NUMBER)));
+                new Input("key2", "1", InputType.NUMBER),
+                new Input("key3", "10:00", InputType.TIME)));
         assertEquals(Long.valueOf(1), advisor.getMagic());
         assertEquals("val",
                 advisor.getInput("key1").orElseThrow().asString());
         assertEquals(new BigDecimal("1"),
-                advisor.getInput("key2").orElseThrow().asDecimal());
+                advisor.getInput("key2").orElseThrow().asBigDecimal());
+        assertEquals(LocalTime.parse("10:00"),
+                advisor.getInput("key3").orElseThrow().asLocalTime());
+
     }
 
 

@@ -12,6 +12,8 @@ import pro.laplacelab.bridge.exception.InvalidInputException;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 @Data
@@ -39,8 +41,12 @@ public class Input {
         return value;
     }
 
-    public BigDecimal asDecimal() {
+    public BigDecimal asBigDecimal() {
         return new BigDecimal(value);
+    }
+
+    public LocalTime asLocalTime() {
+        return LocalTime.parse(value, DateTimeFormatter.ofPattern("HH:mm"));
     }
 
     public Input(final String key, final String value, final InputType type) {

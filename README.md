@@ -27,7 +27,8 @@ _Response:_
     "magic": 100000,
         "inputs": [
             { "key": "propName1", "value": "str", "type": "STRING" },
-            { "key": "propName2", "value": 10, "type": "NUMBER" }
+            { "key": "propName2", "value": "10:00", "type": "TIME" },
+            { "key": "propName3", "value": 10, "type": "NUMBER" }
         ]
 }
 ```
