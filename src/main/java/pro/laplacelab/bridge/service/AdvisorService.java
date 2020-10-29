@@ -7,6 +7,5 @@ import java.util.UUID;
 
 public interface AdvisorService {
     Optional<Advisor> get(UUID uuid);
-
     Advisor add(final Advisor advisor);
 }

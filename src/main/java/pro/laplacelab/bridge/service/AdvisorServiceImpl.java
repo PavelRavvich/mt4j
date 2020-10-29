@@ -17,7 +17,7 @@ public class AdvisorServiceImpl implements AdvisorService {
     private final Map<UUID, Advisor> advisors = new ConcurrentHashMap<>();
 
     @Override
-    public Advisor add(final Advisor advisor) {
+    public Advisor add(final @NotNull Advisor advisor) {
         log.debug("Attempt to build Advisor from source: {}", advisor);
         final Advisor save = new Advisor(advisor.getMagic(), advisor.getInputs());
         advisors.put(save.getId(), save);
@@ -27,7 +27,7 @@ public class AdvisorServiceImpl implements AdvisorService {
 
     @Override
     public Optional<Advisor> get(final @NotNull UUID advisorId) {
-        return Optional.of(advisors.get(advisorId));
+        return Optional.ofNullable(advisors.get(advisorId));
     }
 
 }
