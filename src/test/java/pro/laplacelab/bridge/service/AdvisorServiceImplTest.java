@@ -57,11 +57,11 @@ public class AdvisorServiceImplTest {
         assertEquals(InputType.STRING,
                 advisor.getInput("key1").orElseThrow().getType());
         assertEquals("val",
-                advisor.getInput("key1").orElseThrow().getStringValue());
+                advisor.getInput("key1").orElseThrow().valueAsString());
         assertEquals(InputType.NUMBER,
                 advisor.getInput("key2").orElseThrow().getType());
         assertEquals(new BigDecimal("1"),
-                advisor.getInput("key2").orElseThrow().getBigDecimalValue());
+                advisor.getInput("key2").orElseThrow().valueAsDecimal());
     }
 
 }

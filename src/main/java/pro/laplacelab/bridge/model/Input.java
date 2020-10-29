@@ -35,11 +35,11 @@ public class Input {
     @JsonProperty("type")
     private InputType type;
 
-    public String getStringValue() {
+    public String valueAsString() {
         return value;
     }
 
-    public BigDecimal getBigDecimalValue() {
+    public BigDecimal valueAsDecimal() {
         return new BigDecimal(value);
     }
 

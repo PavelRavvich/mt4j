@@ -29,11 +29,11 @@ public class Advisor {
 
     @Getter
     @JsonIgnore
-    private final transient LinkedList<Position> history = new LinkedList<>();
+    private final LinkedList<Position> history = new LinkedList<>();
 
     @Getter
     @JsonIgnore
-    private final transient LinkedList<Position> positions = new LinkedList<>();
+    private final LinkedList<Position> positions = new LinkedList<>();
 
     public Advisor(final @NotNull Long magic, final @NotNull List<Input> inputs) {
         if (inputs.size() != inputs.stream().map(Input::getKey).count()) {
