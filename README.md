@@ -7,7 +7,7 @@
 
 The local server based on Tomcat is the bridge between Java and Meta Trader 5 via HTTP requests.
 
-Port `80`. Port can't be changed by specific Meta Trader 5 reason, see more in MQL5 documentation: [https://www.mql5.com/en/docs/network/webrequest][webrequest].
+Port **80**. Port can't be changed by specific Meta Trader 5 reason, see more in MQL5 documentation: [https://www.mql5.com/en/docs/network/webrequest][webrequest].
 
 MetaTrader 5 required permission in settings for send http requests to localhost, see more in MQL5 documentation: [https://www.mql5.com/en/docs/network][settings]
 
