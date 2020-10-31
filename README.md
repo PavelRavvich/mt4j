@@ -1,6 +1,9 @@
 # Bridge
 
 ![Build](https://github.com/triodjangopiter/bridge/workflows/Build/badge.svg)
+[![codecov](https://codecov.io/gh/triodjangopiter/bridge/branch/master/graph/badge.svg?token=Y3IRTX7LPW)](undefined)
+
+
 
 The local server based on Tomcat is the bridge between Java and Meta Trader 5 via HTTP requests.
 
