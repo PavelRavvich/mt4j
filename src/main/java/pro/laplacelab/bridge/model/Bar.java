@@ -16,7 +16,7 @@ import java.util.Date;
 @NoArgsConstructor
 @EqualsAndHashCode
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Bar {
+public class Bar implements Comparable<Bar> {
 
     @NotNull(message = "value required")
     @JsonProperty("value")
@@ -25,5 +25,10 @@ public class Bar {
     @NotNull(message = "date required")
     @JsonProperty("date")
     private Date date;
+
+    @Override
+    public int compareTo(final @NotNull Bar bar) {
+        return this.value.compareTo(bar.getValue());
+    }
 
 }
