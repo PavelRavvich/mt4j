@@ -1,7 +1,7 @@
 # Bridge
 
 ![Build](https://github.com/triodjangopiter/bridge/workflows/Build/badge.svg)
-[![codecov](https://codecov.io/gh/triodjangopiter/bridge/branch/master/graph/badge.svg?token=Y3IRTX7LPW)](undefined)
+![codecov](https://codecov.io/gh/triodjangopiter/bridge/branch/master/graph/badge.svg?token=Y3IRTX7LPW)
 
 
 
