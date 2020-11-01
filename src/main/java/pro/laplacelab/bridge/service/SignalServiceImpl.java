@@ -32,13 +32,13 @@ public class SignalServiceImpl implements SignalService {
     @Override
     public Signal onTick(final @NotNull Market market) {
         log.debug("Market request: {}", market);
-        Advisor advisor = advisorService
+        final Advisor advisor = advisorService
                 .get(market.getAdvisorId())
                 .orElseThrow(AdvisorNotFoundException::new);
-        Strategy strategy = strategies.stream()
+        final Strategy strategy = strategies.stream()
                 .filter(item -> market.getStrategyName().equals(item.getName()))
                 .findFirst().orElseThrow(StrategyNotFoundException::new);
-        Signal signal = strategy.apply(advisor, market.getIndicators());
+        final Signal signal = strategy.apply(advisor, market.getIndicators());
         log.debug("Signal response: {}", signal);
         return signal;
     }
