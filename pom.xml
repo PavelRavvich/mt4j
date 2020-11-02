@@ -22,6 +22,7 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <checkstyle.configLocation>src/checkstyle/checkstyle.xml</checkstyle.configLocation>
     </properties>
 
     <dependencies>
@@ -93,7 +94,11 @@
             <artifactId>sonar-maven-plugin</artifactId>
             <version>3.7.0.1746</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.puppycrawl.tools</groupId>
+            <artifactId>checkstyle</artifactId>
+            <version>8.36</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -158,9 +163,20 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${checkstyle.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
-
     <reporting>
         <plugins>
             <plugin>
@@ -173,7 +189,11 @@
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>${checkstyle.version}</version>
                 <configuration>
-                    <configLocation>src/main/resources/checkstyle.xml</configLocation>
+                    <configLocation>${checkstyle.configLocation}</configLocation>
+                    <sourceDirectories>
+                        <sourceDirectory>src/main/java</sourceDirectory>
+                        <sourceDirectory>src/test/java</sourceDirectory>
+                    </sourceDirectories>
                 </configuration>
                 <reportSets>
                     <reportSet>
