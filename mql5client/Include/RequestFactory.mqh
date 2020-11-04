@@ -18,7 +18,7 @@ class RequestFactory {
 public:
                      RequestFactory(int to_copy = 100)
                        {
-                        _to_copy = _to_copy;
+                        _to_copy = to_copy;
                         _rates_provider = new RatesProvider();
                         _add_advisor_request_formatter = "{ \"magic\": %s, \"inputs\": %s }";
                         _signal_request_formatter = "{ \"advisorId\": %s, \"strategyName\": %s, \"rates\": %s }";
