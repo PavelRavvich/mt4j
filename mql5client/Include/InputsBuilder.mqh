@@ -2,6 +2,23 @@
 #property version "1.12"
 #property strict
 
+/*
+   InputsBuilder usage example.
+
+   InputsBuilder * ib = new InputsBuilder();
+   ib.InputString("input_name_1", "input_value_1");
+   ib.InputDouble("input_name_2", 1.1234);
+   ib.InputInteger("input_name_3", 12345);
+   ib.InputLong("input_name_4", 12345678);
+   datetime now = TimeCurrent();
+   ib.InputDatetime("input_name_5", now);
+   ib.InputTimeSeconds("input_name_6", (int) now);
+   ib.InputTimeMilliseconds("input_name_7", now * 1000);
+   string jsonBuild = ib.Build(); // InputsBuilder instance stay imutable.
+   string jsonGet = ib.GetInputs(); // Can be used only after .Build()
+*/
+
+// Build JSON array from inputs.
 class InputsBuilder
   {
 
@@ -21,6 +38,8 @@ class InputsBuilder
 
    string            _array_formatter;
 
+   string            _keys[];
+
 public:
                      InputsBuilder()
      {
@@ -29,9 +48,9 @@ public:
       _empty_inputs = "[]";
       _array_formatter = "[%s]";
       _array_next_item_formatter = "%s%s, ";
-      _input_long_formatter = "{ \"key\": %s, \"value\": %d }";
-      _input_string_formatter = "{ \"key\": %s, \"value\": %s }";
-      _input_double_formatter = "{ \"key\": %s, \"value\": %G }";
+      _input_long_formatter = "{ \"key\": \"%s\", \"value\": %.0f }";
+      _input_string_formatter = "{ \"key\": \"%s\", \"value\": \"%s\" }";
+      _input_double_formatter = "{ \"key\": \"%s\", \"value\": %.7f }";
      }
                     ~InputsBuilder() {}
 
@@ -53,7 +72,7 @@ public:
 
    string             GetInputs()
      {
-      if(is_builed)
+      if(!is_builed)
         {
          Alert("Build() wasn't called. Method Build() should be called before GetInputs().");
          return _empty_inputs;
@@ -68,6 +87,11 @@ public:
          Alert("Build() already done. Method Build() can be called only once.");
          return;
         }
+
+      if(ContainKey(key))
+         Alert(StringFormat("Warning! Key: %s is duplicated.", key));
+
+      AddKey(key);
       string input_string = StringFormat(_input_string_formatter, key, value);
       inputs = StringFormat(_array_next_item_formatter, inputs, input_string);
      }
@@ -79,6 +103,11 @@ public:
          Alert("Build() already done. Method Build() can be called only once.");
          return;
         }
+
+      if(ContainKey(key))
+         Alert(StringFormat("Warning! Key: %s is duplicated.", key));
+
+      AddKey(key);
       string input_double = StringFormat(_input_double_formatter, key, value);
       inputs = StringFormat(_array_next_item_formatter, inputs, input_double);
      }
@@ -90,6 +119,11 @@ public:
          Alert("Build() already done. Method Build() can be called only once.");
          return;
         }
+
+      if(ContainKey(key))
+         Alert(StringFormat("Warning! Key: %s is duplicated.", key));
+
+      AddKey(key);
       string input_long = StringFormat(_input_long_formatter, key, value);
       inputs = StringFormat(_array_next_item_formatter, inputs, input_long);
      }
@@ -99,19 +133,42 @@ public:
       InputLong(key, (long) value);
      }
 
-   void              InputDatetime(string key, datetime value)
+   void              InputDatetime(string key, datetime date)
      {
-      InputLong(key, ((long) value) * 1000);
+      InputLong(key, (long) date * 1000);
      }
 
-   void              InputTimeSeconds(string key, int value)
+   void              InputTimeSeconds(string key, int seconds)
      {
-      InputLong(key, ((long) value) * 1000);
+      InputLong(key, (long) seconds * 1000);
      }
 
-   void              InputTimeMilliseconds(string key, long value)
+   void              InputTimeMilliseconds(string key, long milliseconds)
      {
-      InputLong(key, value);
+      InputLong(key, milliseconds);
+     }
+
+   string            ToString()
+     {
+      return inputs;
+     }
+
+private:
+
+   void              AddKey(string key)
+     {
+      int size = ArraySize(_keys);
+      ArrayResize(_keys, size + 1);
+      _keys[size] = key;
+     }
+
+   bool              ContainKey(string key)
+     {
+      for(int i = 0; i < ArraySize(_keys); i++)
+         if(_keys[i] == key)
+            return true;
+
+      return false;
      }
 
   };
