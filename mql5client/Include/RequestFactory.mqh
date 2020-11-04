@@ -23,7 +23,7 @@ public:
                         _add_advisor_request_formatter = "{ \"magic\": %s, \"inputs\": %s }";
                         _signal_request_formatter = "{ \"advisorId\": %s, \"strategyName\": %s, \"rates\": %s }";
                        }
-                    ~RequestFactory() {}
+                    ~RequestFactory() { delete _rates_provider; }
 
 public:
    string            GetAddAdvisorRequestBody(long magic, string inputsJson)
