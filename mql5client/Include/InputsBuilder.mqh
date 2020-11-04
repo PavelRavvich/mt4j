@@ -9,7 +9,9 @@ class InputsBuilder
 
    bool              is_builed;
 
-   string            _inputs_array_formatter;
+   string            _empty_inputs;
+
+   string            _array_next_item_formatter;
 
    string            _input_string_formatter;
 
@@ -17,12 +19,16 @@ class InputsBuilder
 
    string            _input_long_formatter;
 
+   string            _array_formatter;
+
 public:
                      InputsBuilder()
      {
       inputs = "";
       is_builed = false;
-      _inputs_array_formatter = "%s%s, ";
+      _empty_inputs = "[]";
+      _array_formatter = "[%s]";
+      _array_next_item_formatter = "%s%s, ";
       _input_long_formatter = "{ \"key\": %s, \"value\": %d }";
       _input_string_formatter = "{ \"key\": %s, \"value\": %s }";
       _input_double_formatter = "{ \"key\": %s, \"value\": %G }";
@@ -36,11 +42,11 @@ public:
       if(inputs == "")
         {
          Alert("Warning! Inputs is empty.");
-         return "[]";
+         return _empty_inputs;
         }
 
       string json = StringSubstr(inputs, 0, StringLen(inputs) - 1);
-      inputs = StringFormat("[%s]", json);
+      inputs = StringFormat(_array_formatter, json);
       is_builed = true;
       return inputs;
      }
@@ -50,7 +56,7 @@ public:
       if(is_builed)
         {
          Alert("Build() wasn't called. Method Build() should be called before GetInputs().");
-         return "[]";
+         return _empty_inputs;
         }
       return inputs;
      }
@@ -63,7 +69,7 @@ public:
          return;
         }
       string input_string = StringFormat(_input_string_formatter, key, value);
-      inputs = StringFormat(_inputs_array_formatter, inputs, input_string);
+      inputs = StringFormat(_array_next_item_formatter, inputs, input_string);
      }
 
    void              InputDouble(string key, double value)
@@ -74,7 +80,7 @@ public:
          return;
         }
       string input_double = StringFormat(_input_double_formatter, key, value);
-      inputs = StringFormat(_inputs_array_formatter, inputs, input_double);
+      inputs = StringFormat(_array_next_item_formatter, inputs, input_double);
      }
 
    void              InputLong(string key, long value)
@@ -85,7 +91,7 @@ public:
          return;
         }
       string input_long = StringFormat(_input_long_formatter, key, value);
-      inputs = StringFormat(_inputs_array_formatter, inputs, input_long);
+      inputs = StringFormat(_array_next_item_formatter, inputs, input_long);
      }
 
    void              InputInteger(string key, int value)
