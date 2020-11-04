@@ -9,6 +9,8 @@ class InputsBuilder
 
    bool              is_builed;
 
+   string            _inputs_array_formatter;
+
    string            _input_string_formatter;
 
    string            _input_double_formatter;
@@ -20,6 +22,7 @@ public:
      {
       inputs = "";
       is_builed = false;
+      _inputs_array_formatter = "%s%s, ";
       _input_string_formatter = "{ \"key\": %s, \"value\": %s }";
       _input_double_formatter = "{ \"key\": %s, \"value\": %G }";
       _input_integer_formatter = "{ \"key\": %s, \"value\": %d }";
@@ -35,7 +38,7 @@ public:
          return;
         }
       string input_string = StringFormat(_input_string_formatter, key, value);
-      inputs = StringFormat("%s,", input_string);
+      inputs = StringFormat(_inputs_array_formatter, inputs, input_string);
      }
 
    void              InputDouble(string key, double value)
@@ -46,7 +49,7 @@ public:
          return;
         }
       string input_double = StringFormat(_input_double_formatter, key, value);
-      inputs = StringFormat("%s,", input_double);
+      inputs = StringFormat(_inputs_array_formatter, inputs, input_double);
      }
 
    void              InputInteger(string key, int value)
@@ -57,7 +60,7 @@ public:
          return;
         }
       string input_integer = StringFormat(_input_integer_formatter, key, value);
-      inputs = StringFormat("%s,", input_integer);
+      inputs = StringFormat(_inputs_array_formatter, inputs, input_integer);
      }
 
    void              InputTime(string key, datetime value)
@@ -68,7 +71,10 @@ public:
    string             Build()
      {
       if(inputs == "")
+        {
+         Alert("Warning! Inputs is empty.");
          return "{}";
+        }
 
       string json = StringSubstr(inputs, 0, StringLen(inputs) - 1);
       inputs = StringFormat("[%s]", json);
