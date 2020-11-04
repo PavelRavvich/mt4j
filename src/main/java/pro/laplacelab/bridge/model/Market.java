@@ -6,11 +6,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import pro.laplacelab.bridge.enums.Timeframe;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Data
@@ -29,10 +31,9 @@ public class Market {
     @JsonProperty("strategyName")
     private String strategyName;
 
-    // TODO: 11/4/2020 make multi timeframe protocol
     @NotNull(message = "rates required")
     @NotEmpty(message = "rates can't be empty")
     @JsonProperty("rates")
-    private List<MqlRates> rates;
+    private Map<Timeframe, List<MqlRates>> rates;
 
 }

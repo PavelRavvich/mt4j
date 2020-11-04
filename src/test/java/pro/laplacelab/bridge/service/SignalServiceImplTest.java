@@ -15,6 +15,7 @@ import pro.laplacelab.bridge.exception.AdvisorNotFoundException;
 import pro.laplacelab.bridge.exception.StrategyNotFoundException;
 import pro.laplacelab.bridge.model.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -44,7 +45,7 @@ public class SignalServiceImplTest extends PositionTest {
         final Position position = new Position(advisor.getId(), SignalType.BUY, positionId,
                 lot, stopLoss, takeProfit, openAt, closeAt, profit);
         final Signal signal = new Signal(advisor.getId(), SignalType.NO_ACTION);
-        final Market market = new Market(advisor.getId(), "EXAMPLE", Lists.emptyList());
+        final Market market = new Market(advisor.getId(), "EXAMPLE", new HashMap<>());
         final Example example = mock(Example.class);
 
         doReturn(Optional.of(advisor)).when(advisorService).get(position.getAdvisorId());
@@ -59,7 +60,7 @@ public class SignalServiceImplTest extends PositionTest {
 
     @Test(expected = AdvisorNotFoundException.class)
     public void whenAdvisorNotExistThenThrowAdvisorNotFoundException() {
-        signalService.onTick(new Market(UUID.randomUUID(), "EXAMPLE", Lists.emptyList()));
+        signalService.onTick(new Market(UUID.randomUUID(), "EXAMPLE", new HashMap<>()));
     }
 
     @Test(expected = StrategyNotFoundException.class)
@@ -71,7 +72,7 @@ public class SignalServiceImplTest extends PositionTest {
 
         doReturn(Optional.of(advisor)).when(advisorService).get(position.getAdvisorId());
 
-        signalService.onTick(new Market(advisor.getId(), "EXAMPLE", Lists.emptyList()));
+        signalService.onTick(new Market(advisor.getId(), "EXAMPLE", new HashMap<>()));
     }
 
 }
