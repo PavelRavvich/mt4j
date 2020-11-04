@@ -30,7 +30,7 @@ public class SignalServiceImpl implements SignalService {
         final Strategy strategy = strategyService
                 .findByName(market.getStrategyName())
                 .orElseThrow(StrategyNotFoundException::new);
-        final Signal signal = strategy.apply(advisor, market.getIndicators());
+        final Signal signal = strategy.apply(advisor, market.getRates());
         log.debug("Signal response: {}", signal);
         return signal;
     }

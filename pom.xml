@@ -98,6 +98,11 @@
             <artifactId>checkstyle</artifactId>
             <version>8.36</version>
         </dependency>
+        <dependency>
+            <groupId>org.ta4j</groupId>
+            <artifactId>ta4j-core</artifactId>
+            <version>0.13</version>
+        </dependency>
     </dependencies>
 
     <build>

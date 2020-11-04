@@ -49,7 +49,7 @@ public class SignalServiceImplTest extends PositionTest {
 
         doReturn(Optional.of(advisor)).when(advisorService).get(position.getAdvisorId());
         doReturn(Optional.of(example)).when(strategyService).findByName("EXAMPLE");
-        doReturn(signal).when(example).apply(advisor, market.getIndicators());
+        doReturn(signal).when(example).apply(advisor, market.getRates());
 
         final Signal result = signalService.onTick(market);
         verify(advisorService, times(1)).get(advisor.getId());

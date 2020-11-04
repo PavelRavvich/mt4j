@@ -1,7 +1,7 @@
 package pro.laplacelab.bridge;
 
 import pro.laplacelab.bridge.model.Advisor;
-import pro.laplacelab.bridge.model.Indicator;
+import pro.laplacelab.bridge.model.MqlRates;
 import pro.laplacelab.bridge.model.Signal;
 
 import java.util.List;
@@ -17,8 +17,8 @@ import java.util.function.BiFunction;
  *
  * @see pro.laplacelab.bridge.example.Example
  */
-public interface Strategy extends BiFunction<Advisor, List<Indicator>, Signal> {
-    Signal apply(Advisor advisor, List<Indicator> indicators);
+public interface Strategy extends BiFunction<Advisor, List<MqlRates>, Signal> {
+    Signal apply(Advisor advisor, List<MqlRates> buffer);
 
     String getName();
 }

@@ -29,9 +29,10 @@ public class Market {
     @JsonProperty("strategyName")
     private String strategyName;
 
-    @NotNull(message = "indicators required")
-    @NotEmpty(message = "indicators can't be empty")
-    @JsonProperty("indicators")
-    private List<Indicator> indicators;
+    // TODO: 11/4/2020 make multi timeframe protocol
+    @NotNull(message = "rates required")
+    @NotEmpty(message = "rates can't be empty")
+    @JsonProperty("rates")
+    private List<MqlRates> rates;
 
 }
