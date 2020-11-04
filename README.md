@@ -45,20 +45,22 @@ _Response:_
 _Request:_
 ```json
 {
-    "advisorId": "c4eb34e4-c9c3-4b7e-856d-d5d00588464d",
+    "advisorId": "6a649280-2d72-4f4c-8457-0b0f9c43f244",
     "strategyName": "EXAMPLE",
-    "indicators": [
-        {
-            "number": 1,
-            "timeframe": "M_1",
-            "type": "STOCHASTIC",
-            "buffer": [
-                { "value": 37.38, "date": 1603488613812 },
-                { "value": 39.23, "date": 1603488639826 },
-                { "value": 42.07, "date": 1603488656337 }
-            ]
-        }
-    ]
+    "rates": {
+        "M_1": [
+            {
+                "spread": 4,
+                "time": 16384394738,
+                "open": 1.12412,
+                "high": 1.32412,
+                "low": 1.32421,
+                "close": 1.32111,
+                "tickVolume": 12,
+                "realVolume": 0
+            }
+        ]
+    }
 }
 ```
 
