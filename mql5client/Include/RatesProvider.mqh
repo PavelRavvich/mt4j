@@ -10,7 +10,7 @@ class RatesProvider
    string            _rates_formatter;
 
 public:
-                     RatesProvider(int to_copy = 100)
+                     RatesProvider()
      {
       _rates_formatter = "{ \"open\": %G, \"high\": %G, \"low\": %G, \"close\": %G, \"tickVolume\": %d, \"time\": %d, \"spread\": %d, \"realVolume\": %d }";
       _rates_butch_formatter = "{ \"M_1\": %s, \"M_2\": %s, \"M_3\": %s, \"M_4\": %s, \"M_5\": %s, \"M_6\": %s, \"M_10\": %s, \"M_12\": %s, \"M_15\": %s, \"M_20\": %s, \"M_30\": %s, \"H_1\": %s, \"H_2\": %s, \"H_3\": %s, \"H_4\": %s, \"H_6\": %s, \"H_8\": %s, \"H_12\": %s, \"D_1\": %s, \"W_1\": %s, \"MN_1\": %s }";
