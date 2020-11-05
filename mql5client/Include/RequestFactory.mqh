@@ -49,7 +49,7 @@ public:
                 + ", \"rates\": " + _rates_provider.GetRates(symbol, _to_copy) + " }";
      }
 
-   string           GetPositionRequestBody(Position &position)
+   string            GetPositionRequestBody(Position &position)
      {
       return StringFormat(_position_formatter, position.type, position.advisor_id, position.position_id, position.lot,
                           position.stop_loss, position.take_profit, position.open_at, position.close_at, position,profit);
