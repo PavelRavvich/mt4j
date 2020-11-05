@@ -5,50 +5,46 @@
 class RatesProvider
   {
 
-   string            _rates_butch_formatter;
-
    string            _rates_formatter;
 
 public:
                      RatesProvider()
-     {
-      _rates_formatter = "{ \"open\": %G, \"high\": %G, \"low\": %G, \"close\": %G, \"tickVolume\": %d, \"time\": %d, \"spread\": %d, \"realVolume\": %d }";
-      _rates_butch_formatter = "{ \"M_1\": %s, \"M_2\": %s, \"M_3\": %s, \"M_4\": %s, \"M_5\": %s, \"M_6\": %s, \"M_10\": %s, \"M_12\": %s, \"M_15\": %s, \"M_20\": %s, \"M_30\": %s, \"H_1\": %s, \"H_2\": %s, \"H_3\": %s, \"H_4\": %s, \"H_6\": %s, \"H_8\": %s, \"H_12\": %s, \"D_1\": %s, \"W_1\": %s, \"MN_1\": %s }";
-     }
+     { _rates_formatter = "{ \"open\": %G, \"high\": %G, \"low\": %G, \"close\": %G, \"tickVolume\": %d, \"time\": %d, \"spread\": %d, \"realVolume\": %d }"; }
                     ~RatesProvider() {}
 
 
 public:
    string            GetRates(string symbol, int to_copy)
      {
-      return StringFormat(_rates_butch_formatter,
-                          CopyMqlRates(symbol, PERIOD_M1, to_copy),
-                          CopyMqlRates(symbol, PERIOD_M2, to_copy),
-                          CopyMqlRates(symbol, PERIOD_M3, to_copy),
-                          CopyMqlRates(symbol, PERIOD_M4, to_copy),
-                          CopyMqlRates(symbol, PERIOD_M5, to_copy),
-                          CopyMqlRates(symbol, PERIOD_M6, to_copy),
-                          CopyMqlRates(symbol, PERIOD_M10, to_copy),
-                          CopyMqlRates(symbol, PERIOD_M12, to_copy),
-                          CopyMqlRates(symbol, PERIOD_M15, to_copy),
-                          CopyMqlRates(symbol, PERIOD_M20, to_copy),
-                          CopyMqlRates(symbol, PERIOD_M30, to_copy),
-                          CopyMqlRates(symbol, PERIOD_H1, to_copy),
-                          CopyMqlRates(symbol, PERIOD_H2, to_copy),
-                          CopyMqlRates(symbol, PERIOD_H3, to_copy),
-                          CopyMqlRates(symbol, PERIOD_H4, to_copy),
-                          CopyMqlRates(symbol, PERIOD_H6, to_copy),
-                          CopyMqlRates(symbol, PERIOD_H8, to_copy),
-                          CopyMqlRates(symbol, PERIOD_H12, to_copy),
-                          CopyMqlRates(symbol, PERIOD_D1, to_copy),
-                          CopyMqlRates(symbol, PERIOD_W1, to_copy),
-                          CopyMqlRates(symbol, PERIOD_MN1, to_copy));
-
+      string m1 = "\"M_1\": " + CopyMqlRates(symbol, PERIOD_M1, to_copy) + ",";
+      string m2 = "\"M_2\": " + CopyMqlRates(symbol, PERIOD_M2, to_copy) + ",";
+      string m3 = "\"M_3\": " + CopyMqlRates(symbol, PERIOD_M3, to_copy) + ",";
+      string m4 = "\"M_4\": " + CopyMqlRates(symbol, PERIOD_M4, to_copy) + ",";
+      string m5 = "\"M_5\": " + CopyMqlRates(symbol, PERIOD_M5, to_copy) + ",";
+      string m6 = "\"M_6\": " + CopyMqlRates(symbol, PERIOD_M6, to_copy) + ",";
+      string m10 = "\"M_10\": " + CopyMqlRates(symbol, PERIOD_M10, to_copy) + ",";
+      string m12 = "\"M_12\": " + CopyMqlRates(symbol, PERIOD_M12, to_copy) + ",";
+      string m15 = "\"M_15\": " + CopyMqlRates(symbol, PERIOD_M15, to_copy) + ",";
+      string m20 = "\"M_20\": " + CopyMqlRates(symbol, PERIOD_M20, to_copy) + ",";
+      string m30 = "\"M_30\": " + CopyMqlRates(symbol, PERIOD_M30, to_copy) + ",";
+      string h1 = "\"H_1\": " + CopyMqlRates(symbol, PERIOD_H1, to_copy) + ",";
+      string h2 = "\"H_2\": " + CopyMqlRates(symbol, PERIOD_H2, to_copy) + ",";
+      string h3 = "\"H_3\": " + CopyMqlRates(symbol, PERIOD_H3, to_copy) + ",";
+      string h4 = "\"H_4\": " + CopyMqlRates(symbol, PERIOD_H4, to_copy) + ",";
+      string h6 = "\"H_6\": " + CopyMqlRates(symbol, PERIOD_H6, to_copy) + ",";
+      string h8 = "\"H_8\": " + CopyMqlRates(symbol, PERIOD_H8, to_copy) + ",";
+      string h12 = "\"H_12\": " + CopyMqlRates(symbol, PERIOD_H12, to_copy) + ",";
+      string d1 = "\"D_1\": " + CopyMqlRates(symbol, PERIOD_D1, to_copy) + ",";
+      string w1 = "\"W_1\": " + CopyMqlRates(symbol, PERIOD_W1, to_copy) + ",";
+      string mn1 = "\"MN_1\": " + CopyMqlRates(symbol, PERIOD_MN1, to_copy);
+      return "{" + m1 + m2 + m3 + m4 + m5 + m6 + m10 + m12 + m15 + m20 + m30
+                 + h1 + h2 + h3 + h4 + h6 + h8 + h12 + d1 + w1 + mn1 + "}";
      }
 
 private:
    string            CopyMqlRates(string symbol, ENUM_TIMEFRAMES  timeframe, int to_copy)
      {
+      Bars(symbol, timeframe);
       string items = "";
       MqlRates rates[];
       ArraySetAsSeries(rates, true);
@@ -62,12 +58,12 @@ private:
                                        rates[i].spread, rates[i].real_volume);
             items += item;
             if(i != copied - 1)
-               items += ",";
+               items += ", ";
            }
         }
       else
          Print("Failed to get history data for the symbol ", symbol);
 
-      return StringFormat("[%s]", items);
+      return "[" + items + "]";
      }
   };
