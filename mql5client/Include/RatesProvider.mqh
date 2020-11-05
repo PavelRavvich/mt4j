@@ -53,10 +53,9 @@ private:
       MqlRates rates[];
       ArraySetAsSeries(rates, true);
       int copied = CopyRates(symbol, timeframe, 0, to_copy, rates);
-      if(copied > 0)
+      if(copied == to_copy)
         {
-         int size = fmin(copied, 10);
-         for(int i = 0; i < size; i++)
+         for(int i = 0; i < copied; i++)
            {
             string item = StringFormat(_rates_formatter, rates[i].open, rates[i].high, rates[i].low,
                                        rates[i].close, rates[i].tick_volume, rates[i].time,
