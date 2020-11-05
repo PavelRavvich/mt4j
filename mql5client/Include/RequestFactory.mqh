@@ -5,6 +5,19 @@
 #include <MqlRatesProvider.mqh>
 
 
+struct Position
+  {
+   type: string;
+   advisor_id: string;
+   position_id: string;
+   lot: double;
+   stop_loss: int;
+   take_profit: int;
+   open_at: long;
+   close_at: long;
+   profit: double;
+  };
+
 class RequestFactory
   {
 
@@ -12,10 +25,13 @@ class RequestFactory
 
    RatesProvider *   _rates_provider;
 
+   string _position_formatter;
+
 public:
                      RequestFactory(int to_copy = 100)
      {
       _to_copy = to_copy;
+      _position_formatter = "{ \"type\": %s, \"advisorId\": %s, \"positionId\": %s, \"lot\": %.2f, \"stopLoss\": %.0f, \"takeProfit\": %.0f, \"openAt\": %.0f, \"closeAt\": %.0f, \"profit\": %.2f }";
       _rates_provider = new RatesProvider();
      }
                     ~RequestFactory() { delete _rates_provider; }
@@ -31,6 +47,12 @@ public:
      {
       return "{ \"advisorId\": " +  advisor_id + ", \"strategyName\": " + strategy_name
                 + ", \"rates\": " + _rates_provider.GetRates(symbol, _to_copy) + " }";
+     }
+
+   string           GetPositionRequestBody(Position &position)
+     {
+      return StringFormat(_position_formatter, position.type, position.advisor_id, position.position_id, position.lot,
+                          position.stop_loss, position.take_profit, position.open_at, position.close_at, position,profit);
      }
 
   };
