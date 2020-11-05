@@ -28,15 +28,11 @@ class InputsBuilder
 
    string            _empty_inputs;
 
-   string            _array_next_item_formatter;
-
    string            _input_string_formatter;
 
    string            _input_double_formatter;
 
    string            _input_long_formatter;
-
-   string            _array_formatter;
 
    string            _keys[];
 
@@ -46,8 +42,6 @@ public:
       inputs = "";
       is_builed = false;
       _empty_inputs = "[]";
-      _array_formatter = "[%s]";
-      _array_next_item_formatter = "%s%s, ";
       _input_long_formatter = "{ \"key\": \"%s\", \"value\": %.0f }";
       _input_string_formatter = "{ \"key\": \"%s\", \"value\": \"%s\" }";
       _input_double_formatter = "{ \"key\": \"%s\", \"value\": %.7f }";
@@ -64,10 +58,8 @@ public:
          return _empty_inputs;
         }
 
-      string json = StringSubstr(inputs, 0, StringLen(inputs) - 1);
-      inputs = StringFormat(_array_formatter, json);
       is_builed = true;
-      return inputs;
+      return inputs = "[" + StringSubstr(inputs, 0, StringLen(inputs) - 1) + "]";
      }
 
    string             GetInputs()
@@ -89,11 +81,13 @@ public:
         }
 
       if(ContainKey(key))
-         Alert(StringFormat("Warning! Key: %s is duplicated.", key));
+        {
+         Alert(StringFormat("Error add input property! Key: %s already exist.", key));
+         return;
+        }
 
       AddKey(key);
-      string input_string = StringFormat(_input_string_formatter, key, value);
-      inputs = StringFormat(_array_next_item_formatter, inputs, input_string);
+      inputs = inputs + StringFormat(_input_string_formatter, key, value) + ", ";
      }
 
    void              InputDouble(string key, double value)
@@ -105,11 +99,13 @@ public:
         }
 
       if(ContainKey(key))
-         Alert(StringFormat("Warning! Key: %s is duplicated.", key));
+        {
+         Alert(StringFormat("Error add input property! Key: %s already exist.", key));
+         return;
+        }
 
       AddKey(key);
-      string input_double = StringFormat(_input_double_formatter, key, value);
-      inputs = StringFormat(_array_next_item_formatter, inputs, input_double);
+      inputs = inputs + StringFormat(_input_double_formatter, key, value) + ", ";
      }
 
    void              InputLong(string key, long value)
@@ -121,11 +117,13 @@ public:
         }
 
       if(ContainKey(key))
-         Alert(StringFormat("Warning! Key: %s is duplicated.", key));
+        {
+         Alert(StringFormat("Error add input property! Key: %s already exist.", key));
+         return;
+        }
 
       AddKey(key);
-      string input_long = StringFormat(_input_long_formatter, key, value);
-      inputs = StringFormat(_array_next_item_formatter, inputs, input_long);
+      inputs = inputs + StringFormat(_input_long_formatter, key, value) + ", ";
      }
 
    void              InputInteger(string key, int value)
