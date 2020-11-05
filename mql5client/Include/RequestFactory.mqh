@@ -10,10 +10,6 @@ class RequestFactory
 
    int               _to_copy;
 
-   string            _signal_request_formatter;
-
-   string            _add_advisor_request_formatter;
-
    RatesProvider *   _rates_provider;
 
 public:
@@ -21,22 +17,20 @@ public:
      {
       _to_copy = to_copy;
       _rates_provider = new RatesProvider();
-      _add_advisor_request_formatter = "{ \"magic\": %s, \"inputs\": %s }";
-      _signal_request_formatter = "{ \"advisorId\": %s, \"strategyName\": %s, \"rates\": %s }";
      }
                     ~RequestFactory() { delete _rates_provider; }
 
 public:
-   // todo rewrite with concatination
-   string            GetAddAdvisorRequestBody(long magic, string inputsJson)
+
+   string            GetAddAdvisorRequestBody(long magic, string inputs)
      {
-      return StringFormat(_add_advisor_request_formatter, magic, inputsJson);
+      return "{ \"magic\": " + magic + ", \"inputs\": " + inputs + " }";
      }
-   // todo rewrite with concatination
+
    string            GetSignalRequestBody(string advisor_id, string strategy_name, string symbol)
      {
-      string rates = _rates_provider.GetRates(symbol, _to_copy);
-      return StringFormat(_signal_request_formatter, advisor_id, strategy_name, rates);
+      return "{ \"advisorId\": " +  advisor_id + ", \"strategyName\": " + strategy_name
+                + ", \"rates\": " + _rates_provider.GetRates(symbol, _to_copy) + " }";
      }
 
   };
