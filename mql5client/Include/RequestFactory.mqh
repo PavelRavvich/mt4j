@@ -27,12 +27,12 @@ public:
                     ~RequestFactory() { delete _rates_provider; }
 
 public:
-
+   // todo rewrite with concatination
    string            GetAddAdvisorRequestBody(long magic, string inputsJson)
      {
       return StringFormat(_add_advisor_request_formatter, magic, inputsJson);
      }
-
+   // todo rewrite with concatination
    string            GetSignalRequestBody(string advisor_id, string strategy_name, string symbol)
      {
       string rates = _rates_provider.GetRates(symbol, _to_copy);
