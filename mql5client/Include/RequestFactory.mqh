@@ -31,7 +31,7 @@ public:
                      RequestFactory(int to_copy = 100)
      {
       _to_copy = to_copy;
-      _position_formatter = "{ \"type\": %s, \"advisorId\": %s, \"positionId\": %s, \"lot\": %.2f, \"stopLoss\": %.0f, \"takeProfit\": %.0f, \"openAt\": %.0f, \"closeAt\": %.0f, \"profit\": %.2f }";
+      _position_formatter = "{ \"type\": \"%s\", \"advisorId\": \"%s\", \"positionId\": %s, \"lot\": %.2f, \"stopLoss\": %.0f, \"takeProfit\": %.0f, \"openAt\": %.0f, \"closeAt\": %.0f, \"profit\": %.2f }";
       _market_provider = new MarketProvider();
      }
                     ~RequestFactory() { delete _market_provider; }
@@ -45,8 +45,8 @@ public:
 
    string            GetSignalRequestBody(string advisor_id, string strategy_name, string symbol)
      {
-      return "{ \"advisorId\": " +  advisor_id + ", \"strategyName\": " + strategy_name
-                + ", \"rates\": " + _market_provider.GetRates(symbol, _to_copy) + " }";
+      return "{ \"advisorId\": \"" +  advisor_id + "\", \"strategyName\": \"" + strategy_name
+                + "\", \"rates\": " + _market_provider.GetRates(symbol, _to_copy) + " }";
      }
 
    string            GetPositionRequestBody(Position &position)
