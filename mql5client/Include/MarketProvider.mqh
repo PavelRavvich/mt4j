@@ -2,15 +2,15 @@
 #property version "1.12"
 #property strict
 
-class RatesProvider
+class MarketProvider
   {
 
    string            _rates_formatter;
 
 public:
-                     RatesProvider()
+                     MarketProvider()
      { _rates_formatter = "{ \"open\": %G, \"high\": %G, \"low\": %G, \"close\": %G, \"tickVolume\": %d, \"time\": %d, \"spread\": %d, \"realVolume\": %d }"; }
-                    ~RatesProvider() {}
+                    ~MarketProvider() {}
 
 
 public:

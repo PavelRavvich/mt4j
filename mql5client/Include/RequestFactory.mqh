@@ -2,20 +2,20 @@
 #property version "1.12"
 #property strict
 
-#include <MqlRatesProvider.mqh>
+#include <MarketProvider.mqh>
 
 
 struct Position
   {
-   type: string;
-   advisor_id: string;
-   position_id: string;
-   lot: double;
-   stop_loss: int;
-   take_profit: int;
-   open_at: long;
-   close_at: long;
-   profit: double;
+   string type;
+   string advisor_id;
+   string position_id;
+   double lot;
+   int stop_loss;
+   int take_profit;
+   long open_at;
+   long close_at;
+   double profit;
   };
 
 class RequestFactory
@@ -23,7 +23,7 @@ class RequestFactory
 
    int               _to_copy;
 
-   RatesProvider *   _rates_provider;
+   MarketProvider *  _market_provider;
 
    string _position_formatter;
 
@@ -32,9 +32,9 @@ public:
      {
       _to_copy = to_copy;
       _position_formatter = "{ \"type\": %s, \"advisorId\": %s, \"positionId\": %s, \"lot\": %.2f, \"stopLoss\": %.0f, \"takeProfit\": %.0f, \"openAt\": %.0f, \"closeAt\": %.0f, \"profit\": %.2f }";
-      _rates_provider = new RatesProvider();
+      _market_provider = new MarketProvider();
      }
-                    ~RequestFactory() { delete _rates_provider; }
+                    ~RequestFactory() { delete _market_provider; }
 
 public:
 
@@ -46,7 +46,7 @@ public:
    string            GetSignalRequestBody(string advisor_id, string strategy_name, string symbol)
      {
       return "{ \"advisorId\": " +  advisor_id + ", \"strategyName\": " + strategy_name
-                + ", \"rates\": " + _rates_provider.GetRates(symbol, _to_copy) + " }";
+                + ", \"rates\": " + _market_provider.GetRates(symbol, _to_copy) + " }";
      }
 
    string            GetPositionRequestBody(Position &position)
