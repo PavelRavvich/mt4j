@@ -38,7 +38,7 @@ public:
       string w1 = "\"W_1\": " + CopyMqlRates(symbol, PERIOD_W1, to_copy) + ",";
       string mn1 = "\"MN_1\": " + CopyMqlRates(symbol, PERIOD_MN1, to_copy);
       return "{" + m1 + m2 + m3 + m4 + m5 + m6 + m10 + m12 + m15 + m20 + m30
-                 + h1 + h2 + h3 + h4 + h6 + h8 + h12 + d1 + w1 + mn1 + "}";
+             + h1 + h2 + h3 + h4 + h6 + h8 + h12 + d1 + w1 + mn1 + "}";
      }
 
 private:

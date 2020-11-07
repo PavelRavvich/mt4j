@@ -4,18 +4,17 @@
 
 #include <MarketProvider.mqh>
 
-
 struct Position
   {
-   string type;
-   string advisor_id;
-   string position_id;
-   double lot;
-   int stop_loss;
-   int take_profit;
-   long open_at;
-   long close_at;
-   double profit;
+   string            type;
+   string            advisor_id;
+   string            position_id;
+   double            lot;
+   int               stop_loss;
+   int               take_profit;
+   long              open_at;
+   long              close_at;
+   double            profit;
   };
 
 class RequestFactory
@@ -25,7 +24,7 @@ class RequestFactory
 
    int               _to_copy;
 
-   string _position_formatter;
+   string            _position_formatter;
 
 public:
                      RequestFactory(int to_copy = 100)
@@ -46,7 +45,7 @@ public:
    string            GetSignalRequestBody(string advisor_id, string strategy_name, string symbol)
      {
       return "{ \"advisorId\": \"" +  advisor_id + "\", \"strategyName\": \"" + strategy_name
-                + "\", \"rates\": " + _market_provider.GetRates(symbol, _to_copy) + " }";
+             + "\", \"rates\": " + _market_provider.GetRates(symbol, _to_copy) + " }";
      }
 
    string            GetPositionRequestBody(Position &position)
