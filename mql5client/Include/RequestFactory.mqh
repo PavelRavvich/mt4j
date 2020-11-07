@@ -40,7 +40,7 @@ public:
 
    string            GetAddAdvisorRequestBody(long magic, string inputs)
      {
-      return "{ \"magic\": " + magic + ", \"inputs\": " + inputs + " }";
+      return "{ \"magic\": " + (string) magic + ", \"inputs\": " + inputs + " }";
      }
 
    string            GetSignalRequestBody(string advisor_id, string strategy_name, string symbol)
