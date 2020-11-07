@@ -4,7 +4,7 @@
 
 #include <RequestFactory.mqh>
 
-struct HttpResponce
+struct HttpResponse
   {
    int               status;
    string            body;
@@ -19,7 +19,10 @@ struct HttpRequest
 
 struct RestConfig
   {
-   string            host;
+   string            host = "http://127.0.0.1";
+   string            headers = "Content-Type: application/json\r\n";
+   int               port = 80;
+   int               timeout = 3000;
    long              magic;
    string            inputs;
    int               buffer_size;
@@ -29,20 +32,17 @@ struct RestConfig
 class RestClient
   {
 
-   long              _magic;
+   string            _url_formatter;
 
-   string            _inputs;
-
-   string            _host;
+   RestConfig     *  _restConfig;
 
    RequestFactory *  _requestFactory;
 
 public:
-                     RestClient(RestConfig & restConfig)
+                     RestClient(RestConfig &restConfig)
      {
-      _host = restConfig.host;
-      _magic = restConfig.magic;
-      _inputs = restConfig.inputs;
+      _url_formatter = "%s:%.0f%s";
+      _restConfig = restConfig;
       _requestFactory = new RequestFactory(restConfig.buffer_size);
      }
                     ~RestClient() { delete _requestFactory; }
@@ -51,13 +51,81 @@ public:
 
    string               Connect()
      {
-      return "Advisor-UUID-....";
+      HttpRequest request;
+      request.url = StringFormat(_url_formatter, _restConfig.host, _restConfig.port, "/api/advisor");
+      request.body = _requestFactory.GetAddAdvisorRequestBody(_restConfig.magic, _restConfig.inputs);
+      request.headers = _restConfig.headers;
+      HttpResponse response;
+      Post(request, response);
+      return response.body;
+     }
+
+   string               GetSignal(string advisor_id, string strategy_name, string symbol)
+     {
+      HttpRequest request;
+      request.url = StringFormat(_url_formatter, _restConfig.host, _restConfig.port, "/api/signal");
+      request.body = _requestFactory.GetSignalRequestBody(advisor_id, strategy_name, symbol);
+      request.headers = _restConfig.headers;
+      HttpResponse response;
+      Get(request, response);
+      return response.body;
+     }
+
+   string               AddPosition(Position &position)
+     {
+      HttpRequest request;
+      request.url = StringFormat(_url_formatter, _restConfig.host, _restConfig.port, "/api/position/add");
+      request.body = _requestFactory.GetPositionRequestBody(position);
+      request.headers = _restConfig.headers;
+      HttpResponse response;
+      Post(request, response);
+      return response.body;
+     }
+
+   string               UpdatePosition(Position &position)
+     {
+      HttpRequest request;
+      request.url = StringFormat(_url_formatter, _restConfig.host, _restConfig.port, "/api/position/update");
+      request.body = _requestFactory.GetPositionRequestBody(position);
+      request.headers = _restConfig.headers;
+      HttpResponse response;
+      Post(request, response);
+      return response.body;
+     }
+
+   string               HistoryPosition(Position &position)
+     {
+      HttpRequest request;
+      request.url = StringFormat(_url_formatter, _restConfig.host, _restConfig.port, "/api/position/hisory");
+      request.body = _requestFactory.GetPositionRequestBody(position);
+      request.headers = _restConfig.headers;
+      HttpResponse response;
+      Post(request, response);
+      return response.body;
      }
 
 private:
 
-   void                   Post(HttpRequest &request, HttpResponce &responce) {}
+   void                   Post(HttpRequest &request, HttpResponse &response)
+     {
+      char responseBody[];
+      uchar requestBody[];
+      string responseHeaders;
+      StringToCharArray(request.body, requestBody, 0, StringLen(request.body));
+      int status = WebRequest("POST", request.url, request.headers, _restConfig.timeout, requestBody, responseBody, responseHeaders);
+      response.body = CharArrayToString(responseBody, 0, WHOLE_ARRAY, CP_UTF8);
+      response.status = status;
+     }
 
-   void                   Get(HttpRequest &request, HttpResponce &responce) {}
+   void                   Get(HttpRequest &request, HttpResponse &response)
+     {
+      char responseBody[];
+      uchar requestBody[];
+      string responseHeaders;
+      StringToCharArray(request.body, requestBody, 0, StringLen(request.body));
+      int status = WebRequest("POST", request.url, request.headers, _restConfig.timeout, requestBody, responseBody, responseHeaders);
+      response.body = CharArrayToString(responseBody, 0, WHOLE_ARRAY, CP_UTF8);
+      response.status = status;
+     }
 
   };
