@@ -22,14 +22,13 @@ class RequestFactory
 
    MarketProvider *  _market_provider;
 
-   int               _to_copy;
+   long              _magic;
 
    string            _position_formatter;
 
 public:
-                     RequestFactory(int to_copy = 100)
+                     RequestFactory(long magic)
      {
-      _to_copy = to_copy;
       _market_provider = new MarketProvider();
       _position_formatter = "{ \"type\": \"%s\", \"advisorId\": \"%s\", \"positionId\": %s, \"lot\": %.2f, \"stopLoss\": %.0f, \"takeProfit\": %.0f, \"openAt\": %.0f, \"closeAt\": %.0f, \"profit\": %.2f }";
      }
@@ -37,15 +36,15 @@ public:
 
 public:
 
-   string            GetAddAdvisorRequestBody(long magic, string inputs)
+   string            GetAddAdvisorRequestBody(string inputs)
      {
-      return "{ \"magic\": " + (string) magic + ", \"inputs\": " + inputs + " }";
+      return "{ \"magic\": " + (string) _magic + ", \"inputs\": " + inputs + " }";
      }
 
    string            GetSignalRequestBody(string advisor_id, string strategy_name, string symbol)
      {
       return "{ \"advisorId\": \"" +  advisor_id + "\", \"strategyName\": \"" + strategy_name
-             + "\", \"rates\": " + _market_provider.GetRates(symbol, _to_copy) + " }";
+             + "\", \"rates\": " + _market_provider.GetRates(symbol) + " }";
      }
 
    string            GetPositionRequestBody(Position &position)

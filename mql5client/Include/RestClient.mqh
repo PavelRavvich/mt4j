@@ -19,13 +19,10 @@ struct HttpRequest
 
 struct RestConfig
   {
-   string            host = "http://127.0.0.1";
-   string            headers = "Content-Type: application/json\r\n";
    int               port = 80;
    int               timeout = 3000;
-   long              magic;
-   string            inputs;
-   int               buffer_size;
+   string            host = "http://127.0.0.1";
+   string            headers = "Content-Type: application/json\r\n";
   };
 
 
@@ -39,21 +36,25 @@ class RestClient
    RequestFactory *  _requestFactory;
 
 public:
-                     RestClient(RestConfig &restConfig)
+                     RestClient(long magic, RestConfig &restConfig)
      {
-      _url_formatter = "%s:%.0f%s";
       _restConfig = restConfig;
-      _requestFactory = new RequestFactory(restConfig.buffer_size);
+      _url_formatter = "%s:%.0f%s";
+      _requestFactory = new RequestFactory(magic);
      }
-                    ~RestClient() { delete _requestFactory; }
+                    ~RestClient()
+     {
+      delete _requestFactory;
+      delete _restConfig;
+     }
 
 public:
 
-   string               Connect()
+   string               Connect(string inputs)
      {
       HttpRequest request;
       request.url = StringFormat(_url_formatter, _restConfig.host, _restConfig.port, "/api/advisor");
-      request.body = _requestFactory.GetAddAdvisorRequestBody(_restConfig.magic, _restConfig.inputs);
+      request.body = _requestFactory.GetAddAdvisorRequestBody(inputs);
       request.headers = _restConfig.headers;
       HttpResponse response;
       Post(request, response);
