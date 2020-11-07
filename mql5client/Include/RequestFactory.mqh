@@ -21,9 +21,9 @@ struct Position
 class RequestFactory
   {
 
-   int               _to_copy;
-
    MarketProvider *  _market_provider;
+
+   int               _to_copy;
 
    string _position_formatter;
 
@@ -31,8 +31,8 @@ public:
                      RequestFactory(int to_copy = 100)
      {
       _to_copy = to_copy;
-      _position_formatter = "{ \"type\": \"%s\", \"advisorId\": \"%s\", \"positionId\": %s, \"lot\": %.2f, \"stopLoss\": %.0f, \"takeProfit\": %.0f, \"openAt\": %.0f, \"closeAt\": %.0f, \"profit\": %.2f }";
       _market_provider = new MarketProvider();
+      _position_formatter = "{ \"type\": \"%s\", \"advisorId\": \"%s\", \"positionId\": %s, \"lot\": %.2f, \"stopLoss\": %.0f, \"takeProfit\": %.0f, \"openAt\": %.0f, \"closeAt\": %.0f, \"profit\": %.2f }";
      }
                     ~RequestFactory() { delete _market_provider; }
 
