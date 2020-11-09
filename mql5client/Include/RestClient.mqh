@@ -31,6 +31,7 @@ class RestClient
 
    string            _url_formatter;
 
+   // Example: RestConfig restConfig = {"http://127.0.0.1", 80, "Content-Type: application/json\r\n", 3000 };
    RestConfig        _restConfig;
 
    RequestFactory *  _requestFactory;
@@ -38,10 +39,6 @@ class RestClient
 public:
                      RestClient(long magic, RestConfig &restConfig)
      {
-      if(restConfig.port == NULL) restConfig.port = 80;
-      if(restConfig.timeout == NULL) restConfig.timeout = 3000;
-      if(restConfig.host == NULL) restConfig.host = "http://127.0.0.1";
-      if(restConfig.headers == NULL) restConfig.headers = "Content-Type: application/json\r\n";
       _restConfig = restConfig;
       _url_formatter = "%s:%.0f%s";
       _requestFactory = new RequestFactory(magic);
@@ -53,7 +50,7 @@ public:
    string               Connect(string inputs)
      {
       HttpRequest request;
-      request.url = StringFormat(_url_formatter, _restConfig.host, _restConfig.port, "/api/advisor");
+      request.url = StringFormat(_url_formatter, _restConfig.host, _restConfig.port, "/api/advisor/add");
       request.body = _requestFactory.GetAddAdvisorRequestBody(inputs);
       request.headers = _restConfig.headers;
       HttpResponse response;
