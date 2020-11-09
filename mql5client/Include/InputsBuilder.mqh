@@ -59,7 +59,7 @@ public:
         }
 
       is_builed = true;
-      return inputs = "[" + StringSubstr(inputs, 0, StringLen(inputs) - 1) + "]";
+      return inputs = "[" + StringSubstr(inputs, 0, StringLen(inputs) - 2) + "]";
      }
 
    string             GetInputs()
