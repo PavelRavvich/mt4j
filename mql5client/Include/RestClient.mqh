@@ -29,6 +29,8 @@ struct RestConfig
 class RestClient
   {
 
+   long              _magic;
+
    string            _url_formatter;
 
    // Example: RestConfig restConfig = {"http://127.0.0.1", 80, "Content-Type: application/json\r\n", 3000 };
@@ -39,6 +41,7 @@ class RestClient
 public:
                      RestClient(long magic, RestConfig &restConfig)
      {
+      _magic = magic;
       _restConfig = restConfig;
       _url_formatter = "%s:%.0f%s";
       _requestFactory = new RequestFactory(magic);
@@ -55,6 +58,10 @@ public:
       request.headers = _restConfig.headers;
       HttpResponse response;
       Post(request, response);
+      if(response.status != 200)
+         Alert(StringFormat("Connection to Advisor: %.0f failed", _magic)); ExpertRemove();
+      else
+         Alert(StringFormat("Connection to Advisor: %.0f success", _magic));
       return response.body;
      }
 
