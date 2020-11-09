@@ -5,6 +5,18 @@
 #include <JAson.mqh>
 #include <RestClient.mqh>
 
+
+enum SignalType { BUY = "BUY", SELL = "SELL", UPDATE = "UPDATE", CLOSE = "CLOSE", NO_ACTION = "NO_ACTION" };
+struct Signal
+  {
+   long       positionId;
+   string     advisorId;
+   SignalType type;
+   double     lot;
+   int        stopLoss;
+   int        takeProfit;
+  };
+
 class ApiService
   {
 
@@ -13,6 +25,8 @@ class ApiService
    CJAVal *          _jsonParser;
 
    string            _strategy;
+
+   string            _advisor_id;
 
 public:
                      ApiService(long magic, string strategy)
@@ -31,35 +45,31 @@ public:
       string responceBody = _restClient.Connect(inputs);
       _jsonParser.Clear();
       _jsonParser.Deserialize(responceBody);
-      return _jsonParser["id"].ToStr();
+      return _advisor_id = _jsonParser["id"].ToStr();
      }
 
-   string               GetSignal(string advisor_id)
+   void                 GetSignal(Signal &signal)
      {
-      string responceBody = _restClient.GetSignal(advisor_id, _strategy, Symbol());
+      string responceBody = _restClient.GetSignal(_advisor_id, _strategy, Symbol());
       // todo impl
-      return "";
      }
 
-   string               AddPosition(Position &position)
+   void                 AddPosition(Position &position)
      {
        string responceBody = _restClient.AddPosition(position);
        // todo impl
-       return "";
      }
 
-   string               UpdatePosition(Position &position)
+   void                 UpdatePosition(Position &position)
      {
        string responceBody = _restClient.UpdatePosition(position);
        // todo impl
-       return "";
      }
 
-   string               HistoryPosition(Position &position)
+   void                 HistoryPosition(Position &position)
      {
        string responceBody = _restClient.HistoryPosition(position);
        // todo impl
-       return "";
      }
 
 };
