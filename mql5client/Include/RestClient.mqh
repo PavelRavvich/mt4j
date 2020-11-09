@@ -19,10 +19,10 @@ struct HttpRequest
 
 struct RestConfig
   {
-   int               port = 80;
-   int               timeout = 3000;
-   string            host = "http://127.0.0.1";
-   string            headers = "Content-Type: application/json\r\n";
+   string            host;
+   int               port;
+   string            headers;
+   int               timeout;
   };
 
 
@@ -31,22 +31,22 @@ class RestClient
 
    string            _url_formatter;
 
-   RestConfig     *  _restConfig;
+   RestConfig        _restConfig;
 
    RequestFactory *  _requestFactory;
 
 public:
                      RestClient(long magic, RestConfig &restConfig)
      {
+      if(restConfig.port == NULL) restConfig.port = 80;
+      if(restConfig.timeout == NULL) restConfig.timeout = 3000;
+      if(restConfig.host == NULL) restConfig.host = "http://127.0.0.1";
+      if(restConfig.headers == NULL) restConfig.headers = "Content-Type: application/json\r\n";
       _restConfig = restConfig;
       _url_formatter = "%s:%.0f%s";
       _requestFactory = new RequestFactory(magic);
      }
-                    ~RestClient()
-     {
-      delete _requestFactory;
-      delete _restConfig;
-     }
+                    ~RestClient() { delete _requestFactory; }
 
 public:
 
