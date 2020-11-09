@@ -28,6 +28,8 @@ class InputsBuilder
 
    string            _empty_inputs;
 
+   string            _input_datetime_formatter;
+
    string            _input_string_formatter;
 
    string            _input_double_formatter;
@@ -42,9 +44,10 @@ public:
       inputs = "";
       is_builed = false;
       _empty_inputs = "[]";
-      _input_long_formatter = "{ \"key\": \"%s\", \"value\": %.0f }";
-      _input_string_formatter = "{ \"key\": \"%s\", \"value\": \"%s\" }";
-      _input_double_formatter = "{ \"key\": \"%s\", \"value\": %.7f }";
+      _input_long_formatter = "{ \"key\": \"%s\", \"value\": %.0f, \"type\": \"NUMBER\" }";
+      _input_datetime_formatter = "{ \"key\": \"%s\", \"value\": \"%s\", \"type\": \"DATETIME\" }";
+      _input_string_formatter = "{ \"key\": \"%s\", \"value\": \"%s\", \"type\": \"STRING\" }";
+      _input_double_formatter = "{ \"key\": \"%s\", \"value\": %.7f, \"type\": \"NUMBER\" }";
      }
                     ~InputsBuilder() {}
 

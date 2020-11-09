@@ -21,7 +21,7 @@ public class AdvisorTest extends PositionTest {
         final Advisor advisor = new Advisor(1L, List.of(
                 new Input("key1", "val", InputType.STRING),
                 new Input("key2", "1", InputType.NUMBER),
-                new Input("key3", "10:00", InputType.TIME)));
+                new Input("key3", "10:00", InputType.DATETIME)));
         assertEquals(Long.valueOf(1), advisor.getMagic());
         assertEquals("val",
                 advisor.getInput("key1").orElseThrow().asString());
