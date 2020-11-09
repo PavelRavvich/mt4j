@@ -5,7 +5,7 @@
 class MarketProvider
   {
 
-   string            _buffer_size;
+   int               _buffer_size;
 
    string            _rates_formatter;
 
@@ -41,7 +41,7 @@ public:
       string h12 = "\"H_12\": " + CopyMqlRates(symbol, PERIOD_H12, _buffer_size) + ",";
       string d1 = "\"D_1\": " + CopyMqlRates(symbol, PERIOD_D1, _buffer_size) + ",";
       string w1 = "\"W_1\": " + CopyMqlRates(symbol, PERIOD_W1, _buffer_size) + ",";
-      string mn1 = "\"MN_1\": " + CopyMqlRates(symbol, PERIOD_MN1, to_copy);
+      string mn1 = "\"MN_1\": " + CopyMqlRates(symbol, PERIOD_MN1, _buffer_size);
       return "{" + m1 + m2 + m3 + m4 + m5 + m6 + m10 + m12 + m15 + m20 + m30
              + h1 + h2 + h3 + h4 + h6 + h8 + h12 + d1 + w1 + mn1 + "}";
      }
