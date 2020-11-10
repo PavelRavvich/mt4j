@@ -3,36 +3,27 @@
 #property strict
 
 #include <MarketProvider.mqh>
+#include <PositionProvider.mqh>
 
-struct Position
-  {
-   string            type;
-   string            advisorid;
-   string            positionId;
-   double            lot;
-   int               stopLoss;
-   int               takeProfit;
-   long              openAt;
-   long              closeAt;
-   double            profit;
-  };
 
 class RequestFactory
   {
 
-   MarketProvider *  _market_provider;
+   long                _magic;
 
-   long              _magic;
+   MarketProvider *    _market_provider;
 
-   string            _position_formatter;
+   PositionProvider *  _position_provider;
 
 public:
                      RequestFactory(long magic)
      {
+      _magic = magic;
       _market_provider = new MarketProvider();
-      _position_formatter = "{ \"type\": \"%s\", \"advisorId\": \"%s\", \"positionId\": %s, \"lot\": %.2f, \"stopLoss\": %.0f, \"takeProfit\": %.0f, \"openAt\": %.0f, \"closeAt\": %.0f, \"profit\": %.2f }";
+      _position_provider = new PositionProvider(magic);
      }
-                    ~RequestFactory() { delete _market_provider; }
+
+                    ~RequestFactory() { delete _market_provider; delete _position_provider; }
 
 public:
 
@@ -41,17 +32,11 @@ public:
       return "{ \"magic\": " + (string) _magic + ", \"inputs\": " + inputs + " }";
      }
 
-   // todo add open positions to signal request
    string            GetSignalRequestBody(string advisor_id, string strategy_name, string symbol)
      {
       return "{ \"advisorId\": \"" +  advisor_id + "\", \"strategyName\": \"" + strategy_name
-             + "\", \"rates\": " + _market_provider.GetRates(symbol) + ", \"positions\": " + "[]" + " }";
-     }
-
-   string            GetPositionRequestBody(Position &position)
-     {
-      return StringFormat(_position_formatter, position.type, position.advisor_id, position.position_id, position.lot,
-                          position.stop_loss, position.take_profit, position.open_at, position.close_at, position.profit);
+             + "\", \"rates\": " + _market_provider.GetRates(symbol) +
+             ", \"positions\": " + _position_provider.GetPositions() + " }";
      }
 
   };

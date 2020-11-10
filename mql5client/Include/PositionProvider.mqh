@@ -15,21 +15,23 @@ class PositionProvider
 
 public:
                      PositionProvider(long magic) { _magic = magic; }
-                    ~PositionProvider() { }
-
+                    ~PositionProvider() {}
 
 public:
 
-   void              OnTickRefresh(datetime from)
+   string            GetPositions()
+     {
+      Refresh();
+      // todo impl
+      return "{ \"open\": [], \"history\": [] }";
+     }
+
+private:
+
+   void              Refresh()
      {
 
       // Fetch and Sort this.positions to this.open and this.closed
-     }
-
-   string            GetPositions()
-     {
-      // todo impl
-      return "\"positions\": { \"open\": [], \"history\": [] }";
      }
 
 };

@@ -76,39 +76,6 @@ public:
       return response.body;
      }
 
-   string               AddPosition(Position &position)
-     {
-      HttpRequest request;
-      request.url = StringFormat(_url_formatter, _restConfig.host, _restConfig.port, "/api/position/add");
-      request.body = _requestFactory.GetPositionRequestBody(position);
-      request.headers = _restConfig.headers;
-      HttpResponse response;
-      Post(request, response);
-      return response.body;
-     }
-
-   string               UpdatePosition(Position &position)
-     {
-      HttpRequest request;
-      request.url = StringFormat(_url_formatter, _restConfig.host, _restConfig.port, "/api/position/update");
-      request.body = _requestFactory.GetPositionRequestBody(position);
-      request.headers = _restConfig.headers;
-      HttpResponse response;
-      Post(request, response);
-      return response.body;
-     }
-
-   string               HistoryPosition(Position &position)
-     {
-      HttpRequest request;
-      request.url = StringFormat(_url_formatter, _restConfig.host, _restConfig.port, "/api/position/hisory");
-      request.body = _requestFactory.GetPositionRequestBody(position);
-      request.headers = _restConfig.headers;
-      HttpResponse response;
-      Post(request, response);
-      return response.body;
-     }
-
 private:
 
    void                   Post(HttpRequest &request, HttpResponse &response)
