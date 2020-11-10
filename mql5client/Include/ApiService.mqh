@@ -55,22 +55,4 @@ public:
       // todo impl
      }
 
-   void                 AddPosition(Position &position)
-     {
-       string responceBody = _restClient.AddPosition(position);
-       // todo impl
-     }
-
-   void                 UpdatePosition(Position &position)
-     {
-       string responceBody = _restClient.UpdatePosition(position);
-       // todo impl
-     }
-
-   void                 HistoryPosition(Position &position)
-     {
-       string responceBody = _restClient.HistoryPosition(position);
-       // todo impl
-     }
-
 };
