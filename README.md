@@ -47,6 +47,10 @@ _Request:_
 {
     "advisorId": "6a649280-2d72-4f4c-8457-0b0f9c43f244",
     "strategyName": "EXAMPLE",
+    "positions": {
+        "open": [],
+        "history": []
+    },
     "rates": {
         "M_1": [
             {
@@ -103,27 +107,6 @@ _Response variations:_
 }
 ```
 
-
-**POST** `http://127.0.0.1/api/position/add` - add position to Advisor store.
-
-**POST** `http://127.0.0.1/api/position/update` - update existed position in Advisor store.
-
-**POST** `http://127.0.0.1/api/position/history` - move open position to Advisor history store.
-
-_Request & Response:_
-```json
-{
-    "type": "BUY | SELL",
-    "advisorId": "c4eb34e4-c9c3-4b7e-856d-d5d00588464d",
-    "positionId": 1000000,
-    "lot": 0.01,
-    "stopLoss": 100,
-    "takeProfit": 100,
-    "openAt": 1603488613812,
-    "closeAt": 1603488645205,
-    "profit": 10
-}
-```
 
 **Contribution**
 

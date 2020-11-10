@@ -7,6 +7,12 @@ class PositionProvider
 
    int               _magic;
 
+   Position          _positionsCahe[];
+
+   Position          _openCahe[];
+
+   Position          _historyCahe[];
+
 public:
                      PositionProvider(long magic) { _magic = magic; }
                     ~PositionProvider() { }
@@ -14,20 +20,16 @@ public:
 
 public:
 
-   void              GetPositionById(long id, Position &position)
+   void              OnTickRefresh(datetime from)
      {
-      // todo
+
+      // Fetch and Sort this.positions to this.open and this.closed
      }
 
-   void              GetAllPositions(Position &positions[])
+   string            GetPositions()
      {
-      // todo
+      // todo impl
+      return "\"positions\": { \"open\": [], \"history\": [] }";
      }
 
-   bool              IsPosition()
-     {
-      Position positions[];
-      GetAllPositions(positions);
-      return ArraySize(positions) > 0;
-     }
 };

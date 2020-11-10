@@ -7,13 +7,13 @@
 struct Position
   {
    string            type;
-   string            advisor_id;
-   string            position_id;
+   string            advisorid;
+   string            positionId;
    double            lot;
-   int               stop_loss;
-   int               take_profit;
-   long              open_at;
-   long              close_at;
+   int               stopLoss;
+   int               takeProfit;
+   long              openAt;
+   long              closeAt;
    double            profit;
   };
 
