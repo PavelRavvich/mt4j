@@ -14,7 +14,7 @@ public:
 
 public:
 
-   void              GetPositionById(long positionId, Position &position)
+   void              GetPositionById(long id, Position &position)
      {
       // todo
      }
