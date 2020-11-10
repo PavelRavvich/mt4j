@@ -9,6 +9,7 @@
 enum SignalType { BUY = "BUY", SELL = "SELL", UPDATE = "UPDATE", CLOSE = "CLOSE", NO_ACTION = "NO_ACTION" };
 struct Signal
   {
+   bool       isHistory;
    long       positionId;
    string     advisorId;
    SignalType type;

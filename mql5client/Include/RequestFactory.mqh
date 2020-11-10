@@ -41,10 +41,11 @@ public:
       return "{ \"magic\": " + (string) _magic + ", \"inputs\": " + inputs + " }";
      }
 
+   // todo add open positions to signal request
    string            GetSignalRequestBody(string advisor_id, string strategy_name, string symbol)
      {
       return "{ \"advisorId\": \"" +  advisor_id + "\", \"strategyName\": \"" + strategy_name
-             + "\", \"rates\": " + _market_provider.GetRates(symbol) + " }";
+             + "\", \"rates\": " + _market_provider.GetRates(symbol) + ", \"positions\": " + "[]" + " }";
      }
 
    string            GetPositionRequestBody(Position &position)
