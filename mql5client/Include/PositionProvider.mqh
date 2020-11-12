@@ -30,14 +30,15 @@ public:
       Position positions[];
       FetchPositions(positions);
       string items = "";
-      for(int i = 0; i < ArraySize(positions) - 1; i++)
+      int size = ArraySize(positions);
+      for(int i = 0; i < size - 1; i++)
         {
          string item = StringFormat(_position_pattern, positions[i].isHistory, positions[i].type, positions[i].magic,
                                     positions[i].advisorId, positions[i].positionId, positions[i].lot,
                                     positions[i].stopLoss, positions[i].takeProfit, positions[i].openAt,
                                     positions[i].closeAt, positions[i].profit);
          items += item;
-         if(i != copied - 1)
+         if(i != size - 1)
             items += ", ";
         }
 
