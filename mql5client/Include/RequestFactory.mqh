@@ -20,7 +20,7 @@ public:
      {
       _magic = magic;
       _market_provider = new MarketProvider();
-      _position_provider = new PositionProvider(magic);
+      _position_provider = new PositionProvider();
      }
 
                     ~RequestFactory() { delete _market_provider; delete _position_provider; }
@@ -36,7 +36,7 @@ public:
      {
       return "{ \"advisorId\": \"" +  advisor_id + "\", \"strategyName\": \"" + strategy_name
              + "\", \"rates\": " + _market_provider.GetRates(symbol) +
-             ", \"positions\": " + _position_provider.GetPositions() + " }";
+             ", \"positions\": " + _position_provider.GetPositions(_magic) + " }";
      }
 
   };

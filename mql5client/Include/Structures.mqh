@@ -26,11 +26,25 @@ struct RestConfig
 enum SignalType { BUY = "BUY", SELL = "SELL", UPDATE = "UPDATE", CLOSE = "CLOSE", NO_ACTION = "NO_ACTION" };
 struct Signal
   {
-   bool       isHistory;
    long       positionId;
    string     advisorId;
    SignalType type;
    double     lot;
    int        stopLoss;
    int        takeProfit;
+  };
+
+struct Position
+  {
+   bool              isHistory;
+   string            type;
+   long              magic;
+   long              advisorId;
+   long              positionId;
+   double            lot;
+   int               stopLoss;
+   int               takeProfit;
+   long              openAt;
+   long              closeAt;
+   double            profit;
   };
