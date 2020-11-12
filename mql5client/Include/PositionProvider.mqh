@@ -19,7 +19,7 @@ public:
      {
       this._magic = magic;
       this._advisor_id = advisor_id;
-      _position_pattern = "{ \"isHistory\": &s, \"type\": %s, \"magic\": %.0f, \"advisorId\": %.0f, \"positionId\": %.0f, \"lot\": %.2f, \"stopLoss\": %.0f, \"takeProfit\": %.0f, \"openAt\": %.0f, \"closeAt\": %.0f, \"profit\": %.2f },";
+      _position_pattern = "{ \"isHistory\": &s, \"type\": %s, \"magic\": %.0f, \"advisorId\": %.0f, \"positionId\": %.0f, \"lot\": %.2f, \"stopLoss\": %.0f, \"takeProfit\": %.0f, \"openAt\": %.0f, \"closeAt\": %.0f, \"profit\": %.2f }";
      }
                     ~PositionProvider() {}
 
