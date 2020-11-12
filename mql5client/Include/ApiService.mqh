@@ -4,19 +4,8 @@
 
 #include <JAson.mqh>
 #include <RestClient.mqh>
+#include <Structures.mqh>
 
-
-enum SignalType { BUY = "BUY", SELL = "SELL", UPDATE = "UPDATE", CLOSE = "CLOSE", NO_ACTION = "NO_ACTION" };
-struct Signal
-  {
-   bool       isHistory;
-   long       positionId;
-   string     advisorId;
-   SignalType type;
-   double     lot;
-   int        stopLoss;
-   int        takeProfit;
-  };
 
 class ApiService
   {
@@ -52,7 +41,7 @@ public:
    void                 GetSignal(Signal &signal)
      {
       string responceBody = _restClient.GetSignal(_advisor_id, _strategy, Symbol());
-      // todo impl
+      // todo impl parse signal
      }
 
 };

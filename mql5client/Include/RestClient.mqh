@@ -3,27 +3,7 @@
 #property strict
 
 #include <RequestFactory.mqh>
-
-struct HttpResponse
-  {
-   int               status;
-   string            body;
-  };
-
-struct HttpRequest
-  {
-   string            url;
-   string            body;
-   string            headers;
-  };
-
-struct RestConfig
-  {
-   string            host;
-   int               port;
-   string            headers;
-   int               timeout;
-  };
+#include <Structures.mqh>
 
 
 class RestClient

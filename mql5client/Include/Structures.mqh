@@ -23,23 +23,22 @@ struct RestConfig
    int               timeout;
   };
 
-enum SignalType { BUY = "BUY", SELL = "SELL", UPDATE = "UPDATE", CLOSE = "CLOSE", NO_ACTION = "NO_ACTION" };
+enum PositionType { BUY = "BUY", SELL = "SELL", UPDATE = "UPDATE", CLOSE = "CLOSE", NO_ACTION = "NO_ACTION" };
 struct Signal
   {
-   long       positionId;
-   string     advisorId;
-   SignalType type;
-   double     lot;
-   int        stopLoss;
-   int        takeProfit;
+   long              positionId;
+   string            advisorId;
+   PositionType      type;
+   double            lot;
+   int               stopLoss;
+   int               takeProfit;
   };
 
 struct Position
   {
    bool              isHistory;
-   string            type;
+   PositionType      type;
    long              magic;
-   long              advisorId;
    long              positionId;
    double            lot;
    int               stopLoss;
