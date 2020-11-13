@@ -23,7 +23,7 @@ struct RestConfig
    int               timeout;
   };
 
-enum PositionType { BUY = "BUY", SELL = "SELL", UPDATE = "UPDATE", CLOSE = "CLOSE", NO_ACTION = "NO_ACTION" };
+enum PositionType { BUY, SELL, UPDATE, CLOSE, NO_ACTION };
 struct Signal
   {
    long              positionId;
