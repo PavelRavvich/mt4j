@@ -2,6 +2,7 @@
 #property version "1.12"
 #property strict
 
+#include <Enums.mqh>
 #include <Utils.mqh>
 #include <Structures.mqh>
 

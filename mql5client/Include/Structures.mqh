@@ -2,6 +2,8 @@
 #property version "1.12"
 #property strict
 
+#include <Enums.mqh>
+
 struct HttpResponse
   {
    int               status;
@@ -23,7 +25,6 @@ struct RestConfig
    int               timeout;
   };
 
-enum PositionType { BUY, SELL, UPDATE, CLOSE, NO_ACTION };
 struct Signal
   {
    long              positionId;
