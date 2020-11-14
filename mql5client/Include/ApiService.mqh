@@ -41,7 +41,14 @@ public:
    void                 GetSignal(Signal &signal)
      {
       string responceBody = _restClient.GetSignal(_advisor_id, _strategy, Symbol());
-      // todo impl parse signal
+      _jsonParser.Clear();
+      _jsonParser.Deserialize(responceBody);
+      signal.lot = _jsonParser["lot"].ToDbl();
+      signal.type = _jsonParser["type"].ToStr();
+      signal.advisorId = _jsonParser["id"].ToStr();
+      signal.stopLoss = _jsonParser["stopLoss"].ToInt();
+      signal.takeProfit =  _jsonParser["takeProfit"].ToInt();
+      signal.positionId = _jsonParser["positionId"].ToLong();
      }
 
 };
