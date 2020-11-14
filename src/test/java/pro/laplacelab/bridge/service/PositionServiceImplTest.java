@@ -7,15 +7,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import pro.laplacelab.bridge.BaseTestPreparation;
 import pro.laplacelab.bridge.enums.InputType;
 import pro.laplacelab.bridge.enums.SignalType;
 import pro.laplacelab.bridge.exception.AdvisorNotFoundException;
 import pro.laplacelab.bridge.model.Advisor;
 import pro.laplacelab.bridge.model.Input;
 import pro.laplacelab.bridge.model.Position;
-import pro.laplacelab.bridge.model.PositionTest;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -26,7 +25,7 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 @WebAppConfiguration
 @RunWith(SpringRunner.class)
-public class PositionServiceImplTest extends PositionTest {
+public class PositionServiceImplTest extends BaseTestPreparation {
 
     @Autowired
     PositionService positionService;
@@ -62,12 +61,12 @@ public class PositionServiceImplTest extends PositionTest {
         doReturn(Optional.of(advisor)).when(advisorService).get(origin.getAdvisorId());
         positionService.add(origin);
         final Position update = new Position(advisor.getId(), SignalType.BUY, positionId,
-                new BigDecimal("0.1"), stopLoss, takeProfit, openAt, closeAt, profit);
+                0.1, stopLoss, takeProfit, openAt, closeAt, profit);
         positionService.update(update);
 
         verify(advisor, times(1)).updatePosition(update);
         verify(advisorService, times(2)).get(advisor.getId());
-        assertEquals(new BigDecimal("0.1"), advisor.getPositions().get(0).getLot());
+        assertEquals(Double.valueOf(0.1), advisor.getPositions().get(0).getLot());
     }
 
     @Test(expected = AdvisorNotFoundException.class)

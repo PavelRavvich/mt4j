@@ -1,20 +1,13 @@
 package pro.laplacelab.bridge.model;
 
 import org.junit.Test;
+import pro.laplacelab.bridge.BaseTestPreparation;
 import pro.laplacelab.bridge.enums.SignalType;
 import pro.laplacelab.bridge.exception.InvalidSignalException;
 
-import java.math.BigDecimal;
-
 import static org.junit.Assert.assertEquals;
 
-public class PositionTest extends SignalTest {
-
-    protected final Long openAt = System.currentTimeMillis();
-
-    protected final Long closeAt = System.currentTimeMillis();
-
-    protected final BigDecimal profit = new BigDecimal("1");
+public class PositionTest extends BaseTestPreparation {
 
     @Test
     public void whenPositionConstructedSuccessfulThenStateSaved() {

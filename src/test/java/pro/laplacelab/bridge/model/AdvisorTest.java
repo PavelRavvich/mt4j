@@ -1,6 +1,7 @@
 package pro.laplacelab.bridge.model;
 
 import org.junit.Test;
+import pro.laplacelab.bridge.BaseTestPreparation;
 import pro.laplacelab.bridge.enums.InputType;
 import pro.laplacelab.bridge.enums.SignalType;
 import pro.laplacelab.bridge.exception.DuplicatePositionException;
@@ -14,7 +15,7 @@ import java.util.Optional;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class AdvisorTest extends PositionTest {
+public class AdvisorTest extends BaseTestPreparation {
 
     @Test
     public void whenAdvisorBuildSuccessfullyDataSaved() {
@@ -90,14 +91,14 @@ public class AdvisorTest extends PositionTest {
                 lot, stopLoss, takeProfit, openAt, closeAt, profit);
         advisor.addPosition(origin);
 
-        final BigDecimal newLot = new BigDecimal("100");
-        final BigDecimal newProfit = new BigDecimal("100");
-        final BigDecimal newStopLoss = new BigDecimal("1000");
-        final BigDecimal newTakeProfit = new BigDecimal("1000");
+        final Double newLot = 100d;
+        final Double newProfit = 100d;
+        final Integer newStopLoss = 1000;
+        final Integer newTakeProfit = 1000;
         final Long newCloseAt = System.currentTimeMillis();
         final Position forUpdate = new Position(advisorId, SignalType.BUY, positionId,
                 newLot, newStopLoss, newTakeProfit, openAt, newCloseAt, newProfit);
-        origin.setProfit(new BigDecimal("100"));
+        origin.setProfit(100d);
         advisor.updatePosition(forUpdate);
         final Position expected = advisor.findPositionById(positionId).orElseThrow();
 
@@ -122,7 +123,7 @@ public class AdvisorTest extends PositionTest {
         final Input input = new Input("key1", "val", InputType.STRING);
         final Advisor advisor = new Advisor(1L, List.of(input));
         final Position dropdown = new Position(advisorId, SignalType.BUY, positionId,
-                lot, stopLoss, takeProfit, openAt, closeAt, new BigDecimal("-1"));
+                lot, stopLoss, takeProfit, openAt, closeAt, -1d);
         final Position profit = new Position(advisorId, SignalType.BUY, 2L,
                 lot, stopLoss, takeProfit, openAt, closeAt, this.profit);
         advisor.addPosition(dropdown);
@@ -137,7 +138,7 @@ public class AdvisorTest extends PositionTest {
         final Input input = new Input("key1", "val", InputType.STRING);
         final Advisor advisor = new Advisor(1L, List.of(input));
         final Position position = new Position(advisorId, SignalType.BUY, positionId,
-                lot, stopLoss, takeProfit, openAt, closeAt, new BigDecimal("-1"));
+                lot, stopLoss, takeProfit, openAt, closeAt, -1d);
         advisor.addPosition(position);
         advisor.toHistory(position);
         assertEquals(1, advisor.countDropdown());

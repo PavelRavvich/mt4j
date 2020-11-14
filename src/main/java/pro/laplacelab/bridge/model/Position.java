@@ -27,17 +27,17 @@ public class Position extends Signal {
     private Long closeAt;
 
     @JsonProperty("profit")
-    private BigDecimal profit;
+    private Double profit;
 
     public Position(final @NotNull(message = "advisorId required") UUID advisorId,
                     final @NotNull(message = "type required") SignalType type,
                     final @NotNull(message = "positionId required") Long positionId,
-                    final @NotNull(message = "lot required") BigDecimal lot,
-                    final @NotNull(message = "stopLoss required") BigDecimal stopLoss,
-                    final @NotNull(message = "takeProfit required") BigDecimal takeProfit,
+                    final @NotNull(message = "lot required") Double lot,
+                    final @NotNull(message = "stopLoss required") Integer stopLoss,
+                    final @NotNull(message = "takeProfit required") Integer takeProfit,
                     final @NotNull(message = "openAt required") Long openAt,
                     final @NotNull(message = "closeAt required") Long closeAt,
-                    final @NotNull(message = "profit required") BigDecimal profit) {
+                    final @NotNull(message = "profit required") Double profit) {
         super(advisorId, type, lot, stopLoss, takeProfit);
         this.positionId = positionId;
         this.closeAt = closeAt;

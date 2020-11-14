@@ -30,13 +30,13 @@ public class Signal {
     protected Long positionId;
 
     @JsonProperty("lot")
-    protected BigDecimal lot;
+    protected Double lot;
 
     @JsonProperty("stopLoss")
-    protected BigDecimal stopLoss;
+    protected Integer stopLoss;
 
     @JsonProperty("takeProfit")
-    protected BigDecimal takeProfit;
+    protected Integer takeProfit;
 
     public Signal(final @NotNull UUID advisorId, final @NotNull SignalType type) {
         if (type != SignalType.NO_ACTION) {
@@ -58,10 +58,11 @@ public class Signal {
         this.positionId = positionId;
     }
 
-    public Signal(final @NotNull UUID advisorId, @NotNull final SignalType type,
-                  final @NotNull(message = "lot required") BigDecimal lot,
-                  final @NotNull(message = "stopLoss required") BigDecimal stopLoss,
-                  final @NotNull(message = "takeProfit required") BigDecimal takeProfit) {
+    public Signal(final @NotNull UUID advisorId,
+                  final @NotNull SignalType type,
+                  final @NotNull(message = "lot required") Double lot,
+                  final @NotNull(message = "stopLoss required") Integer stopLoss,
+                  final @NotNull(message = "takeProfit required") Integer takeProfit) {
         if (type != SignalType.BUY && type != SignalType.SELL) {
             throw new InvalidSignalException();
         }
@@ -74,9 +75,9 @@ public class Signal {
 
     public Signal(final UUID advisorId, final SignalType type,
                   final @NotNull(message = "positionId required") Long positionId,
-                  final @NotNull(message = "lot required") BigDecimal lot,
-                  final @NotNull(message = "stopLoss required") BigDecimal stopLoss,
-                  final @NotNull(message = "takeProfit required") BigDecimal takeProfit) {
+                  final @NotNull(message = "lot required") Double lot,
+                  final @NotNull(message = "stopLoss required") Integer stopLoss,
+                  final @NotNull(message = "takeProfit required") Integer takeProfit) {
         if (type != SignalType.UPDATE) {
             throw new InvalidSignalException();
         }

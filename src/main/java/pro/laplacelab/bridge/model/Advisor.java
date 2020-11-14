@@ -102,7 +102,7 @@ public class Advisor {
     public int countDropdown() {
         int counter = 0;
         final Iterator<Position> iterator = history.descendingIterator();
-        while (iterator.hasNext() && iterator.next().getProfit().signum() < 0) {
+        while (iterator.hasNext() && iterator.next().getProfit() < 0) {
             counter++;
         }
         return counter;

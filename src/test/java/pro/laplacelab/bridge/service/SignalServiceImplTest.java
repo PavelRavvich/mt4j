@@ -1,6 +1,5 @@
 package pro.laplacelab.bridge.service;
 
-import org.assertj.core.util.Lists;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import pro.laplacelab.bridge.BaseTestPreparation;
 import pro.laplacelab.bridge.enums.InputType;
 import pro.laplacelab.bridge.enums.SignalType;
 import pro.laplacelab.bridge.example.Example;
@@ -27,7 +27,7 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 @WebAppConfiguration
 @RunWith(SpringRunner.class)
-public class SignalServiceImplTest extends PositionTest {
+public class SignalServiceImplTest extends BaseTestPreparation {
 
     @Autowired
     SignalService signalService;

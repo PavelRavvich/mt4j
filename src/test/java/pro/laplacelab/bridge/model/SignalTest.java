@@ -1,25 +1,13 @@
 package pro.laplacelab.bridge.model;
 
 import org.junit.Test;
+import pro.laplacelab.bridge.BaseTestPreparation;
 import pro.laplacelab.bridge.enums.SignalType;
 import pro.laplacelab.bridge.exception.InvalidSignalException;
 
-import java.math.BigDecimal;
-import java.util.UUID;
-
 import static org.junit.Assert.assertEquals;
 
-public class SignalTest {
-
-    protected final UUID advisorId = UUID.randomUUID();
-
-    protected final Long positionId = 1_000_000L;
-
-    protected final BigDecimal lot = new BigDecimal("0.01");
-
-    protected final BigDecimal stopLoss = new BigDecimal("100");
-
-    protected final BigDecimal takeProfit = new BigDecimal("50");
+public class SignalTest extends BaseTestPreparation {
 
     @Test
     public void whenSignalNoActionBuildSuccessfulThenStateSaved() {
