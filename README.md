@@ -47,10 +47,20 @@ _Request:_
 {
     "advisorId": "6a649280-2d72-4f4c-8457-0b0f9c43f244",
     "strategyName": "EXAMPLE",
-    "positions": {
-        "open": [],
-        "history": []
-    },
+    "positions": [
+        {
+           "isHistory":  true,
+           "type": "BUY | SELL",
+           "magic": 100000,
+           "positionId": 100000,
+           "lot": 0.01,
+           "stopLoss": 100,
+           "takeProfit": 100,
+           "openAt": 16384394738,
+           "closeAt": 16384394738,
+           "profit": 123.45
+        } 
+    ],
     "rates": {
         "M_1": [
             {
