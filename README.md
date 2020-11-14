@@ -1,13 +1,16 @@
-# Bridge
+# MT4J
 
 ![Build](https://github.com/triodjangopiter/bridge/workflows/Build/badge.svg)
 ![codecov](https://codecov.io/gh/triodjangopiter/bridge/branch/master/graph/badge.svg?token=Y3IRTX7LPW)
 
 
 
-The local server based on Tomcat is the bridge between Java and Meta Trader 5 via HTTP requests.
+MT4J is integration bridge between Meta Trader 5 and Java implemented through sync http requests.
 
-Port **80**. Port can't be changed by specific Meta Trader 5 reason, see more in MQL5 documentation: [https://www.mql5.com/en/docs/network/webrequest][webrequest].
+Using this app you can write trading strategies with Java instead of mql5. For implementation strategy logic you can 
+use already connected [ta4j] library, or connect something else what you prefer using maven artifact fox example.
+
+The local server based on Tomcat and use port **80**. Port can't be changed by specific Meta Trader 5 reason, see more in MQL5 documentation: [https://www.mql5.com/en/docs/network/webrequest][webrequest].
 
 MetaTrader 5 required permission in settings for send http requests to localhost, see more in MQL5 documentation: [https://www.mql5.com/en/docs/network][settings]
 
@@ -147,3 +150,4 @@ _Response variations:_
 
 [webrequest]: https://www.mql5.com/en/docs/network/webrequest
 [settings]:https://www.mql5.com/en/docs/network
+[ta4j]:https://github.com/ta4j
