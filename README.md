@@ -20,8 +20,16 @@ _Request:_
 {
     "magic": 100000,
     "inputs": [
-        { "key": "propName1", "value": "str", "type": "STRING" },
-        { "key": "propName2", "value": 10, "type": "NUMBER" }
+        {
+            "key": "propName1",
+            "value": "str",
+            "type": "STRING"
+        },
+        {
+            "key": "propName2",
+            "value": 10,
+            "type": "NUMBER"
+        }
     ]
 }
 ```
@@ -31,11 +39,23 @@ _Response:_
 {
     "id": "c4eb34e4-c9c3-4b7e-856d-d5d00588464d",
     "magic": 100000,
-        "inputs": [
-            { "key": "propName1", "value": "str", "type": "STRING" },
-            { "key": "propName2", "value": "10:00", "type": "TIME" },
-            { "key": "propName3", "value": 10, "type": "NUMBER" }
-        ]
+    "inputs": [
+        {
+            "key": "propName1",
+            "value": "str",
+            "type": "STRING"
+        },
+        {
+            "key": "propName2",
+            "value": "10:00",
+            "type": "TIME"
+        },
+        {
+            "key": "propName3",
+            "value": 10,
+            "type": "NUMBER"
+        }
+    ]
 }
 ```
 
@@ -45,21 +65,21 @@ _Response:_
 _Request:_
 ```json
 {
-    "advisorId": "6a649280-2d72-4f4c-8457-0b0f9c43f244",
-    "strategyName": "EXAMPLE",
-    "positions": [
+    "advisorId":"6a649280-2d72-4f4c-8457-0b0f9c43f244",
+    "strategyName":"EXAMPLE",
+    "positions":[
         {
-           "isHistory":  true,
-           "type": "BUY | SELL",
-           "magic": 100000,
-           "positionId": 100000,
-           "lot": 0.01,
-           "stopLoss": 100,
-           "takeProfit": 100,
-           "openAt": 16384394738,
-           "closeAt": 16384394738,
-           "profit": 123.45
-        } 
+            "isHistory": true,
+            "type": "BUY | SELL",
+            "magic": 100000,
+            "positionId": 100000,
+            "lot": 0.01,
+            "stopLoss": 100,
+            "takeProfit": 100,
+            "openAt": 16384394738,
+            "closeAt": 16384394738,
+            "profit": 123.45
+        }
     ],
     "rates": {
         "M_1": [
