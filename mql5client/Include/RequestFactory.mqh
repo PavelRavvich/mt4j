@@ -11,16 +11,19 @@ class RequestFactory
 
    long                _magic;
 
+   string              _symbol;
+
    MarketProvider *    _market_provider;
 
    PositionProvider *  _position_provider;
 
 public:
-                     RequestFactory(long magic)
+                     RequestFactory(long magic, string symbol)
      {
       _magic = magic;
-      _market_provider = new MarketProvider();
-      _position_provider = new PositionProvider();
+      _symbol = symbol;
+      _market_provider = new MarketProvider(symbol);
+      _position_provider = new PositionProvider(magic);
      }
 
                     ~RequestFactory() { delete _market_provider; delete _position_provider; }
@@ -32,11 +35,11 @@ public:
       return "{ \"magic\": " + (string) _magic + ", \"inputs\": " + inputs + " }";
      }
 
-   string            GetSignalRequestBody(string advisor_id, string strategy_name, string symbol)
+   string            GetSignalRequestBody(string advisor_id, string strategy_name)
      {
       return "{ \"advisorId\": \"" +  advisor_id + "\", \"strategyName\": \"" + strategy_name
-             + "\", \"rates\": " + _market_provider.GetRates(symbol) +
-             ", \"positions\": " + _position_provider.GetPositions(_magic) + " }";
+             + "\", \"rates\": " + _market_provider.GetRates() +
+             ", \"positions\": " + _position_provider.GetPositions() + " }";
      }
 
   };

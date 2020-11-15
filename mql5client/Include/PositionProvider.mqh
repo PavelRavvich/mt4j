@@ -25,7 +25,7 @@ public:
    string            GetPositions()
      {
       Position positions[];
-      FetchPositions(positions);
+      FetchPositions(_magic, positions);
       string items = "";
       int size = ArraySize(positions);
       for(int i = 0; i < size; i++)
@@ -44,33 +44,33 @@ public:
 
 private:
 
-   void              FetchPositions(Position &positions[])
+   void              FetchPositions(long magic, Position &positions[])
      {
       // -- MOCK EXAMPLE -- //
       Position mock1;
-      mock1.magic = _magic;
+      mock1.magic = magic;
       mock1.positionId = 48082938746378;
       mock1.isHistory = false;
-      mock1.type = BUY;
+      mock1.type = LONG;
       mock1.lot = 0.01;
       mock1.stopLoss = 100;
       mock1.takeProfit = 100;
-      mock1.openAt = (long) TimeCurrent() * 1000;
+      mock1.openAt = (long) TimeCurrent() * 1000; // time in milliseconds
       mock1.openAt = NULL;
       mock1.profit = 100.01;
       ArrayResize(positions, ArraySize(positions) + 1);
       positions[ArraySize(positions) - 1] = mock1;
 
       Position mock2;
-      mock1.magic = _magic;
+      mock1.magic = magic;
       mock2.positionId = 48082938754849;
       mock2.isHistory = true;
-      mock2.type = SELL;
+      mock2.type = SHORT;
       mock2.lot = 0.01;
       mock2.stopLoss = 100;
       mock2.takeProfit = 100;
-      mock2.openAt = (long) TimeCurrent() * 1000;
-      mock2.openAt = NULL;
+      mock2.openAt = (long) TimeCurrent() * 1000; // time in milliseconds
+      mock2.closeAt = (long) TimeCurrent() * 1000; // time in milliseconds
       mock2.profit = -6.01;
       ArrayResize(positions, ArraySize(positions) + 1);
       positions[ArraySize(positions) - 1] = mock2;

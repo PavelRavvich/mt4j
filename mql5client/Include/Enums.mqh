@@ -2,4 +2,6 @@
 #property version "1.12"
 #property strict
 
-enum PositionType { BUY, SELL, UPDATE, CLOSE, NO_ACTION };
+
+enum PositionType { LONG, SHORT };
+enum SignalType { BUY, SELL, UPDATE, CLOSE, NO_ACTION };

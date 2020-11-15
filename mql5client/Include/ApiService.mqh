@@ -18,13 +18,16 @@ class ApiService
 
    string            _advisor_id;
 
+   string            _symbol;
+
 public:
-                     ApiService(long magic, string strategy)
+                     ApiService(long magic, string symbol, string strategy)
      {
       RestConfig config = { "http://127.0.0.1", 80, "Content-Type: application/json\r\n", 3000 };
-      _restClient = new RestClient(magic, config);
+      _restClient = new RestClient(magic, symbol, config);
       _jsonParser = new CJAVal(NULL, jtUNDEF);
-      _strategy = strategy_name;
+      _strategy = strategy;
+      _symbol = symbol;
      }
                     ~ApiService() { delete _restClient; delete _jsonParser; }
 
@@ -40,15 +43,15 @@ public:
 
    void                 GetSignal(Signal &signal)
      {
-      string responceBody = _restClient.GetSignal(_advisor_id, _strategy, Symbol());
+      string responceBody = _restClient.GetSignal(_advisor_id, _strategy);
       _jsonParser.Clear();
       _jsonParser.Deserialize(responceBody);
       signal.lot = _jsonParser["lot"].ToDbl();
-      signal.type = _jsonParser["type"].ToStr();
+      signal.type = (SignalType) _jsonParser["type"].ToStr();
       signal.advisorId = _jsonParser["id"].ToStr();
-      signal.stopLoss = _jsonParser["stopLoss"].ToInt();
-      signal.takeProfit =  _jsonParser["takeProfit"].ToInt();
-      signal.positionId = _jsonParser["positionId"].ToLong();
+      signal.stopLoss = (int) _jsonParser["stopLoss"].ToInt();
+      signal.takeProfit = (int) _jsonParser["takeProfit"].ToInt();
+      signal.positionId = _jsonParser["positionId"].ToInt();
      }
 
-};
+  };

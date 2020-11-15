@@ -11,6 +11,8 @@ class RestClient
 
    long              _magic;
 
+   string            _symbol;
+
    string            _url_formatter;
 
    // Example: RestConfig restConfig = {"http://127.0.0.1", 80, "Content-Type: application/json\r\n", 3000 };
@@ -19,12 +21,13 @@ class RestClient
    RequestFactory *  _requestFactory;
 
 public:
-                     RestClient(long magic, RestConfig &restConfig)
+                     RestClient(long magic, string symbol, RestConfig &restConfig)
      {
       _magic = magic;
+      _symbol = symbol;
       _restConfig = restConfig;
       _url_formatter = "%s:%.0f%s";
-      _requestFactory = new RequestFactory(magic);
+      _requestFactory = new RequestFactory(magic, symbol);
      }
                     ~RestClient() { delete _requestFactory; }
 
@@ -39,17 +42,20 @@ public:
       HttpResponse response;
       Post(request, response);
       if(response.status != 200)
-         Alert(StringFormat("Connection to Advisor: %.0f failed", _magic)); ExpertRemove();
+        {
+         Alert(StringFormat("Connection to Advisor: %.0f failed", _magic));
+         ExpertRemove();
+        }
       else
          Alert(StringFormat("Connection to Advisor: %.0f success", _magic));
       return response.body;
      }
 
-   string               GetSignal(string advisor_id, string strategy_name, string symbol)
+   string               GetSignal(string advisor_id, string strategy_name)
      {
       HttpRequest request;
       request.url = StringFormat(_url_formatter, _restConfig.host, _restConfig.port, "/api/signal");
-      request.body = _requestFactory.GetSignalRequestBody(advisor_id, strategy_name, symbol);
+      request.body = _requestFactory.GetSignalRequestBody(advisor_id, strategy_name);
       request.headers = _restConfig.headers;
       HttpResponse response;
       Get(request, response);

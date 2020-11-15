@@ -4,6 +4,7 @@
 
 #include <Enums.mqh>
 
+
 struct HttpResponse
   {
    int               status;
@@ -29,7 +30,7 @@ struct Signal
   {
    long              positionId;
    string            advisorId;
-   PositionType      type;
+   SignalType        type;
    double            lot;
    int               stopLoss;
    int               takeProfit;

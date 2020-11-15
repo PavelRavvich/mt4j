@@ -5,18 +5,19 @@
 #include <Enums.mqh>
 #include <Structures.mqh>
 
+
 string PositionTypeToString(PositionType type)
   {
    switch(type)
      {
-      case BUY:
+      case LONG:
          return "BUY";
-      case SELL:
+      case SHORT:
          return "SELL";
-      case NO_ACTION:
-         return "NO_ACTION";
      }
-   return "";
+   Alert("Unexpected enum value PositionType can't be: ", type, "Expert was stopped!");
+   ExpertRemove();
+   return "ERROR";
   }
 
 string BoolToString(bool val)
