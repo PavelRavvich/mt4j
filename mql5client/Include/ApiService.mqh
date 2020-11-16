@@ -47,11 +47,11 @@ public:
       _jsonParser.Clear();
       _jsonParser.Deserialize(responceBody);
       signal.lot = _jsonParser["lot"].ToDbl();
-      signal.type = (SignalType) _jsonParser["type"].ToStr();
       signal.advisorId = _jsonParser["id"].ToStr();
+      signal.positionId = _jsonParser["positionId"].ToInt();
+      signal.type = (SignalType) _jsonParser["type"].ToStr();
       signal.stopLoss = (int) _jsonParser["stopLoss"].ToInt();
       signal.takeProfit = (int) _jsonParser["takeProfit"].ToInt();
-      signal.positionId = _jsonParser["positionId"].ToInt();
      }
 
   };
