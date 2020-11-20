@@ -3,6 +3,7 @@ package pro.laplacelab.mt4j.model;
 import org.junit.Test;
 import pro.laplacelab.mt4j.BaseTestPreparation;
 import pro.laplacelab.mt4j.enums.InputType;
+import pro.laplacelab.mt4j.enums.PositionType;
 import pro.laplacelab.mt4j.enums.SignalType;
 import pro.laplacelab.mt4j.exception.DuplicatePositionException;
 import pro.laplacelab.mt4j.exception.PositionNotFoundException;
@@ -43,7 +44,7 @@ public class AdvisorTest extends BaseTestPreparation {
     public void whenAddPositionSuccessThenFindPositionByIdReturnPosition() {
         final Input input = new Input("key1", "val", InputType.STRING);
         final Advisor advisor = new Advisor(1L, List.of(input));
-        final Position position = new Position(advisorId, SignalType.BUY, positionId,
+        final Position position = new Position(PositionType.LONG, positionId,
                 lot, stopLoss, takeProfit, openAt, closeAt, profit);
         advisor.addPosition(position);
         final Position expected = advisor.findPositionById(positionId).orElseThrow();
@@ -54,7 +55,7 @@ public class AdvisorTest extends BaseTestPreparation {
     public void whenAddAlreadyExistedPositionTwiceThenThrowDuplicatePositionException() {
         final Input input = new Input("key1", "val", InputType.STRING);
         final Advisor advisor = new Advisor(1L, List.of(input));
-        final Position position = new Position(advisorId, SignalType.BUY, positionId,
+        final Position position = new Position(PositionType.LONG, positionId,
                 lot, stopLoss, takeProfit, openAt, closeAt, profit);
         advisor.addPosition(position);
         advisor.addPosition(position);
@@ -64,7 +65,7 @@ public class AdvisorTest extends BaseTestPreparation {
     public void whenExistedPositionMoveToHistoryThenPositionInHistory() {
         final Input input = new Input("key1", "val", InputType.STRING);
         final Advisor advisor = new Advisor(1L, List.of(input));
-        final Position position = new Position(advisorId, SignalType.BUY, positionId,
+        final Position position = new Position(PositionType.LONG, positionId,
                 lot, stopLoss, takeProfit, openAt, closeAt, profit);
         advisor.addPosition(position);
         advisor.toHistory(position);
@@ -78,7 +79,7 @@ public class AdvisorTest extends BaseTestPreparation {
     public void whenMoveToHistoryNotExistedPositionThenThrowPositionNotFoundException() {
         final Input input = new Input("key1", "val", InputType.STRING);
         final Advisor advisor = new Advisor(1L, List.of(input));
-        final Position position = new Position(advisorId, SignalType.BUY, positionId,
+        final Position position = new Position(PositionType.LONG, positionId,
                 lot, stopLoss, takeProfit, openAt, closeAt, profit);
         advisor.toHistory(position);
     }
@@ -87,7 +88,7 @@ public class AdvisorTest extends BaseTestPreparation {
     public void whenUpdateExistedPositionThenPositionSuccessUpdated() {
         final Input input = new Input("key1", "val", InputType.STRING);
         final Advisor advisor = new Advisor(1L, List.of(input));
-        final Position origin = new Position(advisorId, SignalType.BUY, positionId,
+        final Position origin = new Position(PositionType.LONG, positionId,
                 lot, stopLoss, takeProfit, openAt, closeAt, profit);
         advisor.addPosition(origin);
 
@@ -96,7 +97,8 @@ public class AdvisorTest extends BaseTestPreparation {
         final Integer newStopLoss = 1000;
         final Integer newTakeProfit = 1000;
         final Long newCloseAt = System.currentTimeMillis();
-        final Position forUpdate = new Position(advisorId, SignalType.BUY, positionId,
+
+        final Position forUpdate = new Position(PositionType.LONG, positionId,
                 newLot, newStopLoss, newTakeProfit, openAt, newCloseAt, newProfit);
         origin.setProfit(100d);
         advisor.updatePosition(forUpdate);
@@ -113,7 +115,7 @@ public class AdvisorTest extends BaseTestPreparation {
     public void whenUpdatePositionWhichNotExistedThenThrowPositionNotFoundException() {
         final Input input = new Input("key1", "val", InputType.STRING);
         final Advisor advisor = new Advisor(1L, List.of(input));
-        final Position origin = new Position(advisorId, SignalType.BUY, positionId,
+        final Position origin = new Position(PositionType.LONG, positionId,
                 lot, stopLoss, takeProfit, openAt, closeAt, profit);
         advisor.updatePosition(origin);
     }
@@ -122,9 +124,9 @@ public class AdvisorTest extends BaseTestPreparation {
     public void whenCountNotExistDropdownThenReturnZero() {
         final Input input = new Input("key1", "val", InputType.STRING);
         final Advisor advisor = new Advisor(1L, List.of(input));
-        final Position dropdown = new Position(advisorId, SignalType.BUY, positionId,
-                lot, stopLoss, takeProfit, openAt, closeAt, -1d);
-        final Position profit = new Position(advisorId, SignalType.BUY, 2L,
+        final Position dropdown = new Position(PositionType.LONG, positionId,
+                lot, stopLoss, takeProfit, openAt, closeAt, -1D);
+        final Position profit = new Position(PositionType.LONG, 2L,
                 lot, stopLoss, takeProfit, openAt, closeAt, this.profit);
         advisor.addPosition(dropdown);
         advisor.addPosition(profit);
@@ -137,7 +139,7 @@ public class AdvisorTest extends BaseTestPreparation {
     public void whenDropdownPositionMoveToHistoryThenDropdownCounterReturnOne() {
         final Input input = new Input("key1", "val", InputType.STRING);
         final Advisor advisor = new Advisor(1L, List.of(input));
-        final Position position = new Position(advisorId, SignalType.BUY, positionId,
+        final Position position = new Position(PositionType.LONG, positionId,
                 lot, stopLoss, takeProfit, openAt, closeAt, -1d);
         advisor.addPosition(position);
         advisor.toHistory(position);

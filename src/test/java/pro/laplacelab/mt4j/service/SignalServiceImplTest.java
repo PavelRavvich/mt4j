@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import pro.laplacelab.mt4j.BaseTestPreparation;
 import pro.laplacelab.mt4j.enums.InputType;
+import pro.laplacelab.mt4j.enums.PositionType;
 import pro.laplacelab.mt4j.enums.SignalType;
 import pro.laplacelab.mt4j.example.Example;
 import pro.laplacelab.mt4j.exception.AdvisorNotFoundException;
@@ -42,15 +43,13 @@ public class SignalServiceImplTest extends BaseTestPreparation {
     public void whenSignalGeneratedSuccessThenServicesCalled() {
         final Advisor advisor = spy(new Advisor(1L, List.of(
                 new Input("key1", "val", InputType.STRING))));
-        final Position position = new Position(advisor.getId(), SignalType.BUY, positionId,
-                lot, stopLoss, takeProfit, openAt, closeAt, profit);
         final Signal signal = new Signal(advisor.getId(), SignalType.NO_ACTION);
         final Market market = new Market(advisor.getId(), "EXAMPLE", new HashMap<>());
         final Example example = mock(Example.class);
 
-        doReturn(Optional.of(advisor)).when(advisorService).get(position.getAdvisorId());
-        doReturn(Optional.of(example)).when(strategyService).findByName("EXAMPLE");
-        doReturn(signal).when(example).apply(advisor, market.getRates());
+        when(advisorService.get(advisor.getId())).thenReturn(Optional.of(advisor));
+        when(strategyService.findByName("EXAMPLE")).thenReturn(Optional.of(example));
+        when(example.apply(advisor, market.getRates())).thenReturn(signal);
 
         final Signal result = signalService.onTick(market);
         verify(advisorService, times(1)).get(advisor.getId());
@@ -67,12 +66,10 @@ public class SignalServiceImplTest extends BaseTestPreparation {
     public void whenStrategyNotExistThenThrowStrategyNotFoundException() {
         final Advisor advisor = spy(new Advisor(1L, List.of(
                 new Input("key1", "val", InputType.STRING))));
-        final Position position = new Position(advisor.getId(), SignalType.BUY, positionId,
-                lot, stopLoss, takeProfit, openAt, closeAt, profit);
 
-        doReturn(Optional.of(advisor)).when(advisorService).get(position.getAdvisorId());
+        when(advisorService.get(advisor.getId())).thenReturn(Optional.of(advisor));
 
-        signalService.onTick(new Market(advisor.getId(), "EXAMPLE", new HashMap<>()));
+        signalService.onTick(new Market(advisor.getId(), "NOT_EXIST_STRATEGY", new HashMap<>()));
     }
 
 }
