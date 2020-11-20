@@ -12,7 +12,7 @@
     <groupId>pro.laplacelab</groupId>
     <artifactId>bridge</artifactId>
     <version>1.0.LATEST</version>
-    <name>bridge</name>
+    <name>mt4j</name>
     <description>Bridge MetaTrader5 to Java Strategy impl</description>
 
     <properties>
