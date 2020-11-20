@@ -10,10 +10,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>pro.laplacelab</groupId>
-    <artifactId>bridge</artifactId>
+    <artifactId>mt4j</artifactId>
     <version>1.0.LATEST</version>
     <name>mt4j</name>
-    <description>Bridge MetaTrader5 to Java Strategy impl</description>
+    <description>Integration bridge MetaTrader5 to Java Strategy impl</description>
 
     <properties>
         <java.version>11</java.version>
