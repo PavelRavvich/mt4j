@@ -4,7 +4,6 @@ import org.junit.Test;
 import pro.laplacelab.mt4j.BaseTestPreparation;
 import pro.laplacelab.mt4j.enums.InputType;
 import pro.laplacelab.mt4j.enums.PositionType;
-import pro.laplacelab.mt4j.enums.SignalType;
 import pro.laplacelab.mt4j.exception.DuplicatePositionException;
 import pro.laplacelab.mt4j.exception.PositionNotFoundException;
 
