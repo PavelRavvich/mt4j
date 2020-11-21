@@ -4,7 +4,8 @@
 ![codecov](https://codecov.io/gh/triodjangopiter/bridge/branch/master/graph/badge.svg?token=Y3IRTX7LPW)
 
 
-##About
+###About
+
 MT4J is integration bridge between Meta Trader 5 and Java implemented through sync http requests.
 
 Using this app you can write trading strategies with Java instead of mql5 language. For implementation strategy logic you can 
@@ -14,7 +15,8 @@ The local server based on Tomcat and use port **80**. Port can't be changed by s
 
 MetaTrader 5 required permission in settings for send http requests to localhost, see more in MQL5 documentation: [https://www.mql5.com/en/docs/network][settings]
 
-##Data Exchange Protocol
+
+###Data Exchange Protocol
 
 Endpoints:
 
