@@ -37,7 +37,7 @@ public class PositionServiceImplTest extends BaseTestPreparation {
         final Advisor advisor = spy(new Advisor(1L, List.of(
                 new Input("key1", "val", InputType.STRING))));
         final Position position = new Position(PositionType.LONG, positionId,
-                lot, stopLoss, takeProfit, openAt, closeAt, profit);
+                lot, stopLoss, takeProfit, openAt, closeAt, profit, swap);
         when(advisorService.get(advisor.getId())).thenReturn(Optional.of(advisor));
         positionService.add(advisor.getId(), position);
 
@@ -48,7 +48,7 @@ public class PositionServiceImplTest extends BaseTestPreparation {
     @Test(expected = AdvisorNotFoundException.class)
     public void whenAddFailThenThrowAdvisorNotFoundException() {
         positionService.add(advisorId, new Position(PositionType.LONG, positionId,
-                lot, stopLoss, takeProfit, openAt, closeAt, profit));
+                lot, stopLoss, takeProfit, openAt, closeAt, profit, swap));
     }
 
     @Test
@@ -56,12 +56,12 @@ public class PositionServiceImplTest extends BaseTestPreparation {
         final Advisor advisor = spy(new Advisor(1L, List.of(
                 new Input("key1", "val", InputType.STRING))));
         final Position origin = new Position(PositionType.LONG, positionId,
-                lot, stopLoss, takeProfit, openAt, closeAt, profit);
+                lot, stopLoss, takeProfit, openAt, closeAt, profit, swap);
 
         when(advisorService.get(advisor.getId())).thenReturn(Optional.of(advisor));
         positionService.add(advisor.getId(), origin);
         final Position update = new Position(PositionType.LONG, positionId,
-                0.1, stopLoss, takeProfit, openAt, closeAt, profit);
+                0.1, stopLoss, takeProfit, openAt, closeAt, profit, swap);
         positionService.update(advisor.getId(), update);
 
         verify(advisor, times(1)).updatePosition(update);
@@ -72,7 +72,7 @@ public class PositionServiceImplTest extends BaseTestPreparation {
     @Test(expected = AdvisorNotFoundException.class)
     public void whenUpdateFailThenThrowAdvisorNotFoundException() {
         positionService.update(advisorId, new Position(PositionType.LONG,
-                positionId, lot, stopLoss, takeProfit, openAt, closeAt, profit));
+                positionId, lot, stopLoss, takeProfit, openAt, closeAt, profit, swap));
     }
 
     @Test
@@ -80,7 +80,7 @@ public class PositionServiceImplTest extends BaseTestPreparation {
         final Advisor advisor = spy(new Advisor(1L, List.of(
                 new Input("key1", "val", InputType.STRING))));
         final Position position = new Position(PositionType.LONG, positionId,
-                lot, stopLoss, takeProfit, openAt, closeAt, profit);
+                lot, stopLoss, takeProfit, openAt, closeAt, profit, swap);
         when(advisorService.get(advisor.getId())).thenReturn(Optional.of(advisor));
         positionService.add(advisor.getId(), position);
         positionService.history(advisor.getId(), position);
@@ -93,7 +93,7 @@ public class PositionServiceImplTest extends BaseTestPreparation {
     @Test(expected = AdvisorNotFoundException.class)
     public void whenHistoryFailThenThrowAdvisorNotFoundException() {
         positionService.history(advisorId, new Position(PositionType.LONG, positionId,
-                lot, stopLoss, takeProfit, openAt, closeAt, profit));
+                lot, stopLoss, takeProfit, openAt, closeAt, profit, swap));
     }
 
 }

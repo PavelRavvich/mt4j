@@ -44,7 +44,7 @@ public class AdvisorTest extends BaseTestPreparation {
         final Input input = new Input("key1", "val", InputType.STRING);
         final Advisor advisor = new Advisor(1L, List.of(input));
         final Position position = new Position(PositionType.LONG, positionId,
-                lot, stopLoss, takeProfit, openAt, closeAt, profit);
+                lot, stopLoss, takeProfit, openAt, closeAt, profit, swap);
         advisor.addPosition(position);
         final Position expected = advisor.findPositionById(positionId).orElseThrow();
         assertEquals(position, expected);
@@ -55,7 +55,7 @@ public class AdvisorTest extends BaseTestPreparation {
         final Input input = new Input("key1", "val", InputType.STRING);
         final Advisor advisor = new Advisor(1L, List.of(input));
         final Position position = new Position(PositionType.LONG, positionId,
-                lot, stopLoss, takeProfit, openAt, closeAt, profit);
+                lot, stopLoss, takeProfit, openAt, closeAt, profit, swap);
         advisor.addPosition(position);
         advisor.addPosition(position);
     }
@@ -65,7 +65,7 @@ public class AdvisorTest extends BaseTestPreparation {
         final Input input = new Input("key1", "val", InputType.STRING);
         final Advisor advisor = new Advisor(1L, List.of(input));
         final Position position = new Position(PositionType.LONG, positionId,
-                lot, stopLoss, takeProfit, openAt, closeAt, profit);
+                lot, stopLoss, takeProfit, openAt, closeAt, profit, swap);
         advisor.addPosition(position);
         advisor.toHistory(position);
         final Optional<Position> origin = advisor.findPositionById(positionId);
@@ -79,7 +79,7 @@ public class AdvisorTest extends BaseTestPreparation {
         final Input input = new Input("key1", "val", InputType.STRING);
         final Advisor advisor = new Advisor(1L, List.of(input));
         final Position position = new Position(PositionType.LONG, positionId,
-                lot, stopLoss, takeProfit, openAt, closeAt, profit);
+                lot, stopLoss, takeProfit, openAt, closeAt, profit, swap);
         advisor.toHistory(position);
     }
 
@@ -88,7 +88,7 @@ public class AdvisorTest extends BaseTestPreparation {
         final Input input = new Input("key1", "val", InputType.STRING);
         final Advisor advisor = new Advisor(1L, List.of(input));
         final Position origin = new Position(PositionType.LONG, positionId,
-                lot, stopLoss, takeProfit, openAt, closeAt, profit);
+                lot, stopLoss, takeProfit, openAt, closeAt, profit, swap);
         advisor.addPosition(origin);
 
         final Double newLot = 100d;
@@ -98,7 +98,7 @@ public class AdvisorTest extends BaseTestPreparation {
         final Long newCloseAt = System.currentTimeMillis();
 
         final Position forUpdate = new Position(PositionType.LONG, positionId,
-                newLot, newStopLoss, newTakeProfit, openAt, newCloseAt, newProfit);
+                newLot, newStopLoss, newTakeProfit, openAt, newCloseAt, newProfit, swap);
         origin.setProfit(100d);
         advisor.updatePosition(forUpdate);
         final Position expected = advisor.findPositionById(positionId).orElseThrow();
@@ -115,7 +115,7 @@ public class AdvisorTest extends BaseTestPreparation {
         final Input input = new Input("key1", "val", InputType.STRING);
         final Advisor advisor = new Advisor(1L, List.of(input));
         final Position origin = new Position(PositionType.LONG, positionId,
-                lot, stopLoss, takeProfit, openAt, closeAt, profit);
+                lot, stopLoss, takeProfit, openAt, closeAt, profit, swap);
         advisor.updatePosition(origin);
     }
 
@@ -124,9 +124,9 @@ public class AdvisorTest extends BaseTestPreparation {
         final Input input = new Input("key1", "val", InputType.STRING);
         final Advisor advisor = new Advisor(1L, List.of(input));
         final Position dropdown = new Position(PositionType.LONG, positionId,
-                lot, stopLoss, takeProfit, openAt, closeAt, -1D);
+                lot, stopLoss, takeProfit, openAt, closeAt, -1D, swap);
         final Position profit = new Position(PositionType.LONG, 2L,
-                lot, stopLoss, takeProfit, openAt, closeAt, this.profit);
+                lot, stopLoss, takeProfit, openAt, closeAt, this.profit, swap);
         advisor.addPosition(dropdown);
         advisor.addPosition(profit);
         advisor.toHistory(dropdown);
@@ -139,7 +139,7 @@ public class AdvisorTest extends BaseTestPreparation {
         final Input input = new Input("key1", "val", InputType.STRING);
         final Advisor advisor = new Advisor(1L, List.of(input));
         final Position position = new Position(PositionType.LONG, positionId,
-                lot, stopLoss, takeProfit, openAt, closeAt, -1d);
+                lot, stopLoss, takeProfit, openAt, closeAt, -1d, swap);
         advisor.addPosition(position);
         advisor.toHistory(position);
         assertEquals(1, advisor.countDropdown());

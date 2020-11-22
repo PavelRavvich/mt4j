@@ -11,7 +11,7 @@ public class PositionTest extends BaseTestPreparation {
     @Test
     public void whenPositionConstructedSuccessfulThenStateSaved() {
         final Position position = new Position(PositionType.LONG, positionId,
-                lot, stopLoss, takeProfit, openAt, closeAt, profit);
+                lot, stopLoss, takeProfit, openAt, closeAt, profit, swap);
         assertEquals(PositionType.LONG, position.getType());
         assertEquals(positionId, position.getPositionId());
         assertEquals(takeProfit, position.getTakeProfit());

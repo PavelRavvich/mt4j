@@ -47,7 +47,9 @@ public class Position  {
     @JsonProperty("profit")
     private Double profit;
 
-    // todo add swap
+    @NotNull(message = "swap required")
+    @JsonProperty("swap")
+    private Double swap;
 
 }
 

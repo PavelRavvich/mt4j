@@ -20,4 +20,6 @@ public class BaseTestPreparation {
 
     protected final Integer takeProfit = 50;
 
+    protected final Double swap = 0D;
+
 }
