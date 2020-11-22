@@ -47,9 +47,9 @@ public:
 
 private:
 
-   void              FetchPositions(long magic, Position &positions[])
+   void              FetchPositions(Position &positions[])
      {
-      FetchOpenPositions(Position positions);
+      FetchOpenPositions(positions);
      }
 
    void              FetchOpenPositions(Position &positions[])
@@ -72,19 +72,19 @@ private:
               }
      }
 
-   void              FetchHistory(Position &positions)
+   void              FetchHistory(Position &positions[])
      {
       // todo fetch history
       Position position;
       position.isHistory = true;
-      positions.AddPosition(position);
+      AddPosition(position, positions);
      }
 
    void              AddPosition(Position &position, Position &positions[])
      {
       int size = ArraySize(positions);
       ArrayResize(positions, size + 1);
-      arr[size] = position;
+      positions[size] = position;
      }
 
   };
