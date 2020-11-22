@@ -41,12 +41,12 @@ struct Position
    bool              isHistory;
    PositionType      type;
    long              magic;
-   long              positionId;
+   ulong             positionId;
    double            lot;
    int               stopLoss;
    int               takeProfit;
-   long              openAt;
-   long              closeAt;
+   ulong             openAt;
+   ulong             closeAt;
    double            profit;
    double            swap;
   };

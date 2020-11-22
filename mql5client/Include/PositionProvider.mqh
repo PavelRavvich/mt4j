@@ -28,7 +28,7 @@ public:
    string            GetPositions()
      {
       Position positions[];
-      FetchPositions(_magic, positions);
+      FetchPositions(positions);
       string items = "";
       int size = ArraySize(positions);
       for(int i = 0; i < size; i++)
@@ -65,9 +65,9 @@ private:
                position.profit = position_info.Profit();
                position.openAt = position_info.TimeMsc();
                position.positionId = position_info.Ticket();
-               position.stopLoss = position_info.StopLoss();
-               position.takeProfit = position_info.TakeProfit();
                position.type = position_info.PositionType() == POSITION_TYPE_BUY ? LONG : SHORT;
+               position.stopLoss = StopLossToPoint(position_info.StopLoss(), position_info.PositionType());
+               position.takeProfit = TakeProfitToPoint(position_info.TakeProfit(), position_info.PositionType());
                AddPosition(position, positions);
               }
      }
