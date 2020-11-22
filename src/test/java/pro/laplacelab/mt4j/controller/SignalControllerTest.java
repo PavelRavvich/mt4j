@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import pro.laplacelab.mt4j.JsonMapper;
 import pro.laplacelab.mt4j.enums.Timeframe;
+import pro.laplacelab.mt4j.model.Account;
 import pro.laplacelab.mt4j.model.Market;
 import pro.laplacelab.mt4j.model.MqlRates;
 import pro.laplacelab.mt4j.model.Signal;
@@ -39,7 +40,11 @@ public class SignalControllerTest {
     public void testGetSignal() throws Exception {
         Market market = new Market();
         market.setAdvisorId(UUID.randomUUID());
-        market.setRates(Map.of(Timeframe.M_1, List.of(new MqlRates(1L, 1D, 1D, 1D, 1D, 1L, 1, 1L))));
+        market.setRates(Map.of(
+                Timeframe.M_1, List.of(MqlRates.builder().time(1L).open(1D).high(1D).low(1D)
+                        .close(1D).tickVolume(1L).spread(1).realVolume(1L).build())));
+        market.setAccount(
+                Account.builder().deposit(1D).id(1L).freeMargin(1D).margin(1D).owner("T").build());
         market.setPositions(List.of());
         market.setStrategyName("TEST");
         final String requestJson = mapper.toJson(market);

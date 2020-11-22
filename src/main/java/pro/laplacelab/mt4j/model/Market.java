@@ -26,6 +26,10 @@ public class Market {
     @JsonProperty("advisorId")
     private UUID advisorId;
 
+    @NotNull(message = "account required")
+    @JsonProperty("account")
+    private Account account;
+
     @NotNull(message = "strategyName required")
     @NotBlank(message = "strategyName can't be blank")
     @JsonProperty("strategyName")

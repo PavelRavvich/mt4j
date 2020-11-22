@@ -13,10 +13,7 @@ import pro.laplacelab.mt4j.enums.SignalType;
 import pro.laplacelab.mt4j.example.Example;
 import pro.laplacelab.mt4j.exception.AdvisorNotFoundException;
 import pro.laplacelab.mt4j.exception.StrategyNotFoundException;
-import pro.laplacelab.mt4j.model.Advisor;
-import pro.laplacelab.mt4j.model.Input;
-import pro.laplacelab.mt4j.model.Market;
-import pro.laplacelab.mt4j.model.Signal;
+import pro.laplacelab.mt4j.model.*;
 
 import java.util.*;
 
@@ -43,7 +40,8 @@ public class SignalServiceImplTest extends BaseTestPreparation {
         final Advisor advisor = spy(new Advisor(1L, List.of(
                 new Input("key1", "val", InputType.STRING))));
         final Signal signal = new Signal(advisor.getId(), SignalType.NO_ACTION);
-        final Market market = new Market(advisor.getId(), "EXAMPLE", new ArrayList<>(), new HashMap<>());
+        final Market market = new Market(advisor.getId(), new Account(),
+                "EXAMPLE", new ArrayList<>(), new HashMap<>());
         final Example example = mock(Example.class);
 
         when(advisorService.get(advisor.getId())).thenReturn(Optional.of(advisor));
@@ -58,7 +56,8 @@ public class SignalServiceImplTest extends BaseTestPreparation {
 
     @Test(expected = AdvisorNotFoundException.class)
     public void whenAdvisorNotExistThenThrowAdvisorNotFoundException() {
-        signalService.onTick(new Market(UUID.randomUUID(), "EXAMPLE", new ArrayList<>(), new HashMap<>()));
+        signalService.onTick(new Market(UUID.randomUUID(), new Account(),
+                "EXAMPLE", new ArrayList<>(), new HashMap<>()));
     }
 
     @Test(expected = StrategyNotFoundException.class)
@@ -68,7 +67,8 @@ public class SignalServiceImplTest extends BaseTestPreparation {
 
         when(advisorService.get(advisor.getId())).thenReturn(Optional.of(advisor));
 
-        signalService.onTick(new Market(advisor.getId(), "NOT_EXIST_STRATEGY", new ArrayList<>(), new HashMap<>()));
+        signalService.onTick(new Market(advisor.getId(), new Account(),
+                "NOT_EXIST_STRATEGY", new ArrayList<>(), new HashMap<>()));
     }
 
 }
