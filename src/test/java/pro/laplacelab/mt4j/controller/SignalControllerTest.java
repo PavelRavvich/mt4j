@@ -40,6 +40,7 @@ public class SignalControllerTest {
         Market market = new Market();
         market.setAdvisorId(UUID.randomUUID());
         market.setRates(Map.of(Timeframe.M_1, List.of(new MqlRates(1L, 1D, 1D, 1D, 1D, 1L, 1, 1L))));
+        market.setPositions(List.of());
         market.setStrategyName("TEST");
         final String requestJson = mapper.toJson(market);
         Signal signal = new Signal();

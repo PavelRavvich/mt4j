@@ -9,17 +9,16 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import pro.laplacelab.mt4j.BaseTestPreparation;
 import pro.laplacelab.mt4j.enums.InputType;
-import pro.laplacelab.mt4j.enums.PositionType;
 import pro.laplacelab.mt4j.enums.SignalType;
 import pro.laplacelab.mt4j.example.Example;
 import pro.laplacelab.mt4j.exception.AdvisorNotFoundException;
 import pro.laplacelab.mt4j.exception.StrategyNotFoundException;
-import pro.laplacelab.mt4j.model.*;
+import pro.laplacelab.mt4j.model.Advisor;
+import pro.laplacelab.mt4j.model.Input;
+import pro.laplacelab.mt4j.model.Market;
+import pro.laplacelab.mt4j.model.Signal;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
@@ -44,7 +43,7 @@ public class SignalServiceImplTest extends BaseTestPreparation {
         final Advisor advisor = spy(new Advisor(1L, List.of(
                 new Input("key1", "val", InputType.STRING))));
         final Signal signal = new Signal(advisor.getId(), SignalType.NO_ACTION);
-        final Market market = new Market(advisor.getId(), "EXAMPLE", new HashMap<>());
+        final Market market = new Market(advisor.getId(), "EXAMPLE", new ArrayList<>(), new HashMap<>());
         final Example example = mock(Example.class);
 
         when(advisorService.get(advisor.getId())).thenReturn(Optional.of(advisor));
@@ -59,7 +58,7 @@ public class SignalServiceImplTest extends BaseTestPreparation {
 
     @Test(expected = AdvisorNotFoundException.class)
     public void whenAdvisorNotExistThenThrowAdvisorNotFoundException() {
-        signalService.onTick(new Market(UUID.randomUUID(), "EXAMPLE", new HashMap<>()));
+        signalService.onTick(new Market(UUID.randomUUID(), "EXAMPLE", new ArrayList<>(), new HashMap<>()));
     }
 
     @Test(expected = StrategyNotFoundException.class)
@@ -69,7 +68,7 @@ public class SignalServiceImplTest extends BaseTestPreparation {
 
         when(advisorService.get(advisor.getId())).thenReturn(Optional.of(advisor));
 
-        signalService.onTick(new Market(advisor.getId(), "NOT_EXIST_STRATEGY", new HashMap<>()));
+        signalService.onTick(new Market(advisor.getId(), "NOT_EXIST_STRATEGY", new ArrayList<>(), new HashMap<>()));
     }
 
 }

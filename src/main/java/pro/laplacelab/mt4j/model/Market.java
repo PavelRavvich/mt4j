@@ -31,6 +31,10 @@ public class Market {
     @JsonProperty("strategyName")
     private String strategyName;
 
+    @NotNull(message = "positions required")
+    @JsonProperty("positions")
+    private List<Position> positions;
+
     @NotNull(message = "rates required")
     @NotEmpty(message = "rates can't be empty")
     @JsonProperty("rates")
