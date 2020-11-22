@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import pro.laplacelab.mt4j.enums.PositionType;
 
 import javax.validation.constraints.NotNull;
-import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -47,6 +46,8 @@ public class Position  {
     @NotNull(message = "profit required")
     @JsonProperty("profit")
     private Double profit;
+
+    // todo add swap
 
 }
 

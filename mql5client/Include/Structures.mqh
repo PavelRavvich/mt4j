@@ -48,4 +48,5 @@ struct Position
    long              openAt;
    long              closeAt;
    double            profit;
+   double            swap;
   };

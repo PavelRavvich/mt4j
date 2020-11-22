@@ -5,6 +5,7 @@
 #include <Enums.mqh>
 #include <Utils.mqh>
 #include <Structures.mqh>
+#include <Trade\PositionInfo.mqh>
 
 
 class PositionProvider
@@ -13,6 +14,8 @@ class PositionProvider
    long              _magic;
 
    string            _position_pattern;
+
+   CPositionInfo     _position_info;
 
 public:
 
@@ -46,37 +49,42 @@ private:
 
    void              FetchPositions(long magic, Position &positions[])
      {
-      // -- MOCK EXAMPLE -- //
-      Position mock1;
-      mock1.magic = magic;
-      mock1.positionId = 48082938746378;
-      mock1.isHistory = false;
-      mock1.type = LONG;
-      mock1.lot = 0.01;
-      mock1.stopLoss = 100;
-      mock1.takeProfit = 100;
-      mock1.openAt = (long) TimeCurrent() * 1000; // time in milliseconds
-      mock1.openAt = NULL;
-      mock1.profit = 100.01;
-      ArrayResize(positions, ArraySize(positions) + 1);
-      positions[ArraySize(positions) - 1] = mock1;
+      FetchOpenPositions(Position positions);
+     }
 
-      Position mock2;
-      mock1.magic = magic;
-      mock2.positionId = 48082938754849;
-      mock2.isHistory = true;
-      mock2.type = SHORT;
-      mock2.lot = 0.01;
-      mock2.stopLoss = 100;
-      mock2.takeProfit = 100;
-      mock2.openAt = (long) TimeCurrent() * 1000; // time in milliseconds
-      mock2.closeAt = (long) TimeCurrent() * 1000; // time in milliseconds
-      mock2.profit = -6.01;
-      ArrayResize(positions, ArraySize(positions) + 1);
-      positions[ArraySize(positions) - 1] = mock2;
-      // -- MOCK EXAMPLE -- //
+   void              FetchOpenPositions(Position &positions[])
+     {
+      for(int i = PositionsTotal() - 1; i >= 0; i--)
+         if(position_info.SelectByIndex(i))
+            if(position_info.Magic() == _magic)
+              {
+               Position position;
+               position.isHistory = false;
+               position.swap = position_info.Swap();
+               position.lot = position_info.Volume();
+               position.profit = position_info.Profit();
+               position.openAt = position_info.TimeMsc();
+               position.positionId = position_info.Ticket();
+               position.stopLoss = position_info.StopLoss();
+               position.takeProfit = position_info.TakeProfit();
+               position.type = position_info.PositionType() == POSITION_TYPE_BUY ? LONG : SHORT;
+               AddPosition(position, positions);
+              }
+     }
 
-      // todo Fetch all positions by magic
+   void              FetchHistory(Position &positions)
+     {
+      // todo fetch history
+      Position position;
+      position.isHistory = true;
+      positions.AddPosition(position);
+     }
+
+   void              AddPosition(Position &position, Position &positions[])
+     {
+      int size = ArraySize(positions);
+      ArrayResize(positions, size + 1);
+      arr[size] = position;
      }
 
   };
