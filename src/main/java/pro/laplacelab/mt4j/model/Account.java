@@ -20,14 +20,9 @@ public class Account {
     @JsonProperty("id")
     private Long id;
 
-    @NotNull(message = "owner required")
-    @NotEmpty(message = "owner name cant be empty")
-    @JsonProperty("owner")
-    private String owner;
-
-    @NotNull(message = "deposit required")
-    @JsonProperty("deposit")
-    private Double deposit;
+    @NotNull(message = "balance required")
+    @JsonProperty("balance")
+    private Double balance;
 
     @NotNull(message = "margin required")
     @JsonProperty("margin")
@@ -36,5 +31,15 @@ public class Account {
     @NotNull(message = "freeMargin required")
     @JsonProperty("freeMargin")
     private Double freeMargin;
+
+    @NotNull(message = "owner required")
+    @NotEmpty(message = "owner name cant be empty")
+    @JsonProperty("owner")
+    private String owner;
+
+    @NotEmpty(message = "company name cant be empty")
+    @NotNull(message = "company required")
+    @JsonProperty("company")
+    private String company;
 
 }

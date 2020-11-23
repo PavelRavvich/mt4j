@@ -44,7 +44,9 @@ public class SignalControllerTest {
                 Timeframe.M_1, List.of(MqlRates.builder().time(1L).open(1D).high(1D).low(1D)
                         .close(1D).tickVolume(1L).spread(1).realVolume(1L).build())));
         market.setAccount(
-                Account.builder().deposit(1D).id(1L).freeMargin(1D).margin(1D).owner("T").build());
+                Account.builder()
+                        .company("a").balance(1D).id(1L).freeMargin(1D).margin(1D).owner("T")
+                        .build());
         market.setPositions(List.of());
         market.setStrategyName("TEST");
         final String requestJson = mapper.toJson(market);
