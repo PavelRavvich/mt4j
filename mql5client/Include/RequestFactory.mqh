@@ -3,6 +3,7 @@
 #property strict
 
 #include <MarketProvider.mqh>
+#include <AccountProvider.mqh>
 #include <PositionProvider.mqh>
 
 
@@ -15,6 +16,8 @@ class RequestFactory
 
    MarketProvider *    _market_provider;
 
+   AccountProvider *   _account_provider;
+
    PositionProvider *  _position_provider;
 
 public:
@@ -26,7 +29,7 @@ public:
       _position_provider = new PositionProvider(magic);
      }
 
-                    ~RequestFactory() { delete _market_provider; delete _position_provider; }
+                    ~RequestFactory() { delete _market_provider; delete _position_provider; delete _account_provider; }
 
 public:
 
@@ -37,9 +40,11 @@ public:
 
    string            GetSignalRequestBody(string advisor_id, string strategy_name)
      {
-      return "{ \"advisorId\": \"" +  advisor_id + "\", \"strategyName\": \"" + strategy_name
-             + "\", \"rates\": " + _market_provider.GetRates() +
-             ", \"positions\": " + _position_provider.GetPositions() + " }";
+      return "{ \"advisorId\": \"" +  advisor_id + "\", \"strategyName\": \"" + strategy_name +
+             "\", \"rates\": " + _market_provider.GetRates() +
+             ", \"positions\": " + _position_provider.GetPositions() +
+             ", \"account\": " + _account_provider.GetAccount() +
+             " }";
      }
 
   };
