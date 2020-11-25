@@ -1,5 +1,4 @@
-# MT4J ![Build](https://github.com/triodjangopiter/bridge/workflows/Build/badge.svg) ![codecov](https://codecov.io/gh/triodjangopiter/bridge/branch/master/graph/badge.svg?token=Y3IRTX7LPW)
-
+# MT4J [![License: MIT](https://img.shields.io/badge/License-MIT%202.0-0298c3.svg)](https://opensource.org/licenses/MIT) ![Build](https://github.com/triodjangopiter/bridge/workflows/Build/badge.svg) ![codecov](https://codecov.io/gh/triodjangopiter/bridge/branch/master/graph/badge.svg?token=Y3IRTX7LPW)  [![Issues](https://img.shields.io/github/issues/triodjangopiter/mt4j)](https://opensource.org/licenses/MIT)
 
 ## About
 
