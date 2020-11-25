@@ -1,10 +1,8 @@
-#property copyright "Copyright © 2006-2017"
-#property version "1.12"
 #property strict
 
-#include <JAson.mqh>
-#include <RestClient.mqh>
-#include <Structures.mqh>
+#include <Common\JAson.mqh>
+#include <Common\Structures.mqh>
+#include <Network\RestClient.mqh>
 
 
 class ApiService

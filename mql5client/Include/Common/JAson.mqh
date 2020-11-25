@@ -1,9 +1,3 @@
-//+------------------------------------------------------------------ß
-//|                                                            JAson |
-//|    This software is licensed under the MIT https://goo.gl/eyJgHe |
-//+------------------------------------------------------------------+
-#property copyright "Copyright © 2006-2017"
-#property version "1.12"
 #property strict
 
 //------------------------------------------------------------------ enum enJAType

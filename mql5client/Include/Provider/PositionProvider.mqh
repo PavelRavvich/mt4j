@@ -1,11 +1,10 @@
-#property copyright "Copyright © 2006-2017"
-#property version "1.12"
 #property strict
 
-#include <Enums.mqh>
-#include <Utils.mqh>
-#include <Structures.mqh>
 #include <Trade\PositionInfo.mqh>
+
+#include <Common\Structures.mqh>
+#include <Common\Utils.mqh>
+#include <Common\Enums.mqh>
 
 
 class PositionProvider

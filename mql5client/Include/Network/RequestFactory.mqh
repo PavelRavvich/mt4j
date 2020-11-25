@@ -1,10 +1,8 @@
-#property copyright "Copyright © 2006-2017"
-#property version "1.12"
 #property strict
 
-#include <MarketProvider.mqh>
-#include <AccountProvider.mqh>
-#include <PositionProvider.mqh>
+#include <Provider\MarketProvider.mqh>
+#include <Provider\AccountProvider.mqh>
+#include <Provider\PositionProvider.mqh>
 
 
 class RequestFactory

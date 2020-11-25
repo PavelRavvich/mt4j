@@ -1,5 +1,3 @@
-#property copyright "Copyright © 2006-2017"
-#property version "1.12"
 #property strict
 
 

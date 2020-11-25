@@ -1,25 +1,23 @@
-#property copyright "Copyright © 2006-2017"
-#property version "1.12"
 #property strict
 
 /*
-   InputsBuilder usage example.
+   InputsProvider usage example.
 
-   InputsBuilder * ib = new InputsBuilder();
-   ib.InputString("input_name_1", "input_value_1");
-   ib.InputDouble("input_name_2", 1.1234);
-   ib.InputInteger("input_name_3", 12345);
-   ib.InputLong("input_name_4", 12345678);
+   InputsProvider * ip = new InputsProvider();
+   ip.InputString("input_name_1", "input_value_1");
+   ip.InputDouble("input_name_2", 1.1234);
+   ip.InputInteger("input_name_3", 12345);
+   ip.InputLong("input_name_4", 12345678);
    datetime now = TimeCurrent();
-   ib.InputDatetime("input_name_5", now);
-   ib.InputTimeSeconds("input_name_6", (int) now);
-   ib.InputTimeMilliseconds("input_name_7", now * 1000);
-   string jsonBuild = ib.Build(); // InputsBuilder instance stay imutable.
-   string jsonGet = ib.GetInputs(); // Can be used only after .Build()
+   ip.InputDatetime("input_name_5", now);
+   ip.InputTimeSeconds("input_name_6", (int) now);
+   ip.InputTimeMilliseconds("input_name_7", now * 1000);
+   string jsonBuild = ip.Build(); // InputsProvider instance stay imutable.
+   string jsonGet = ip.GetInputs(); // Can be used only after .Build()
 */
 
 // Build JSON array from inputs.
-class InputsBuilder
+class InputsProvider
   {
 
    string            inputs;
@@ -37,7 +35,7 @@ class InputsBuilder
    string            _keys[];
 
 public:
-                     InputsBuilder()
+                     InputsProvider()
      {
       inputs = "";
       is_builed = false;
@@ -46,7 +44,7 @@ public:
       _input_string_formatter = "{ \"key\": \"%s\", \"value\": \"%s\", \"type\": \"STRING\" }";
       _input_double_formatter = "{ \"key\": \"%s\", \"value\": %.5f, \"type\": \"NUMBER\" }";
      }
-                    ~InputsBuilder() {}
+                    ~InputsProvider() {}
 
 public:
 

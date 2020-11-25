@@ -1,9 +1,7 @@
-#property copyright "Copyright © 2006-2017"
-#property version "1.12"
 #property strict
 
-#include <Enums.mqh>
-#include <Structures.mqh>
+#include <Common\Enums.mqh>
+#include <Common\Structures.mqh>
 
 
 string PositionTypeToString(PositionType type)
