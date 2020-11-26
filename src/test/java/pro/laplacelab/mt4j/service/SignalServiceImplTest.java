@@ -39,19 +39,19 @@ public class SignalServiceImplTest extends BaseTestPreparation {
     public void whenSignalGeneratedSuccessThenServicesCalled() {
         final Advisor advisor = spy(new Advisor(1L, List.of(
                 new Input("key1", "val", InputType.STRING))));
-        final Signal signal = new Signal(advisor.getId(), SignalType.NO_ACTION);
+        final List<Signal> signals = List.of(new Signal(advisor.getId(), SignalType.NO_ACTION));
         final Market market = new Market(advisor.getId(), new Account(),
                 "EXAMPLE", new ArrayList<>(), new HashMap<>());
         final Example example = mock(Example.class);
 
         when(advisorService.get(advisor.getId())).thenReturn(Optional.of(advisor));
         when(strategyService.findByName("EXAMPLE")).thenReturn(Optional.of(example));
-        when(example.apply(advisor, market.getRates())).thenReturn(signal);
+        when(example.apply(advisor, market.getRates())).thenReturn(signals);
 
-        final Signal result = signalService.onTick(market);
+        final List<Signal> result = signalService.onTick(market);
         verify(advisorService, times(1)).get(advisor.getId());
         verify(strategyService, times(1)).findByName(market.getStrategyName());
-        assertEquals(signal, result);
+        assertEquals(signals, result);
     }
 
     @Test(expected = AdvisorNotFoundException.class)

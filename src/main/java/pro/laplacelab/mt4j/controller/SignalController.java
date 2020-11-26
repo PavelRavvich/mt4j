@@ -11,6 +11,7 @@ import pro.laplacelab.mt4j.model.Signal;
 import pro.laplacelab.mt4j.service.SignalService;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/signal")
@@ -20,7 +21,7 @@ public class SignalController {
     private final SignalService signalService;
 
     @GetMapping
-    public ResponseEntity<Signal> signal(@RequestBody @Valid final Market market) {
+    public ResponseEntity<List<Signal>> signal(@RequestBody @Valid final Market market) {
         return ResponseEntity.ok(signalService.onTick(market));
     }
 

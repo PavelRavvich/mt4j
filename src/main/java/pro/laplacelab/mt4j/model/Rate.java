@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @EqualsAndHashCode
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class MqlRates {
+public class Rate {
 
     @NotNull(message = "time required")
     @NotBlank(message = "time can't be blank")

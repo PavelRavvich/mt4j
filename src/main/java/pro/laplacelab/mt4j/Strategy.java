@@ -2,7 +2,7 @@ package pro.laplacelab.mt4j;
 
 import pro.laplacelab.mt4j.enums.Timeframe;
 import pro.laplacelab.mt4j.model.Advisor;
-import pro.laplacelab.mt4j.model.MqlRates;
+import pro.laplacelab.mt4j.model.Rate;
 import pro.laplacelab.mt4j.model.Signal;
 
 import java.util.List;
@@ -19,7 +19,9 @@ import java.util.function.BiFunction;
  *
  * @see pro.laplacelab.mt4j.example.Example
  */
-public interface Strategy extends BiFunction<Advisor, Map<Timeframe, List<MqlRates>>, Signal> {
-    Signal apply(Advisor advisor, Map<Timeframe, List<MqlRates>> buffer);
+public interface Strategy
+        extends BiFunction<Advisor, Map<Timeframe, List<Rate>>, List<Signal>> {
+    List<Signal> apply(Advisor advisor, Map<Timeframe, List<Rate>> rates);
+
     String getName();
 }
