@@ -11,6 +11,7 @@ import pro.laplacelab.mt4j.model.Market;
 import pro.laplacelab.mt4j.model.Signal;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -22,7 +23,7 @@ public class SignalServiceImpl implements SignalService {
     private final StrategyService strategyService;
 
     @Override
-    public Signal onTick(final @NotNull Market market) {
+    public List<Signal> onTick(final @NotNull Market market) {
         log.debug("Market request: {}", market);
         final Advisor advisor = advisorService
                 .get(market.getAdvisorId())
@@ -30,9 +31,9 @@ public class SignalServiceImpl implements SignalService {
         final Strategy strategy = strategyService
                 .findByName(market.getStrategyName())
                 .orElseThrow(StrategyNotFoundException::new);
-        final Signal signal = strategy.apply(advisor, market.getRates());
-        log.debug("Signal response: {}", signal);
-        return signal;
+        final List<Signal> signals = strategy.apply(advisor, market.getRates());
+        log.debug("Signals response: {}", signals);
+        return signals;
     }
 
 }

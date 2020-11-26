@@ -42,6 +42,6 @@ public class Market {
     @NotNull(message = "rates required")
     @NotEmpty(message = "rates can't be empty")
     @JsonProperty("rates")
-    private Map<Timeframe, List<MqlRates>> rates;
+    private Map<Timeframe, List<Rate>> rates;
 
 }

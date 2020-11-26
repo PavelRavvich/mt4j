@@ -13,7 +13,7 @@ import pro.laplacelab.mt4j.JsonMapper;
 import pro.laplacelab.mt4j.enums.Timeframe;
 import pro.laplacelab.mt4j.model.Account;
 import pro.laplacelab.mt4j.model.Market;
-import pro.laplacelab.mt4j.model.MqlRates;
+import pro.laplacelab.mt4j.model.Rate;
 import pro.laplacelab.mt4j.model.Signal;
 import pro.laplacelab.mt4j.service.SignalService;
 
@@ -41,7 +41,7 @@ public class SignalControllerTest {
         Market market = new Market();
         market.setAdvisorId(UUID.randomUUID());
         market.setRates(Map.of(
-                Timeframe.M_1, List.of(MqlRates.builder().time(1L).open(1D).high(1D).low(1D)
+                Timeframe.M_1, List.of(Rate.builder().time(1L).open(1D).high(1D).low(1D)
                         .close(1D).tickVolume(1L).spread(1).realVolume(1L).build())));
         market.setAccount(
                 Account.builder()
@@ -50,14 +50,14 @@ public class SignalControllerTest {
         market.setPositions(List.of());
         market.setStrategyName("TEST");
         final String requestJson = mapper.toJson(market);
-        Signal signal = new Signal();
+        List<Signal> signals = List.of(new Signal());
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/signal")
                 .content(requestJson)
                 .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk());
 
-        when(signalService.onTick(market)).thenReturn(signal);
+        when(signalService.onTick(market)).thenReturn(signals);
         verify(signalService, times(1)).onTick(market);
     }
 
