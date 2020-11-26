@@ -30,8 +30,7 @@ int TakeProfitToPoint(double takeProfit, ENUM_POSITION_TYPE type)
 
 double TakeProfitToPrice(int takeProfit, ENUM_POSITION_TYPE type)
   {
-   // todo
-   return 1.2345;
+   return (type == BUY ? Ask() + takeProfit * Point() : Bid() - takeProfit * Point());
   }
 int StopLossToPoint(double stopLoss, ENUM_POSITION_TYPE type)
   {
@@ -41,6 +40,15 @@ int StopLossToPoint(double stopLoss, ENUM_POSITION_TYPE type)
 
 double StopLossToPrice(double stopLoss, ENUM_POSITION_TYPE type)
   {
-   // todo
-   return 1.2345;
+   return (type == BUY ? Ask() - stopLoss * Point() : Bid() + stopLoss * Point());
+  }
+
+double Ask()
+  {
+   return NormalizeDouble(SymbolInfoDouble(_symbolInfo.Name(), SYMBOL_ASK), Digits());
+  }
+
+double Bid()
+  {
+   return NormalizeDouble(SymbolInfoDouble(_symbolInfo.Name(), SYMBOL_BID), Digits());
   }

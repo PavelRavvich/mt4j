@@ -4,16 +4,17 @@
 #include <Trade\Trade.mqh>
 
 #include <Common\Structures.mqh>
+#include <Common\Utils.mqh>
 #include <Common\Enums.mqh>
 
 
+//+------------------------------------------------------------------+
+//| Execute all trade signals                                        |
+//+------------------------------------------------------------------+
 class SignalExecutor
   {
-
    CTrade *          _trade;
-
    CSymbolInfo *     _symbolInfo;
-
 public:
                      SignalExecutor(long magic, string symbol)
      {
@@ -30,65 +31,59 @@ public:
          else
             _trade.SetTypeFilling(ORDER_FILLING_RETURN);
      }
-
                     ~SignalExecutor() { delete _trade; delete _symbolInfo; }
-
 public:
-
-   void              Execute(Signal &signal)
-     {
-      if(signal.type == NO_ACTION)
-         return;
-      if(signal.type == BUY)
-         Buy(signal);
-      if(signal.type == SELL)
-         Sell(signal);
-      if(signal.type == CLOSE)
-         Close(signal);
-      if(signal.type == UPDATE)
-         Update(signal);
-     }
-
+   void              Execute(Signal &signal);
 private:
-
-   void              Buy(Signal &signal)
-     {
-      // todo
-     }
-
-   void              Sell(Signal &signal)
-     {
-      // todo
-     }
-
-   void              Close(Signal &signal)
-     {
-      // todo
-     }
-
-   void              Update(Signal &signal)
-     {
-      // todo
-     }
-
-   double            StopLoss(int stopLoss, SignalType type)
-     {
-      return (type == BUY ? Ask() - stopLoss * _symbolInfo.Point() : Bid() + stopLoss * _symbolInfo.Point());
-     }
-
-   double            TakeProfit(int takeProfit, SignalType type)
-     {
-      return (type == BUY ? Ask() + takeProfit * _symbolInfo.Point() : Bid() - takeProfit * _symbolInfo.Point());
-     }
-
-   double            Ask()
-     {
-      return NormalizeDouble(SymbolInfoDouble(_symbolInfo.Name(), SYMBOL_ASK), _symbolInfo.Digits());
-     }
-
-   double            Bid()
-     {
-      return NormalizeDouble(SymbolInfoDouble(_symbolInfo.Name(), SYMBOL_BID), _symbolInfo.Digits());
-     }
-
+   void              Buy(Signal &signal);
+   void              Sell(Signal &signal);
+   void              Close(Signal &signal);
   };
+
+//+------------------------------------------------------------------+
+//| Executing all signals                                            |
+//+------------------------------------------------------------------+
+void::SignalExecutor              Execute(Signal &signal)
+  {
+   if(signal.type == NO_ACTION)
+      return;
+   if(signal.type == BUY)
+      Buy(signal);
+   if(signal.type == SELL)
+      Sell(signal);
+   if(signal.type == CLOSE)
+      Close(signal);
+  }
+
+//+------------------------------------------------------------------+
+//| Execute BUY                                                      |
+//+------------------------------------------------------------------+
+void::SignalExecutor              Buy(Signal &signal)
+  {
+   while(!_trade.Buy(GetLot(), _symbolInfo.Symbol(), Ask(),
+                     StopLossToPrice(signal.stopLoss, signal.type),
+                     TakeProfitToPrice(signal.takeProfit, signal.type)))
+     { Print(GetLastError());}
+  }
+//+------------------------------------------------------------------+
+//| Execute SELL                                                     |
+//+------------------------------------------------------------------+
+void::SignalExecutor              Sell(Signal &signal)
+  {
+   while(!_trade.Sell(GetLot(), _symbolInfo.Symbol(), Bid(),
+                      ConvertStopLoss(signal.stopLoss, signal.type),
+                      ConvertTakeProfit(signal.takeProfit, signal.type)))
+     { Print(GetLastError()); }
+  }
+//+------------------------------------------------------------------+
+//| Execute CLOSE by ticket(Signal.positionId)                       |
+//+------------------------------------------------------------------+
+void::SignalExecutor              Close(Signal &signal)
+  {
+   for(int i = PositionsTotal() - 1; i >= 0; i--)
+      if(position_info.SelectByIndex(i))
+         if(position_info.Ticket() == signal.positionId)
+            while(!trade.PositionClose(position_info.Ticket(), 100))
+               Print(GetLastError());
+  }
+//+------------------------------------------------------------------+
