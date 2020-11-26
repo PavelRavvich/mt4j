@@ -3,7 +3,6 @@
 #include <Common\Enums.mqh>
 #include <Common\Structures.mqh>
 
-
 string PositionTypeToString(PositionType type)
   {
    switch(type)

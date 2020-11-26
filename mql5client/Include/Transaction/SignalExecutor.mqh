@@ -2,11 +2,9 @@
 
 #include <Trade\SymbolInfo.mqh>
 #include <Trade\Trade.mqh>
-
 #include <Common\Structures.mqh>
 #include <Common\Utils.mqh>
 #include <Common\Enums.mqh>
-
 
 //+------------------------------------------------------------------+
 //| Execute all trade signals                                        |

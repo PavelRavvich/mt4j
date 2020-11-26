@@ -2,7 +2,6 @@
 
 #include <Common\Enums.mqh>
 
-
 struct HttpResponse
   {
    int               status;
