@@ -16,9 +16,10 @@ public class PositionTest extends BaseTestPreparation {
         assertEquals(positionId, position.getPositionId());
         assertEquals(takeProfit, position.getTakeProfit());
         assertEquals(stopLoss, position.getStopLoss());
-        assertEquals(lot, position.getLot());
-        assertEquals(openAt, position.getOpenAt());
         assertEquals(closeAt, position.getCloseAt());
+        assertEquals(openAt, position.getOpenAt());
+        assertEquals(swap, position.getSwap());
+        assertEquals(lot, position.getLot());
     }
 
 }

@@ -93,22 +93,24 @@ public class AdvisorTest extends BaseTestPreparation {
         advisor.addPosition(origin);
 
         final Double newLot = 100d;
+        final Double newSwap = 200d;
         final Double newProfit = 100d;
         final Integer newStopLoss = 1000;
         final Integer newTakeProfit = 1000;
         final Long newCloseAt = System.currentTimeMillis();
 
         final Position forUpdate = new Position(PositionType.LONG, positionId,
-                newLot, newStopLoss, newTakeProfit, openAt, newCloseAt, newProfit, swap);
+                newLot, newStopLoss, newTakeProfit, openAt, newCloseAt, newProfit, newSwap);
         origin.setProfit(100d);
         advisor.updatePosition(forUpdate);
         final Position expected = advisor.findPositionById(positionId).orElseThrow();
 
         assertEquals(newLot, expected.getLot());
+        assertEquals(newSwap, expected.getSwap());
         assertEquals(newProfit, expected.getProfit());
+        assertEquals(newCloseAt, expected.getCloseAt());
         assertEquals(newStopLoss, expected.getStopLoss());
         assertEquals(newTakeProfit, expected.getTakeProfit());
-        assertEquals(newCloseAt, expected.getCloseAt());
     }
 
     @Test(expected = PositionNotFoundException.class)
