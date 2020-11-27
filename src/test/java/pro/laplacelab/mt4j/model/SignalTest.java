@@ -21,6 +21,11 @@ public class SignalTest extends BaseTestPreparation {
         new Signal(advisorId, SignalType.BUY);
     }
 
+    @Test(expected = InvalidSignalException.class)
+    public void whenSignalNoActionBuild1WithWrongSignalTypeThenThrowException() {
+        new Signal(advisorId, SignalType.BUY, positionId);
+    }
+
     @Test
     public void whenSignalCloseBuildSuccessfulThenStateSaved() {
         Signal signal = new Signal(advisorId, SignalType.CLOSE, positionId);
