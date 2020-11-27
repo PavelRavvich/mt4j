@@ -76,16 +76,6 @@ public class Advisor {
                 .findFirst()
                 .ifPresent(positions::remove);
         history.add(position);
-        if (history.size() == 1_000) {
-            final List<Position> swap = new ArrayList<>(100);
-            final Iterator<Position> iterator = history.descendingIterator();
-            int copy = 0;
-            while (copy++ != 100) {
-                swap.add(iterator.next());
-            }
-            history.clear();
-            history.addAll(swap);
-        }
     }
 
     public void updatePosition(final @NotNull Position position) {
