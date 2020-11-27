@@ -10,7 +10,6 @@ import pro.laplacelab.mt4j.enums.InputType;
 import pro.laplacelab.mt4j.model.Advisor;
 import pro.laplacelab.mt4j.model.Input;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -36,15 +35,6 @@ public class AdvisorServiceImplTest {
         assertNotNull(advisor.getId());
     }
 
-    @Test(expected = RuntimeException.class)
-    public void whenAddFailThenThrowException() {
-        advisorService.add(
-                new Advisor(1L, List.of(
-                        new Input("", "val", InputType.STRING)
-                ))
-        );
-    }
-
     @Test
     public void whenAddSuccessThenAdvisorInputsSaved() {
         Advisor save = advisorService.add(
@@ -60,8 +50,8 @@ public class AdvisorServiceImplTest {
                 advisor.getInput("key1").orElseThrow().asString());
         assertEquals(InputType.NUMBER,
                 advisor.getInput("key2").orElseThrow().getType());
-        assertEquals(new BigDecimal("1"),
-                advisor.getInput("key2").orElseThrow().asBigDecimal());
+        assertEquals(Double.valueOf("1"),
+                advisor.getInput("key2").orElseThrow().asDouble());
     }
 
 }

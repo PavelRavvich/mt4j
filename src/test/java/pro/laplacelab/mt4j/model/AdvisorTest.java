@@ -8,7 +8,6 @@ import pro.laplacelab.mt4j.exception.DuplicateInputException;
 import pro.laplacelab.mt4j.exception.DuplicatePositionException;
 import pro.laplacelab.mt4j.exception.PositionNotFoundException;
 
-import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
@@ -27,17 +26,11 @@ public class AdvisorTest extends BaseTestPreparation {
         assertEquals(Long.valueOf(1), advisor.getMagic());
         assertEquals("val",
                 advisor.getInput("key1").orElseThrow().asString());
-        assertEquals(new BigDecimal("1"),
-                advisor.getInput("key2").orElseThrow().asBigDecimal());
+        assertEquals(Double.valueOf("1"),
+                advisor.getInput("key2").orElseThrow().asDouble());
         assertEquals(LocalTime.parse("10:00"),
                 advisor.getInput("key3").orElseThrow().asLocalTime());
 
-    }
-
-
-    @Test(expected = RuntimeException.class)
-    public void whenAdvisorBuildFailThenThrowRuntimeException() {
-        new Input("", "val", InputType.STRING);
     }
 
     @Test
