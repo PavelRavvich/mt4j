@@ -36,7 +36,7 @@ public class Advisor {
     private final LinkedList<Position> positions = new LinkedList<>();
 
     public Advisor(final @NotNull Long magic, final @NotNull List<Input> inputs) {
-        if (inputs.size() != inputs.stream().map(Input::getKey).count()) {
+        if (inputs.size() != inputs.stream().distinct().count()) {
             throw new DuplicateInputException();
         }
         this.id = UUID.randomUUID();

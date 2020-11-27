@@ -4,6 +4,7 @@ import org.junit.Test;
 import pro.laplacelab.mt4j.BaseTestPreparation;
 import pro.laplacelab.mt4j.enums.InputType;
 import pro.laplacelab.mt4j.enums.PositionType;
+import pro.laplacelab.mt4j.exception.DuplicateInputException;
 import pro.laplacelab.mt4j.exception.DuplicatePositionException;
 import pro.laplacelab.mt4j.exception.PositionNotFoundException;
 
@@ -143,6 +144,13 @@ public class AdvisorTest extends BaseTestPreparation {
         advisor.addPosition(position);
         advisor.toHistory(position);
         assertEquals(1, advisor.countDropdown());
+    }
+
+    @Test(expected = DuplicateInputException.class)
+    public void whenInputKeysDuplicatedThenThrowDuplicateInputException() {
+        final Input input = new Input("key1", "val", InputType.STRING);
+        final Input duplicate = new Input("key1", "val", InputType.STRING);
+        new Advisor(1L, List.of(input, duplicate));
     }
 
 }
