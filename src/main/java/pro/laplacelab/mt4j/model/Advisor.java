@@ -83,6 +83,7 @@ public class Advisor {
                 .filter(item -> item.getPositionId().equals(position.getPositionId()))
                 .findFirst().orElseThrow(PositionNotFoundException::new);
         candidate.setLot(position.getLot());
+        candidate.setSwap(position.getSwap());
         candidate.setProfit(position.getProfit());
         candidate.setCloseAt(position.getCloseAt());
         candidate.setStopLoss(position.getStopLoss());
