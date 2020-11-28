@@ -87,6 +87,9 @@ public class Advisor {
         candidate.setProfit(position.getProfit());
         candidate.setCloseAt(position.getCloseAt());
         candidate.setStopLoss(position.getStopLoss());
+        candidate.setOpenPrice(position.getOpenPrice());
+        candidate.setCommission(position.getCommission());
+        candidate.setClosePrice(position.getClosePrice());
         candidate.setTakeProfit(position.getTakeProfit());
     }
 
