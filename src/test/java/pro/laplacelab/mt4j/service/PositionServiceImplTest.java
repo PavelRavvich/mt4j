@@ -36,8 +36,8 @@ public class PositionServiceImplTest extends BaseTestPreparation {
     public void whenAddSuccessThenAddPositionMethodCalled() {
         final Advisor advisor = spy(new Advisor(1L, List.of(
                 new Input("key1", "val", InputType.STRING))));
-        final Position position = new Position(PositionType.LONG, positionId,
-                lot, stopLoss, takeProfit, openAt, closeAt, profit, swap);
+        final Position position = new Position(PositionType.LONG, positionId, lot, stopLoss,
+                takeProfit, openPrice, closePrice, openAt, closeAt, profit, swap, commission);
         when(advisorService.get(advisor.getId())).thenReturn(Optional.of(advisor));
         positionService.add(advisor.getId(), position);
 
@@ -47,21 +47,21 @@ public class PositionServiceImplTest extends BaseTestPreparation {
 
     @Test(expected = AdvisorNotFoundException.class)
     public void whenAddFailThenThrowAdvisorNotFoundException() {
-        positionService.add(advisorId, new Position(PositionType.LONG, positionId,
-                lot, stopLoss, takeProfit, openAt, closeAt, profit, swap));
+        positionService.add(advisorId, new Position(PositionType.LONG, positionId, lot, stopLoss,
+                takeProfit, openPrice, closePrice, openAt, closeAt, profit, swap, commission));
     }
 
     @Test
     public void whenUpdateSuccessThenUpdatePositionMethodCalled() {
         final Advisor advisor = spy(new Advisor(1L, List.of(
                 new Input("key1", "val", InputType.STRING))));
-        final Position origin = new Position(PositionType.LONG, positionId,
-                lot, stopLoss, takeProfit, openAt, closeAt, profit, swap);
+        final Position origin = new Position(PositionType.LONG, positionId, lot, stopLoss,
+                takeProfit, openPrice, closePrice, openAt, closeAt, profit, swap, commission);
 
         when(advisorService.get(advisor.getId())).thenReturn(Optional.of(advisor));
         positionService.add(advisor.getId(), origin);
-        final Position update = new Position(PositionType.LONG, positionId,
-                0.1, stopLoss, takeProfit, openAt, closeAt, profit, swap);
+        final Position update = new Position(PositionType.LONG, positionId, 0.1, stopLoss, takeProfit,
+                openPrice, closePrice, openAt, closeAt, profit, swap, commission);
         positionService.update(advisor.getId(), update);
 
         verify(advisor, times(1)).updatePosition(update);
@@ -71,16 +71,16 @@ public class PositionServiceImplTest extends BaseTestPreparation {
 
     @Test(expected = AdvisorNotFoundException.class)
     public void whenUpdateFailThenThrowAdvisorNotFoundException() {
-        positionService.update(advisorId, new Position(PositionType.LONG,
-                positionId, lot, stopLoss, takeProfit, openAt, closeAt, profit, swap));
+        positionService.update(advisorId, new Position(PositionType.LONG, positionId, lot, stopLoss,
+                takeProfit, openPrice, closePrice, openAt, closeAt, profit, swap, commission));
     }
 
     @Test
     public void whenHistorySuccessThenHistoryMethodCalled() {
         final Advisor advisor = spy(new Advisor(1L, List.of(
                 new Input("key1", "val", InputType.STRING))));
-        final Position position = new Position(PositionType.LONG, positionId,
-                lot, stopLoss, takeProfit, openAt, closeAt, profit, swap);
+        final Position position = new Position(PositionType.LONG, positionId, lot, stopLoss,
+                takeProfit, openPrice, closePrice, openAt, closeAt, profit, swap, commission);
         when(advisorService.get(advisor.getId())).thenReturn(Optional.of(advisor));
         positionService.add(advisor.getId(), position);
         positionService.history(advisor.getId(), position);
@@ -92,8 +92,8 @@ public class PositionServiceImplTest extends BaseTestPreparation {
 
     @Test(expected = AdvisorNotFoundException.class)
     public void whenHistoryFailThenThrowAdvisorNotFoundException() {
-        positionService.history(advisorId, new Position(PositionType.LONG, positionId,
-                lot, stopLoss, takeProfit, openAt, closeAt, profit, swap));
+        positionService.history(advisorId, new Position(PositionType.LONG, positionId, lot, stopLoss,
+                takeProfit, openPrice, closePrice, openAt, closeAt, profit, swap, commission));
     }
 
 }

@@ -1,6 +1,5 @@
 package pro.laplacelab.mt4j.model;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -36,6 +35,13 @@ public class Position  {
     @JsonProperty("takeProfit")
     protected Integer takeProfit;
 
+    @NotNull(message = "openPrice required")
+    @JsonProperty("openPrice")
+    private Double openPrice;
+
+    @JsonProperty("closePrice")
+    private Double closePrice;
+
     @NotNull(message = "openAt required")
     @JsonProperty("openAt")
     private Long openAt;
@@ -50,6 +56,10 @@ public class Position  {
     @NotNull(message = "swap required")
     @JsonProperty("swap")
     private Double swap;
+
+    @NotNull(message = "commission required")
+    @JsonProperty("commission")
+    private Double commission;
 
 }
 
