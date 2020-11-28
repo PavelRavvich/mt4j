@@ -73,14 +73,16 @@ void::PositionProvider              FetchOpenPositions(Position &positions[])
            {
             Position position;
             position.isHistory = false;
-            position.swap = position_info.Swap();
-            position.lot = position_info.Volume();
-            position.profit = position_info.Profit();
-            position.openAt = position_info.TimeMsc();
-            position.positionId = position_info.Ticket();
-            position.type = position_info.PositionType() == POSITION_TYPE_BUY ? LONG : SHORT;
-            position.stopLoss = StopLossToPoint(position_info.StopLoss(), position_info.PositionType());
-            position.takeProfit = TakeProfitToPoint(position_info.TakeProfit(), position_info.PositionType());
+            position.swap = _position_info.Swap();
+            position.lot = _position_info.Volume();
+            position.profit = _position_info.Profit();
+            position.openAt = _position_info.TimeMsc();
+            position.positionId = _position_info.Ticket();
+            position.openPrice = _position_info.PriceOpen();
+            position.commission = _position_info.Commission();
+            position.type = _position_info.PositionType() == POSITION_TYPE_BUY ? LONG : SHORT;
+            position.stopLoss = StopLossToPoint(_position_info.StopLoss(), _position_info.PositionType());
+            position.takeProfit = TakeProfitToPoint(_position_info.TakeProfit(), _position_info.PositionType());
             AddPosition(position, positions);
            }
   }
