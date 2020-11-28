@@ -1,5 +1,6 @@
 #property strict
 
+#include <Libs\CHistoryPositionInfo.mqh>
 #include <Trade\PositionInfo.mqh>
 #include <Common\Structures.mqh>
 #include <Common\Utils.mqh>
@@ -10,9 +11,10 @@
 //+------------------------------------------------------------------+
 class PositionProvider
   {
-   long              _magic;
-   string            _position_pattern;
-   CPositionInfo     _position_info;
+   long                 _magic;
+   string               _position_pattern;
+   CPositionInfo        _position_info;
+   CHistoryPositionInfo _history_info;
 public:
 
                      PositionProvider(long magic)
@@ -88,10 +90,30 @@ void::PositionProvider              FetchOpenPositions(Position &positions[])
 //+------------------------------------------------------------------+
 void::PositionProvider              FetchHistory(Position &positions[])
   {
-// todo fetch history
-   // Position position;
-   // position.isHistory = true;
-   // AddPosition(position, positions);
+   int total = _history_info.PositionsTotal();
+   for(int i = 0; i < total; i++)
+     {
+      //--- Select a closed position by its index in the list
+      if(_history_info.SelectByIndex(i))
+        {
+         Position position;
+         position.isHistory = true;
+         position.magic = _magic;
+         position.positionId = _history_info.Ticket();
+         position.openAt = _history_info.TimeOpenMsc();
+         position.closeAt = _history_info.TimeCloseMsc();
+         position.swap = NormalizeDouble(_history_info.Swap(), 2);
+         position.lot = NormalizeDouble(_history_info.Volume(), 2);
+         position.profit = NormalizeDouble(_history_info.Profit(), 2);
+         position.stopLoss = StopLossToPoint(_history_info.StopLoss());
+         position.openPrice = NormalizeDouble(_history_info.PriceOpen(), 2);
+         position.takeProfit = TakeProfitToPoint(_history_info.TakeProfit());
+         position.closePrice = NormalizeDouble(_history_info.PriceClose(), 2);
+         position.commission = NormalizeDouble(_history_info.Commission(), 2);
+         position.type = _history_info.PositionType() == POSITION_TYPE_BUY ? LONG : SHORT;
+         AddPosition(position, positions);
+        }
+     }
   }
 
 //+------------------------------------------------------------------+

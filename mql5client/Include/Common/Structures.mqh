@@ -44,6 +44,9 @@ struct Position
    int               takeProfit;
    ulong             openAt;
    ulong             closeAt;
+   double            openPrice;
+   double            closePrice;
    double            profit;
+   double            commission;
    double            swap;
   };
