@@ -24,22 +24,22 @@ string BoolToString(bool val)
 
 int TakeProfitToPoint(double takeProfit, ENUM_POSITION_TYPE type)
   {
-   return 100;
+   return type == POSITION_TYPE_BUY ? (takeProfit - Ask()) / Point() : (Bid() - takeProfit) / Point();
   }
 
 double TakeProfitToPrice(int takeProfit, ENUM_POSITION_TYPE type)
   {
-   return (type == BUY ? Ask() + takeProfit * Point() : Bid() - takeProfit * Point());
+   return type == POSITION_TYPE_BUY ? Ask() + takeProfit * Point() : Bid() - takeProfit * Point();
   }
+
 int StopLossToPoint(double stopLoss, ENUM_POSITION_TYPE type)
   {
-   // todo
-   return 100;
+   return type == POSITION_TYPE_BUY ? (Ask() - stopLoss) / Point() : (stopLoss - Bid()) / Point();
   }
 
 double StopLossToPrice(double stopLoss, ENUM_POSITION_TYPE type)
   {
-   return (type == BUY ? Ask() - stopLoss * Point() : Bid() + stopLoss * Point());
+   return type == POSITION_TYPE_BUY ? Ask() - stopLoss * Point() : Bid() + stopLoss * Point();
   }
 
 double Ask()

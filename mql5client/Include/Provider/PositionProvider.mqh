@@ -1,6 +1,6 @@
 #property strict
 
-#include <Libs\CHistoryPositionInfo.mqh>
+#include <Libs\HistoryPositionInfo.mqh>
 #include <Trade\PositionInfo.mqh>
 #include <Common\Structures.mqh>
 #include <Common\Utils.mqh>
@@ -67,19 +67,20 @@ void::PositionProvider              FetchPositions(Position &positions[])
 //+------------------------------------------------------------------+
 void::PositionProvider              FetchOpenPositions(Position &positions[])
   {
+   _position_info.HistorySelect(0, TimeCurrent());
    for(int i = PositionsTotal() - 1; i >= 0; i--)
-      if(position_info.SelectByIndex(i))
-         if(position_info.Magic() == _magic)
+      if(_position_info.SelectByIndex(i))
+         if(_position_info.Magic() == _magic)
            {
             Position position;
             position.isHistory = false;
-            position.swap = _position_info.Swap();
-            position.lot = _position_info.Volume();
-            position.profit = _position_info.Profit();
             position.openAt = _position_info.TimeMsc();
             position.positionId = _position_info.Ticket();
             position.openPrice = _position_info.PriceOpen();
-            position.commission = _position_info.Commission();
+            position.swap = NormalizeDouble(_position_info.Swap());
+            position.lot = NormalizeDouble(_position_info.Volume());
+            position.profit = NormalizeDouble(_position_info.Profit());
+            position.commission = NormalizeDouble(_position_info.Commission());
             position.type = _position_info.PositionType() == POSITION_TYPE_BUY ? LONG : SHORT;
             position.stopLoss = StopLossToPoint(_position_info.StopLoss(), _position_info.PositionType());
             position.takeProfit = TakeProfitToPoint(_position_info.TakeProfit(), _position_info.PositionType());
@@ -92,6 +93,7 @@ void::PositionProvider              FetchOpenPositions(Position &positions[])
 //+------------------------------------------------------------------+
 void::PositionProvider              FetchHistory(Position &positions[])
   {
+   _history_info.HistorySelect(0, TimeCurrent());
    int total = _history_info.PositionsTotal();
    for(int i = 0; i < total; i++)
      {
@@ -101,6 +103,8 @@ void::PositionProvider              FetchHistory(Position &positions[])
          Position position;
          position.isHistory = true;
          position.magic = _magic;
+         position.openPrice = _history_info.PriceOpen();
+         position.closePrice = _history_info.PriceClose();
          position.positionId = _history_info.Ticket();
          position.openAt = _history_info.TimeOpenMsc();
          position.closeAt = _history_info.TimeCloseMsc();
@@ -108,9 +112,7 @@ void::PositionProvider              FetchHistory(Position &positions[])
          position.lot = NormalizeDouble(_history_info.Volume(), 2);
          position.profit = NormalizeDouble(_history_info.Profit(), 2);
          position.stopLoss = StopLossToPoint(_history_info.StopLoss());
-         position.openPrice = NormalizeDouble(_history_info.PriceOpen(), 2);
          position.takeProfit = TakeProfitToPoint(_history_info.TakeProfit());
-         position.closePrice = NormalizeDouble(_history_info.PriceClose(), 2);
          position.commission = NormalizeDouble(_history_info.Commission(), 2);
          position.type = _history_info.PositionType() == POSITION_TYPE_BUY ? LONG : SHORT;
          AddPosition(position, positions);
