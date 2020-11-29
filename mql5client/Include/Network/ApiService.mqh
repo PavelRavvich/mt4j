@@ -26,7 +26,7 @@ public:
                     ~ApiService() { delete _restClient; delete _jsonParser; }
 public:
    string             Connect(string inputs);
-   void                 GetSignal(Signal &signal);
+   void                 GetSignals(Signal &signal);
   };
 //+------------------------------------------------------------------+
 //| Connect MT advisor with server side. Return advisor's UUID       |
@@ -41,16 +41,23 @@ string::ApiService Connect(string inputs)
 //+------------------------------------------------------------------+
 //| Get signal as strategy result                                    |
 //+------------------------------------------------------------------+
-void::ApiService GetSignal(Signal &signal)
+void::ApiService GetSignals(Signal &signals[])
   {
-   string responceBody = _restClient.GetSignal(_advisor_id, _strategy);
+   string responceBody = _restClient.GetSignals(_advisor_id, _strategy);
    _jsonParser.Clear();
    _jsonParser.Deserialize(responceBody);
-   signal.lot = _jsonParser["lot"].ToDbl();
-   signal.advisorId = _jsonParser["id"].ToStr();
-   signal.positionId = _jsonParser["positionId"].ToInt();
-   signal.type = (SignalType) _jsonParser["type"].ToStr();
-   signal.stopLoss = (int) _jsonParser["stopLoss"].ToInt();
-   signal.takeProfit = (int) _jsonParser["takeProfit"].ToInt();
+   for(int i = 0; i < _jsonParser.Size(); i++)
+     {
+      Signal signal;
+      signal.lot = _jsonParser[i]["lot"].ToDbl();
+      signal.advisorId = _jsonParser[i]["id"].ToStr();
+      signal.positionId = _jsonParser[i]["positionId"].ToInt();
+      signal.type = (SignalType) _jsonParser[i]["type"].ToStr();
+      signal.stopLoss = (int) _jsonParser[i]["stopLoss"].ToInt();
+      signal.takeProfit = (int) _jsonParser[i]["takeProfit"].ToInt();
+      int size = ArraySize(signals);
+      ArrayResize(signals, size + 1);
+      signals[size] = signal;
+     }
   }
 //+------------------------------------------------------------------+

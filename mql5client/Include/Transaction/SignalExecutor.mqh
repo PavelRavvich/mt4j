@@ -31,7 +31,7 @@ public:
      }
                     ~SignalExecutor() { delete _trade; delete _symbolInfo; }
 public:
-   void              Execute(Signal &signal);
+   void              Execute(Signal &signals[]);
 private:
    void              Buy(Signal &signal);
    void              Sell(Signal &signal);
@@ -41,16 +41,18 @@ private:
 //+------------------------------------------------------------------+
 //| Executing all signals                                            |
 //+------------------------------------------------------------------+
-void::SignalExecutor              Execute(Signal &signal)
+void::SignalExecutor              Execute(Signal &signals[])
   {
-   if(signal.type == NO_ACTION)
-      return;
-   if(signal.type == BUY)
-      Buy(signal);
-   if(signal.type == SELL)
-      Sell(signal);
-   if(signal.type == CLOSE)
-      Close(signal);
+   for(int i = 0; i < ArraySize(signals); i++)
+     {
+      Signal signal = signals[i];
+      if(signal.type == BUY)
+         Buy(signal);
+      if(signal.type == SELL)
+         Sell(signal);
+      if(signal.type == CLOSE)
+         Close(signal);
+     }
   }
 
 //+------------------------------------------------------------------+

@@ -24,11 +24,11 @@ public:
      }
                     ~RestClient() { delete _requestFactory; }
 public:
-   string               Connect(string inputs);
-   string               GetSignal(string advisor_id, string strategy_name);
+   string            Connect(string inputs);
+   string            GetSignals(string advisor_id, string strategy_name);
 private:
-   void                   Post(HttpRequest &request, HttpResponse &response);
-   void                   Get(HttpRequest &request, HttpResponse &response);
+   void              Post(HttpRequest &request, HttpResponse &response);
+   void              Get(HttpRequest &request, HttpResponse &response);
   };
 
 //+------------------------------------------------------------------+
@@ -54,7 +54,7 @@ string::RestClient               Connect(string inputs)
 //+------------------------------------------------------------------+
 //| Get trade signal request                                         |
 //+------------------------------------------------------------------+
-string::RestClient               GetSignal(string advisor_id, string strategy_name)
+string::RestClient               GetSignals(string advisor_id, string strategy_name)
   {
    HttpRequest request;
    request.url = StringFormat(_url_formatter, _restConfig.host, _restConfig.port, "/api/signal");
