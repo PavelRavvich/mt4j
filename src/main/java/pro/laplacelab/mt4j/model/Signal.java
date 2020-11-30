@@ -37,15 +37,6 @@ public class Signal {
     @JsonProperty("takeProfit")
     protected Integer takeProfit;
 
-    public Signal(final @NotNull UUID advisorId, final @NotNull SignalType type) {
-        if (type != SignalType.NO_ACTION) {
-            throw new InvalidSignalException();
-        }
-        this.type = type;
-        this.advisorId = advisorId;
-
-    }
-
     public Signal(final @NotNull UUID advisorId,
                   final @NotNull SignalType type,
                   final @NotNull(message = "positionId required") Long positionId) {

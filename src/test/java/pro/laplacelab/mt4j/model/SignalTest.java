@@ -9,18 +9,6 @@ import static org.junit.Assert.assertEquals;
 
 public class SignalTest extends BaseTestPreparation {
 
-    @Test
-    public void whenSignalNoActionBuildSuccessfulThenStateSaved() {
-        Signal signal = new Signal(advisorId, SignalType.NO_ACTION);
-        assertEquals(SignalType.NO_ACTION, signal.getType());
-        assertEquals(advisorId, signal.getAdvisorId());
-    }
-
-    @Test(expected = InvalidSignalException.class)
-    public void whenSignalNoActionBuildWithWrongSignalTypeThenThrowException() {
-        new Signal(advisorId, SignalType.BUY);
-    }
-
     @Test(expected = InvalidSignalException.class)
     public void whenSignalNoActionBuild1WithWrongSignalTypeThenThrowException() {
         new Signal(advisorId, SignalType.BUY, positionId);
@@ -36,7 +24,7 @@ public class SignalTest extends BaseTestPreparation {
 
     @Test(expected = InvalidSignalException.class)
     public void whenSignalCloseBuildWithWrongSignalTypeThenThrowException() {
-        new Signal(advisorId, SignalType.BUY);
+        new Signal(advisorId, SignalType.BUY, positionId);
     }
 
     @Test

@@ -133,13 +133,6 @@ _Response variations:_
     "positionId": 1000000000
 }
 ```
-###### No Action Signal Response:
-```json
-{
-    "advisorId": "c4eb34e4-c9c3-4b7e-856d-d5d00588464d",
-    "type": "NO_ACTION"
-}
-```
 
 
 **Contribution**

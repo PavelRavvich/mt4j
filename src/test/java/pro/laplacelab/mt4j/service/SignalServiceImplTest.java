@@ -39,7 +39,8 @@ public class SignalServiceImplTest extends BaseTestPreparation {
     public void whenSignalGeneratedSuccessThenServicesCalled() {
         final Advisor advisor = spy(new Advisor(1L, List.of(
                 new Input("key1", "val", InputType.STRING))));
-        final List<Signal> signals = List.of(new Signal(advisor.getId(), SignalType.NO_ACTION));
+        final List<Signal> signals = List.of(
+                new Signal(advisorId, SignalType.BUY, lot, stopLoss, takeProfit));
         final Market market = new Market(advisor.getId(), new Account(),
                 "EXAMPLE", new ArrayList<>(), new HashMap<>());
         final Example example = mock(Example.class);
