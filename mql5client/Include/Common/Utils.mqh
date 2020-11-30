@@ -22,9 +22,9 @@ string BoolToString(bool val)
    return val ? "true" : "false";
   }
 
-int TakeProfitToPoint(double takeProfit, ENUM_POSITION_TYPE type)
+int TakeProfitToPoint(double takeProfit, double price, ENUM_POSITION_TYPE type)
   {
-   return type == POSITION_TYPE_BUY ? (takeProfit - Ask()) / Point() : (Bid() - takeProfit) / Point();
+   return type == POSITION_TYPE_BUY ? (takeProfit - price) / Point() : (price - takeProfit) / Point();
   }
 
 double TakeProfitToPrice(int takeProfit, ENUM_POSITION_TYPE type)
@@ -32,9 +32,9 @@ double TakeProfitToPrice(int takeProfit, ENUM_POSITION_TYPE type)
    return type == POSITION_TYPE_BUY ? Ask() + takeProfit * Point() : Bid() - takeProfit * Point();
   }
 
-int StopLossToPoint(double stopLoss, ENUM_POSITION_TYPE type)
+int StopLossToPoint(double stopLoss, double price, ENUM_POSITION_TYPE type)
   {
-   return type == POSITION_TYPE_BUY ? (Ask() - stopLoss) / Point() : (stopLoss - Bid()) / Point();
+   return type == POSITION_TYPE_BUY ? (price - stopLoss) / Point() : (stopLoss - price) / Point();
   }
 
 double StopLossToPrice(double stopLoss, ENUM_POSITION_TYPE type)

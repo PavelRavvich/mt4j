@@ -80,10 +80,14 @@ void::PositionProvider              FetchOpenPositions(Position &positions[])
             position.swap = NormalizeDouble(_position_info.Swap());
             position.lot = NormalizeDouble(_position_info.Volume());
             position.profit = NormalizeDouble(_position_info.Profit());
+            position.stopLoss = StopLossToPoint(_position_info.StopLoss(),
+                                                _position_info.PriceOpen(),
+                                                _position_info.PositionType());
+            position.takeProfit = TakeProfitToPoint(_position_info.TakeProfit(),
+                                                    _position_info.PriceOpen(),
+                                                    _position_info.PositionType());
             position.commission = NormalizeDouble(_position_info.Commission());
             position.type = _position_info.PositionType() == POSITION_TYPE_BUY ? LONG : SHORT;
-            position.stopLoss = StopLossToPoint(_position_info.StopLoss(), _position_info.PositionType());
-            position.takeProfit = TakeProfitToPoint(_position_info.TakeProfit(), _position_info.PositionType());
             AddPosition(position, positions);
            }
   }
