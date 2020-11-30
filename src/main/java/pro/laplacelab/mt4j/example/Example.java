@@ -23,7 +23,7 @@ public class Example implements Strategy {
     @Override
     public List<Signal> apply(final Advisor advisor, final Map<Timeframe, List<Rate>> rates) {
         // TODO: 23.10.2020 analytic strategy sequences implementation
-        return List.of(new Signal(advisor.getId(), SignalType.NO_ACTION));
+        return List.of(new Signal(advisor.getId(), SignalType.CLOSE, 12345L));
     }
 
 }
