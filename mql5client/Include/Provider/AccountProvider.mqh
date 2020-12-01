@@ -7,12 +7,15 @@
 //+------------------------------------------------------------------+
 class AccountProvider
   {
-   CAccountInfo      _account_info;
+   CAccountInfo *    _account_info;
    string            _account_formatter;
 public:
                      AccountProvider()
-     { _account_formatter = "{ \"id\": %.0f, \"balance\": %.2f, \"freeMargin\": %.2f, \"margin\": %.2f, \"owner\": \"%s\", \"company\": \"%s\" }"; }
-                    ~AccountProvider() {}
+     {
+      _account_info = new CAccountInfo();
+      _account_formatter = "{ \"id\": %.0f, \"balance\": %.2f, \"freeMargin\": %.2f, \"margin\": %.2f, \"owner\": \"%s\", \"company\": \"%s\" }";
+     }
+                    ~AccountProvider() { delete _account_info; }
 public:
    string            GetAccount();
   };

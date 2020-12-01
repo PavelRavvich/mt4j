@@ -11,14 +11,19 @@
 //+------------------------------------------------------------------+
 class PositionProvider
   {
-   long                 _magic;
-   string               _position_pattern;
-   CPositionInfo        _position_info;
-   CHistoryPositionInfo _history_info;
+   long                   _magic;
+   string                 _position_pattern;
+   CPositionInfo *        _position_info;
+   CHistoryPositionInfo * _history_info;
 public:
 
                      PositionProvider(long magic)
-     { _magic = magic; _position_pattern = "{ \"isHistory\": %s, \"type\": %s, \"magic\": %.0f, \"positionId\": %.0f, \"lot\": %.2f, \"stopLoss\": %.0f, \"takeProfit\": %.0f, \"openAt\": %.0f, \"closeAt\": %.0f, \"profit\": %.2f }"; }
+     {
+      _magic = magic;
+      _position_info = new CPositionInfo();
+      _history_info = new CHistoryPositionInfo();
+      _position_pattern = "{ \"isHistory\": %s, \"type\": %s, \"magic\": %.0f, \"positionId\": %.0f, \"lot\": %.2f, \"stopLoss\": %.0f, \"takeProfit\": %.0f, \"openAt\": %.0f, \"closeAt\": %.0f, \"profit\": %.2f }";
+     }
                     ~PositionProvider() {}
 
 public:
