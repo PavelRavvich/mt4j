@@ -19,6 +19,7 @@ public:
      {
       _magic = magic;
       _symbol = symbol;
+      _account_provider = new AccountProvider();
       _market_provider = new MarketProvider(symbol);
       _position_provider = new PositionProvider(magic);
      }
