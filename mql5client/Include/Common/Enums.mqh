@@ -2,4 +2,4 @@
 
 
 enum PositionType { LONG, SHORT };
-enum SignalType { BUY, SELL, CLOSE };
+enum SignalType { BUY, SELL, UPDATE, CLOSE };
