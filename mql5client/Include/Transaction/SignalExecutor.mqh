@@ -13,9 +13,11 @@ class SignalExecutor
   {
    CTrade *          _trade;
    CSymbolInfo *     _symbolInfo;
+   CPositionInfo *   _position_info;
 public:
                      SignalExecutor(long magic, string symbol)
      {
+      _position_info = new CPositionInfo();
       _symbolInfo = new CSymbolInfo();
       _symbolInfo.Name(symbol);
       _trade = new Trade();
@@ -29,13 +31,14 @@ public:
          else
             _trade.SetTypeFilling(ORDER_FILLING_RETURN);
      }
-                    ~SignalExecutor() { delete _trade; delete _symbolInfo; }
+                    ~SignalExecutor() { delete _trade; delete _symbolInfo; delete _position_info; }
 public:
    void              Execute(Signal &signals[]);
 private:
    void              Buy(Signal &signal);
    void              Sell(Signal &signal);
    void              Close(Signal &signal);
+   void              Update(Signal &signal);
   };
 
 //+------------------------------------------------------------------+
@@ -50,6 +53,8 @@ void::SignalExecutor              Execute(Signal &signals[])
          Buy(signal);
       if(signal.type == SELL)
          Sell(signal);
+      if(signal.type == UPDATE)
+         Update(signal);
       if(signal.type == CLOSE)
          Close(signal);
      }
@@ -60,9 +65,10 @@ void::SignalExecutor              Execute(Signal &signals[])
 //+------------------------------------------------------------------+
 void::SignalExecutor              Buy(Signal &signal)
   {
-   while(!_trade.Buy(GetLot(), _symbolInfo.Symbol(), Ask(),
-                     StopLossToPrice(signal.stopLoss, signal.type),
-                     TakeProfitToPrice(signal.takeProfit, signal.type)))
+   double ask = Ask();
+   while(!_trade.Buy(GetLot(), _symbolInfo.Symbol(), ask,
+                     StopLossToPrice(signal.stopLoss, ask, signal.type),
+                     TakeProfitToPrice(signal.takeProfit, ask, signal.type)))
      { Print(GetLastError());}
   }
 //+------------------------------------------------------------------+
@@ -70,9 +76,31 @@ void::SignalExecutor              Buy(Signal &signal)
 //+------------------------------------------------------------------+
 void::SignalExecutor              Sell(Signal &signal)
   {
-   while(!_trade.Sell(GetLot(), _symbolInfo.Symbol(), Bid(),
-                      ConvertStopLoss(signal.stopLoss, signal.type),
-                      ConvertTakeProfit(signal.takeProfit, signal.type)))
+   double bid = Bid();
+   while(!_trade.Sell(GetLot(), _symbolInfo.Symbol(), bid,
+                      StopLossToPrice(signal.stopLoss, bid, signal.type),
+                      TakeProfitToPrice(signal.takeProfit, bid, signal.type)))
+     { Print(GetLastError()); }
+  }
+//+------------------------------------------------------------------+
+//| Execute UPDATE                                                     |
+//+------------------------------------------------------------------+
+void::SignalExecutor              Update(Signal &signal)
+  {
+   double openPrice = 0;
+   for(int i = PositionsTotal() - 1; i >= 0; i--)
+      if(_position_info.SelectByIndex(i))
+         if(_position_info.Ticket() == signal.positionId)
+            {
+             openPrice = _position_info.PriceOpen();
+             break;
+            }
+   if(openPrice == 0)
+      return;
+
+   while(!_trade.PositionModify(signal.positionId,
+                                ConvertStopLoss(signal.stopLoss, openPrice, signal.type),
+                                ConvertTakeProfit(signal.takeProfit, openPrice, signal.type)))
      { Print(GetLastError()); }
   }
 //+------------------------------------------------------------------+
@@ -81,9 +109,9 @@ void::SignalExecutor              Sell(Signal &signal)
 void::SignalExecutor              Close(Signal &signal)
   {
    for(int i = PositionsTotal() - 1; i >= 0; i--)
-      if(position_info.SelectByIndex(i))
-         if(position_info.Ticket() == signal.positionId)
-            while(!trade.PositionClose(position_info.Ticket(), 100))
+      if(_position_info.SelectByIndex(i))
+         if(_position_info.Ticket() == signal.positionId)
+            while(!_trade.PositionClose(position_info.Ticket(), 100))
                Print(GetLastError());
   }
 //+------------------------------------------------------------------+
