@@ -11,7 +11,7 @@ class AccountProvider
    string            _account_formatter;
 public:
                      AccountProvider()
-     {_account_formatter = "{ \"id\": %.0f, \"balance\": %.2f, \"freeMargin\": %.2f, \"margin\": %.2f, \"owner\": \"%s\", \"company\": \"%s\" }"; }
+     { _account_formatter = "{ \"id\": %.0f, \"balance\": %.2f, \"freeMargin\": %.2f, \"margin\": %.2f, \"owner\": \"%s\", \"company\": \"%s\" }"; }
                     ~AccountProvider() {}
 public:
    string            GetAccount();

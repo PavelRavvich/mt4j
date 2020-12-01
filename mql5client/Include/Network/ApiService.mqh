@@ -25,8 +25,8 @@ public:
      }
                     ~ApiService() { delete _restClient; delete _jsonParser; }
 public:
-   string             Connect(string inputs);
-   void                 GetSignals(Signal &signal);
+   string            Connect(string inputs);
+   void              GetSignals(Signal &signal);
   };
 //+------------------------------------------------------------------+
 //| Connect MT advisor with server side. Return advisor's UUID       |

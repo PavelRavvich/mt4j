@@ -27,9 +27,10 @@ int OnInit()
       return (INIT_FAILED);
    else
       Alert("Connection success. Advisor UUID: " + advisorUUID);
-//---
    return(INIT_SUCCEEDED);
   }
+
+void OnDeinit(const int reason) { delete apiService; delete inputsProvider; delete signalExecutor; }
 
 string CollectInputs()
   {
