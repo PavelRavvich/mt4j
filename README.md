@@ -71,6 +71,14 @@ _Request:_
 {
     "advisorId":"6a649280-2d72-4f4c-8457-0b0f9c43f244",
     "strategyName":"EXAMPLE",
+    "account":{
+        "id": 12345,
+        "balance": 100.55,
+        "margin": 100.55,
+        "freeMargin": 100.55,
+        "owner": "Ritchie Goldberg",
+        "company": "Best Broker"
+    },
     "positions":[
         {
             "isHistory": true,
@@ -102,43 +110,37 @@ _Request:_
 }
 ```
 
-_Response variations:_
 
-###### Open Position Signal Response:
+_Response_ 
+
+Can contain 3 position types:
+  * Open (buy or sell)
+  * Close
+  * Update (TakeProfit and StopLoss can be updated)
+    
 ```json
-{
-    "advisorId": "c4eb34e4-c9c3-4b7e-856d-d5d00588464d",
-    "type": "BUY | SELL",
-    "lot": 0.01,
-    "stopLoss": 100,
-    "takeProfit": 100
-}
+[
+    {
+        "advisorId":"c4eb34e4-c9c3-4b7e-856d-d5d00588464d",
+        "type":"BUY | SELL",
+        "lot":0.01,
+        "stopLoss":100,
+        "takeProfit":100
+    },
+    {
+        "advisorId":"c4eb34e4-c9c3-4b7e-856d-d5d00588464d",
+        "type":"UPDATE",
+        "positionId":10000000,
+        "stopLoss":100,
+        "takeProfit":100
+    },
+    {
+        "advisorId":"c4eb34e4-c9c3-4b7e-856d-d5d00588464d",
+        "type":"CLOSE",
+        "positionId":1000000000
+    }
+]
 ```
-###### Update Position Signal Response:
-```json
-{
-    "advisorId": "c4eb34e4-c9c3-4b7e-856d-d5d00588464d",
-    "type": "UPDATE",
-    "positionId": 10000000,
-    "lot": 0.01,
-    "stopLoss": 100,
-    "takeProfit": 100
-}
-```
-###### Close Position Signal Response:
-```json
-{
-    "advisorId": "c4eb34e4-c9c3-4b7e-856d-d5d00588464d",
-    "type": "CLOSE",
-    "positionId": 1000000000
-}
-```
-
-
-**Contribution**
-
-    1. For bug reports welcome to GitHub Issue.
-    2. Pull Request should be supported GitHub Issue.
     
 
 
