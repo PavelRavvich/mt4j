@@ -20,7 +20,7 @@ public:
       _position_info = new CPositionInfo();
       _symbolInfo = new CSymbolInfo();
       _symbolInfo.Name(symbol);
-      _trade = new Trade();
+      _trade = new CTrade();
       _trade.SetExpertMagicNumber(magic);
       _trade.SetTypeFillingBySymbol(symbol);
       if(SymbolInfoInteger(_symbolInfo.Name(), SYMBOL_FILLING_MODE) == SYMBOL_FILLING_FOK)
