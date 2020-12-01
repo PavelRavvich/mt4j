@@ -1,21 +1,5 @@
 #property strict
 
-/*
-   InputsProvider usage example.
-
-   InputsProvider * ip = new InputsProvider();
-   ip.InputString("input_name_1", "input_value_1");
-   ip.InputDouble("input_name_2", 1.1234);
-   ip.InputInteger("input_name_3", 12345);
-   ip.InputLong("input_name_4", 12345678);
-   datetime now = TimeCurrent();
-   ip.InputDatetime("input_name_5", now);
-   ip.InputTimeSeconds("input_name_6", (int) now);
-   ip.InputTimeMilliseconds("input_name_7", now * 1000);
-   string jsonBuild = ip.Build(); // InputsProvider instance stay imutable.
-   string jsonGet = ip.GetJsonInputs(); // Can be used only after .Build()
-*/
-
 //+------------------------------------------------------------------+
 //| Build JSON array from inputs.                                    |
 //+------------------------------------------------------------------+
@@ -41,8 +25,8 @@ public:
                     ~InputsProvider() {}
 
 public:
-   string             Build();
-   string             GetJsonInputs();
+   string            Build();
+   string            GetJsonInputs();
    void              InputString(string key, string value);
    void              InputDouble(string key, double value);
    void              InputLong(string key, long value);
