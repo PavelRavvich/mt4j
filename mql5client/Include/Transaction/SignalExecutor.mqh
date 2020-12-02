@@ -1,7 +1,7 @@
 #property strict
 
-#include <Trade\SymbolInfo.mqh>
-#include <Trade\Trade.mqh>
+#include <ApplicationContext\ApplicationContext.mqh>
+
 #include <Common\Structures.mqh>
 #include <Common\Utils.mqh>
 #include <Common\Enums.mqh>
@@ -17,10 +17,9 @@ class SignalExecutor
 public:
                      SignalExecutor(long magic, string symbol)
      {
-      _position_info = new CPositionInfo();
-      _symbolInfo = new CSymbolInfo();
-      _symbolInfo.Name(symbol);
-      _trade = new CTrade();
+      _position_info = ApplicationContext().PositionInfo();
+      _symbolInfo = ApplicationContext().SymbolInfo();
+      _trade = ApplicationContext().Trade();
       _trade.SetExpertMagicNumber(magic);
       _trade.SetTypeFillingBySymbol(symbol);
       if(SymbolInfoInteger(_symbolInfo.Name(), SYMBOL_FILLING_MODE) == SYMBOL_FILLING_FOK)

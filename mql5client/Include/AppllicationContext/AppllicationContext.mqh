@@ -2,25 +2,41 @@
 
 #include <Trade\Trade.mqh>
 #include <Trade\SymbolInfo.mqh>
+#include <Trade\AccountInfo.mqh>
 #include <Trade\PositionInfo.mqh>
 #include <Libs\HistoryPositionInfo.mqh>
 
+//+------------------------------------------------------------------+
+//| Appllication Context with singleton defenition.                  |
+//+------------------------------------------------------------------+
+
 CTrade *               Trade = NULL;
 CSymbolInfo *          SymbolInfo = NULL;
-CPositionInfo *        PositionInfo = NULL;
+CAccountInfo *         AccountInfo = NULL;
 CHistoryPositionInfo * HistoryInfo = NULL;
+CPositionInfo *        PositionInfo = NULL;
 
-CSymbolInfo * SymbolInfo() { return SymbolInfo == NULL ? SymbolInfo = new CSymbolInfo() : SymbolInfo; }
+CAccountInfo * AccountInfo() { return AccountInfo == NULL ? AccountInfo = new CAccountInfo() : AccountInfo; }
 CPositionInfo * PositionInfo() { return PositionInfo == NULL ? PositionInfo = new CPositionInfo() : PositionInfo; }
 CHistoryPositionInfo * HistoryInfo() { return HistoryInfo == NULL ? HistoryInfo = new CHistoryPositionInfo() : HistoryInfo; }
-CTrade * Trade()
+CSymbolInfo * SymbolInfo()
+  {
+   if(SymbolInfo != NULL)
+      return SymbolInfo;
+
+   SymbolInfo = new CSymbolInfo();
+   SymbolInfo.Name(Symbol());
+   return SymbolInfo;
+  }
+
+CTrade * Trade(long magic)
   {
    if(Trade != NULL)
       return Trade;
 
    Trade = new CTrade();
    Trade.SetExpertMagicNumber(magic);
-   Trade.SetTypeFillingBySymbol(symbol);
+   Trade.SetTypeFillingBySymbol(Symbol());
    if(SymbolInfoInteger(SymbolInfo().Name(), SYMBOL_FILLING_MODE) == SYMBOL_FILLING_FOK)
       Trade.SetTypeFilling(ORDER_FILLING_FOK);
    else
