@@ -11,7 +11,7 @@ class RestClient
    long              _magic;
    string            _symbol;
    string            _url_formatter;
-   RestConfig        _restConfig; // Example: RestConfig restConfig = {"http://127.0.0.1", 80, "Content-Type: application/json\r\n", 3000 };
+   RestConfig        _restConfig;
    RequestFactory *  _requestFactory;
 public:
                      RestClient(long magic, string symbol, RestConfig &restConfig)
