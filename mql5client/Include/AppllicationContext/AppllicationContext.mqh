@@ -9,7 +9,7 @@
 input long MagicNumber = 10000;
 
 //+------------------------------------------------------------------+
-//| Appllication Context with singleton defenition.                  |
+//| Appllication Context with object defenitions.                    |
 //+------------------------------------------------------------------+
 
 CTrade *               Trade = NULL;
@@ -33,27 +33,27 @@ void DestroyContext()
   }
 
 //+------------------------------------------------------------------+
-//|                                                                  |
+//| Singleton of JsonMapper                                          |
 //+------------------------------------------------------------------+
 CJAVal *               JsonMapper()
   { return JsonMapper == NULL ? JsonMapper = new CJAVal(NULL, jtUNDEF) : JsonMapper; }
 //+------------------------------------------------------------------+
-//|                                                                  |
+//| Singleton of AccountInfo                                         |
 //+------------------------------------------------------------------+
 CAccountInfo *         AccountInfo()
   { return AccountInfo == NULL ? AccountInfo = new CAccountInfo() : AccountInfo; }
 //+------------------------------------------------------------------+
-//|                                                                  |
+//| Singleton of PositionInfo                                        |
 //+------------------------------------------------------------------+
 CPositionInfo *        PositionInfo()
   { return PositionInfo == NULL ? PositionInfo = new CPositionInfo() : PositionInfo; }
 //+------------------------------------------------------------------+
-//|                                                                  |
+//| Singleton of HistoryInfo                                         |
 //+------------------------------------------------------------------+
 CHistoryPositionInfo * HistoryInfo()
   { return HistoryInfo == NULL ? HistoryInfo = new CHistoryPositionInfo() : HistoryInfo; }
 //+------------------------------------------------------------------+
-//|                                                                  |
+//| Singleton of SymbolInfo                                          |
 //+------------------------------------------------------------------+
 CSymbolInfo *          SymbolInfo()
   {
@@ -65,7 +65,7 @@ CSymbolInfo *          SymbolInfo()
    return SymbolInfo;
   }
 //+------------------------------------------------------------------+
-//|                                                                  |
+//| Singleton of Trade                                               |
 //+------------------------------------------------------------------+
 CTrade * Trade()
   {
