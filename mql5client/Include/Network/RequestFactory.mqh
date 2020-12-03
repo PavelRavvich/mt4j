@@ -1,5 +1,7 @@
 #property strict
 
+#include <ApplicationContext\ApplicationContext.mqh>
+
 #include <Provider\MarketProvider.mqh>
 #include <Provider\AccountProvider.mqh>
 #include <Provider\PositionProvider.mqh>
@@ -9,22 +11,18 @@
 //+------------------------------------------------------------------+
 class RequestFactory
   {
-   long                _magic;
-   string              _symbol;
-   MarketProvider *    _market_provider;
-   AccountProvider *   _account_provider;
-   PositionProvider *  _position_provider;
+   MarketProvider *    market_provider;
+   AccountProvider *   account_provider;
+   PositionProvider *  position_provider;
 public:
-                     RequestFactory(long magic, string symbol)
+                     RequestFactory()
      {
-      _magic = magic;
-      _symbol = symbol;
-      _account_provider = new AccountProvider();
-      _market_provider = new MarketProvider(symbol);
-      _position_provider = new PositionProvider(magic);
+      market_provider = new MarketProvider();
+      account_provider = new AccountProvider();
+      position_provider = new PositionProvider();
      }
 
-                    ~RequestFactory() { delete _market_provider; delete _position_provider; delete _account_provider; }
+                    ~RequestFactory() { delete market_provider; delete position_provider; delete account_provider; }
 
 public:
    string            GetAddAdvisorRequestBody(string inputs);
@@ -36,7 +34,7 @@ public:
 //+------------------------------------------------------------------+
 string::RequestFactory            GetAddAdvisorRequestBody(string inputs)
   {
-   return "{ \"magic\": " + (string) _magic + ", \"inputs\": " + inputs + " }";
+   return "{ \"magic\": " + (string) Magic() + ", \"inputs\": " + inputs + " }";
   }
 
 //+------------------------------------------------------------------+
@@ -45,9 +43,9 @@ string::RequestFactory            GetAddAdvisorRequestBody(string inputs)
 string::RequestFactory            GetSignalRequestBody(string advisor_id, string strategy_name)
   {
    return "{ \"advisorId\": \"" +  advisor_id + "\", \"strategyName\": \"" + strategy_name +
-          "\", \"rates\": " + _market_provider.GetRates() +
-          ", \"positions\": " + _position_provider.GetPositions() +
-          ", \"account\": " + _account_provider.GetAccount() +
+          "\", \"rates\": " + market_provider.GetRates() +
+          ", \"positions\": " + position_provider.GetPositions() +
+          ", \"account\": " + account_provider.GetAccount() +
           " }";
   }
 //+------------------------------------------------------------------+

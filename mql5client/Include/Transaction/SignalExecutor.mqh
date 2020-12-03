@@ -21,7 +21,7 @@ public:
       symbol_info = SymbolInfo();
       position_info = PositionInfo();
      }
-                    ~SignalExecutor() { delete trade; delete symbol_info; delete position_info; }
+                    ~SignalExecutor() {}
 public:
    void              Execute(Signal &signals[]);
 private:
@@ -97,7 +97,7 @@ void SignalExecutor::Update(Signal &signal)
      { Print(GetLastError()); }
   }
 //+------------------------------------------------------------------+
-//| Execute CLOSE by ticket(Signal.positionId)                       |
+//| Execute CLOSE                                                    |
 //+------------------------------------------------------------------+
 void SignalExecutor::Close(Signal &signal)
   {
