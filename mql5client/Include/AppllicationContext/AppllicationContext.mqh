@@ -46,27 +46,27 @@ void DestroyContext()
   }
 
 //+------------------------------------------------------------------+
-//| Singleton of JsonMapper                                          |
+//| Singleton of CJAVal                                              |
 //+------------------------------------------------------------------+
 CJAVal *               JsonMapper()
   { return JsonMapper == NULL ? JsonMapper = new CJAVal(NULL, jtUNDEF) : JsonMapper; }
 //+------------------------------------------------------------------+
-//| Singleton of AccountInfo                                         |
+//| Singleton of CAccountInfo                                        |
 //+------------------------------------------------------------------+
 CAccountInfo *         AccountInfo()
   { return AccountInfo == NULL ? AccountInfo = new CAccountInfo() : AccountInfo; }
 //+------------------------------------------------------------------+
-//| Singleton of PositionInfo                                        |
+//| Singleton of CPositionInfo                                       |
 //+------------------------------------------------------------------+
 CPositionInfo *        PositionInfo()
   { return PositionInfo == NULL ? PositionInfo = new CPositionInfo() : PositionInfo; }
 //+------------------------------------------------------------------+
-//| Singleton of HistoryInfo                                         |
+//| Singleton of CHistoryPositionInfo                                |
 //+------------------------------------------------------------------+
 CHistoryPositionInfo * HistoryInfo()
   { return HistoryInfo == NULL ? HistoryInfo = new CHistoryPositionInfo() : HistoryInfo; }
 //+------------------------------------------------------------------+
-//| Singleton of SymbolInfo                                          |
+//| Singleton of CSymbolInfo                                         |
 //+------------------------------------------------------------------+
 CSymbolInfo *          SymbolInfo()
   {
@@ -78,7 +78,7 @@ CSymbolInfo *          SymbolInfo()
    return SymbolInfo;
   }
 //+------------------------------------------------------------------+
-//| Singleton of Trade                                               |
+//| Singleton of CTrade                                              |
 //+------------------------------------------------------------------+
 CTrade * Trade()
   {
@@ -98,17 +98,31 @@ CTrade * Trade()
 
    return Trade;
   }
-
+//+------------------------------------------------------------------+
+//| Singleton of CPositionProvider                                   |
+//+------------------------------------------------------------------+
 CPositionProvider * PositionProvider() { return PositionProvider == NULL ? PositionProvider = new CPositionProvider() : PositionProvider; }
-
+//+------------------------------------------------------------------+
+//| Singleton of CMarketProvider                                     |
+//+------------------------------------------------------------------+
 CMarketProvider * MarketProvider() { return MarketProvider == NULL ? MarketProvider = new CMarketProvider() : MarketProvider; }
-
+//+------------------------------------------------------------------+
+//| Singleton of CInputsProvider                                     |
+//+------------------------------------------------------------------+
 CInputsProvider * InputsProvider() { return InputsProvider == NULL ? InputsProvider = new CInputsProvider() : InputsProvider; }
-
+//+------------------------------------------------------------------+
+//| Singleton of CAccountProvider                                    |
+//+------------------------------------------------------------------+
 CAccountProvider * AccountProvider() { return AccountProvider == NULL ? AccountProvider = new CAccountProvider() : AccountProvider; }
-
+//+------------------------------------------------------------------+
+//| Singleton of CRestClient                                         |
+//+------------------------------------------------------------------+
 CRestClient * RestClient() { return RestClient == NULL ? RestClient = new CRestClient() : RestClient; }
-
+//+------------------------------------------------------------------+
+//| Singleton of CRequestFactory                                     |
+//+------------------------------------------------------------------+
 CRequestFactory * RequestFactory() { return RequestFactory == NULL ? RequestFactory = new CRequestFactory() : RequestFactory; }
-
+//+------------------------------------------------------------------+
+//| Singleton of CApiService                                         |
+//+------------------------------------------------------------------+
 CApiService * ApiService() { return ApiService == NULL ? ApiService = new CApiService() : ApiService; }
