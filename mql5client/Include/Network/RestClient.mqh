@@ -1,5 +1,7 @@
 #property strict
 
+#include <ApplicationContext\ApplicationContext.mqh>
+
 #include <Common\Structures.mqh>
 #include <Network\RequestFactory.mqh>
 
@@ -8,21 +10,17 @@
 //+------------------------------------------------------------------+
 class RestClient
   {
-   long              _magic;
-   string            _symbol;
-   string            _url_formatter;
-   RestConfig        _restConfig;
-   RequestFactory *  _requestFactory;
+   string            url_formatter;
+   RestConfig        rest_config;
+   RequestFactory *  request_factory;
 public:
-                     RestClient(long magic, string symbol, RestConfig &restConfig)
+                     RestClient()
      {
-      _magic = magic;
-      _symbol = symbol;
-      _restConfig = restConfig;
-      _url_formatter = "%s:%.0f%s";
-      _requestFactory = new RequestFactory(magic, symbol);
+      rest_config = { "http://127.0.0.1", 80, "Content-Type: application/json\r\n", 3000 };;
+      request_factory = new RequestFactory();
+      url_formatter = "%s:%.0f%s";
      }
-                    ~RestClient() { delete _requestFactory; }
+                    ~RestClient() { delete request_factory; }
 public:
    string            Connect(string inputs);
    string            GetSignals(string advisor_id, string strategy_name);
@@ -37,18 +35,18 @@ private:
 string::RestClient               Connect(string inputs)
   {
    HttpRequest request;
-   request.url = StringFormat(_url_formatter, _restConfig.host, _restConfig.port, "/api/advisor/add");
-   request.body = _requestFactory.GetAddAdvisorRequestBody(inputs);
-   request.headers = _restConfig.headers;
+   request.url = StringFormat(url_formatter, rest_config.host, rest_config.port, "/api/advisor/add");
+   request.body = request_factory.GetAddAdvisorRequestBody(inputs);
+   request.headers = rest_config.headers;
    HttpResponse response;
    Post(request, response);
    if(response.status != 200)
      {
-      Alert(StringFormat("Connection to Advisor: %.0f failed", _magic));
+      Alert(StringFormat("Connection to Advisor: %.0f failed", Magic()));
       ExpertRemove();
      }
    else
-      Alert(StringFormat("Connection to Advisor: %.0f success", _magic));
+      Alert(StringFormat("Connection to Advisor: %.0f success", Magic()));
    return response.body;
   }
 //+------------------------------------------------------------------+
@@ -57,9 +55,9 @@ string::RestClient               Connect(string inputs)
 string::RestClient               GetSignals(string advisor_id, string strategy_name)
   {
    HttpRequest request;
-   request.url = StringFormat(_url_formatter, _restConfig.host, _restConfig.port, "/api/signal");
-   request.body = _requestFactory.GetSignalRequestBody(advisor_id, strategy_name);
-   request.headers = _restConfig.headers;
+   request.url = StringFormat(url_formatter, rest_config.host, rest_config.port, "/api/signal");
+   request.body = request_factory.GetSignalRequestBody(advisor_id, strategy_name);
+   request.headers = rest_config.headers;
    HttpResponse response;
    Get(request, response);
    return response.body;
@@ -73,7 +71,7 @@ void::RestClient                   Get(HttpRequest &request, HttpResponse &respo
    uchar requestBody[];
    string responseHeaders;
    StringToCharArray(request.body, requestBody, 0, StringLen(request.body));
-   int status = WebRequest("POST", request.url, request.headers, _restConfig.timeout, requestBody, responseBody, responseHeaders);
+   int status = WebRequest("POST", request.url, request.headers, rest_config.timeout, requestBody, responseBody, responseHeaders);
    response.body = CharArrayToString(responseBody, 0, WHOLE_ARRAY, CP_UTF8);
    response.status = status;
   }
@@ -86,7 +84,7 @@ void::RestClient                   Post(HttpRequest &request, HttpResponse &resp
    uchar requestBody[];
    string responseHeaders;
    StringToCharArray(request.body, requestBody, 0, StringLen(request.body));
-   int status = WebRequest("POST", request.url, request.headers, _restConfig.timeout, requestBody, responseBody, responseHeaders);
+   int status = WebRequest("POST", request.url, request.headers, rest_config.timeout, requestBody, responseBody, responseHeaders);
    response.body = CharArrayToString(responseBody, 0, WHOLE_ARRAY, CP_UTF8);
    response.status = status;
   }

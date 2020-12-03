@@ -10,21 +10,17 @@
 //+------------------------------------------------------------------+
 class ApiService
   {
-   RestClient *      _restClient;
+   RestClient *      rest_client;
    CJAVal *          json_mapper;
-   string            _strategy;
-   string            _advisor_id;
-   string            _symbol;
+   string            strategy;
+   string            advisor_id;
 public:
-                     ApiService(long magic, string symbol, string strategy)
+                     ApiService()
      {
-      RestConfig config = { "http://127.0.0.1", 80, "Content-Type: application/json\r\n", 3000 };
-      _restClient = new RestClient(magic, symbol, config);
-      json_mapper = new CJAVal(NULL, jtUNDEF);
-      _strategy = strategy;
-      _symbol = symbol;
+      rest_client = new RestClient();
+      json_mapper = JsonMapper();
      }
-                    ~ApiService() { delete _restClient; }
+                    ~ApiService() { delete rest_client; }
 public:
    string            Connect(string inputs);
    void              GetSignals(Signal &signal);
@@ -34,17 +30,17 @@ public:
 //+------------------------------------------------------------------+
 string::ApiService Connect(string inputs)
   {
-   string responceBody = _restClient.Connect(inputs);
+   string responceBody = rest_client.Connect(inputs);
    json_mapper.Clear();
    json_mapper.Deserialize(responceBody);
-   return _advisor_id = json_mapper["id"].ToStr();
+   return advisor_id = json_mapper["id"].ToStr();
   }
 //+------------------------------------------------------------------+
 //| Get signal as strategy result                                    |
 //+------------------------------------------------------------------+
 void::ApiService GetSignals(Signal &signals[])
   {
-   string responceBody = _restClient.GetSignals(_advisor_id, _strategy);
+   string responceBody = rest_client.GetSignals(advisor_id, Strategy());
    json_mapper.Clear();
    json_mapper.Deserialize(responceBody);
    for(int i = 0; i < json_mapper.Size(); i++)

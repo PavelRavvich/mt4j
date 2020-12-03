@@ -7,20 +7,20 @@ class InputsProvider
   {
    string            inputs;
    bool              is_builed;
-   string            _empty_inputs;
-   string            _input_string_formatter;
-   string            _input_double_formatter;
-   string            _input_long_formatter;
-   string            _keys[];
+   string            empty_inputs;
+   string            input_string_formatter;
+   string            input_double_formatter;
+   string            input_long_formatter;
+   string            keys[];
 public:
                      InputsProvider()
      {
       inputs = "";
       is_builed = false;
-      _empty_inputs = "[]";
-      _input_long_formatter = "{ \"key\": \"%s\", \"value\": %.0f, \"type\": \"NUMBER\" }";
-      _input_string_formatter = "{ \"key\": \"%s\", \"value\": \"%s\", \"type\": \"STRING\" }";
-      _input_double_formatter = "{ \"key\": \"%s\", \"value\": %.5f, \"type\": \"NUMBER\" }";
+      empty_inputs = "[]";
+      input_long_formatter = "{ \"key\": \"%s\", \"value\": %.0f, \"type\": \"NUMBER\" }";
+      input_string_formatter = "{ \"key\": \"%s\", \"value\": \"%s\", \"type\": \"STRING\" }";
+      input_double_formatter = "{ \"key\": \"%s\", \"value\": %.5f, \"type\": \"NUMBER\" }";
      }
                     ~InputsProvider() {}
 
@@ -48,7 +48,7 @@ string::InputsProvider             Build()
    if(inputs == "")
      {
       Alert("Warning! Inputs is empty.");
-      return _empty_inputs;
+      return empty_inputs;
      }
 
    if(is_builed)
@@ -66,7 +66,7 @@ string::InputsProvider             GetJsonInputs()
    if(!is_builed)
      {
       Alert("Build() wasn't called. Method Build() should be called before GetInputs().");
-      return _empty_inputs;
+      return empty_inputs;
      }
    return inputs;
   }
@@ -89,7 +89,7 @@ void::InputsProvider              InputString(string key, string value)
      }
 
    AddKey(key);
-   inputs = inputs + StringFormat(_input_string_formatter, key, value) + ", ";
+   inputs = inputs + StringFormat(input_string_formatter, key, value) + ", ";
   }
 
 //+------------------------------------------------------------------+
@@ -110,7 +110,7 @@ void::InputsProvider              InputDouble(string key, double value)
      }
 
    AddKey(key);
-   inputs = inputs + StringFormat(_input_double_formatter, key, value) + ", ";
+   inputs = inputs + StringFormat(input_double_formatter, key, value) + ", ";
   }
 
 //+------------------------------------------------------------------+
@@ -131,7 +131,7 @@ void::InputsProvider              InputLong(string key, long value)
      }
 
    AddKey(key);
-   inputs = inputs + StringFormat(_input_long_formatter, key, value) + ", ";
+   inputs = inputs + StringFormat(input_long_formatter, key, value) + ", ";
   }
 
 //+------------------------------------------------------------------+
@@ -179,9 +179,9 @@ string::InputsProvider            ToString()
 //+------------------------------------------------------------------+
 void::InputsProvider              AddKey(string key)
   {
-   int size = ArraySize(_keys);
-   ArrayResize(_keys, size + 1);
-   _keys[size] = key;
+   int size = ArraySize(keys);
+   ArrayResize(keys, size + 1);
+   keys[size] = key;
   }
 
 //+------------------------------------------------------------------+
@@ -189,8 +189,8 @@ void::InputsProvider              AddKey(string key)
 //+------------------------------------------------------------------+
 bool::InputsProvider              ContainKey(string key)
   {
-   for(int i = 0; i < ArraySize(_keys); i++)
-      if(_keys[i] == key)
+   for(int i = 0; i < ArraySize(keys); i++)
+      if(keys[i] == key)
          return true;
 
    return false;

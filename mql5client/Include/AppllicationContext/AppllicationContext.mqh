@@ -7,6 +7,7 @@
 #include <Libs\HistoryPositionInfo.mqh>
 
 input long MagicNumber = 10000;
+input String Strategy = 10000;
 
 //+------------------------------------------------------------------+
 //| Appllication Context with object defenitions.                    |
@@ -85,3 +86,6 @@ CTrade * Trade()
 
    return Trade;
   }
+
+string Strategy() { return Strategy; }
+string Magic() { return MagicNumber; }

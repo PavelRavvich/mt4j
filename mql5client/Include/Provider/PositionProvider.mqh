@@ -11,18 +11,16 @@
 //+------------------------------------------------------------------+
 class PositionProvider
   {
-   long                   _magic;
-   string                 _position_pattern;
+   string                 position_pattern;
    CPositionInfo *        position_info;
    CHistoryPositionInfo * history_info;
 public:
 
-                     PositionProvider(long magic)
+                     PositionProvider()
      {
-      _magic = magic;
       position_info = PositionInfo();
       history_info = HistoryPositionInfo();
-      _position_pattern = "{ \"isHistory\": %s, \"type\": %s, \"magic\": %.0f, \"positionId\": %.0f, \"lot\": %.2f, \"stopLoss\": %.0f, \"takeProfit\": %.0f, \"openAt\": %.0f, \"closeAt\": %.0f, \"profit\": %.2f }";
+      position_pattern = "{ \"isHistory\": %s, \"type\": %s, \"magic\": %.0f, \"positionId\": %.0f, \"lot\": %.2f, \"stopLoss\": %.0f, \"takeProfit\": %.0f, \"openAt\": %.0f, \"closeAt\": %.0f, \"profit\": %.2f }";
      }
                     ~PositionProvider() {}
 
@@ -46,7 +44,7 @@ string::PositionProvider            GetPositions()
    int size = ArraySize(positions);
    for(int i = 0; i < size; i++)
      {
-      string item = StringFormat(_position_pattern,
+      string item = StringFormat(position_pattern,
                                  BoolToString(positions[i].isHistory), PositionTypeToString(positions[i].type),
                                  positions[i].magic, positions[i].positionId, positions[i].lot, positions[i].stopLoss,
                                  positions[i].takeProfit, positions[i].openAt, positions[i].closeAt, positions[i].profit);
@@ -75,7 +73,7 @@ void::PositionProvider              FetchOpenPositions(Position &positions[])
    position_info.HistorySelect(0, TimeCurrent());
    for(int i = PositionsTotal() - 1; i >= 0; i--)
       if(position_info.SelectByIndex(i))
-         if(position_info.Magic() == _magic)
+         if(position_info.Magic() == Magic())
            {
             Position position;
             position.isHistory = false;
@@ -111,7 +109,7 @@ void::PositionProvider              FetchHistory(Position &positions[])
         {
          Position position;
          position.isHistory = true;
-         position.magic = _magic;
+         position.magic = Magic();
          position.openPrice = history_info.PriceOpen();
          position.closePrice = history_info.PriceClose();
          position.positionId = history_info.Ticket();
