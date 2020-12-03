@@ -9,20 +9,19 @@
 //+------------------------------------------------------------------+
 //| Factory http request's body                                      |
 //+------------------------------------------------------------------+
-class RequestFactory
+class CRequestFactory
   {
    MarketProvider *    market_provider;
    AccountProvider *   account_provider;
    PositionProvider *  position_provider;
 public:
-                     RequestFactory()
+                     CRequestFactory()
      {
-      market_provider = new MarketProvider();
-      account_provider = new AccountProvider();
-      position_provider = new PositionProvider();
+      market_provider = MarketProvider();
+      account_provider = AccountProvider();
+      position_provider = PositionProvider();
      }
-
-                    ~RequestFactory() { delete market_provider; delete position_provider; delete account_provider; }
+                    ~CRequestFactory() {}
 
 public:
    string            GetAddAdvisorRequestBody(string inputs);
@@ -32,7 +31,7 @@ public:
 //+------------------------------------------------------------------+
 //| Build requests body for register advisor                         |
 //+------------------------------------------------------------------+
-string::RequestFactory            GetAddAdvisorRequestBody(string inputs)
+string::CRequestFactory            GetAddAdvisorRequestBody(string inputs)
   {
    return "{ \"magic\": " + (string) Magic() + ", \"inputs\": " + inputs + " }";
   }
@@ -40,7 +39,7 @@ string::RequestFactory            GetAddAdvisorRequestBody(string inputs)
 //+------------------------------------------------------------------+
 //| Build request body for fetch signal from remote resource         |
 //+------------------------------------------------------------------+
-string::RequestFactory            GetSignalRequestBody(string advisor_id, string strategy_name)
+string::CRequestFactory            GetSignalRequestBody(string advisor_id, string strategy_name)
   {
    return "{ \"advisorId\": \"" +  advisor_id + "\", \"strategyName\": \"" + strategy_name +
           "\", \"rates\": " + market_provider.GetRates() +

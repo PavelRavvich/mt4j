@@ -5,24 +5,24 @@
 //+------------------------------------------------------------------+
 //| Provide account info as JSON                                     |
 //+------------------------------------------------------------------+
-class AccountProvider
+class CAccountProvider
   {
    CAccountInfo *    account_info;
    string            account_formatter;
 public:
-                     AccountProvider()
+                     CAccountProvider()
      {
       account_info = AccountInfo();
       account_formatter = "{ \"id\": %.0f, \"balance\": %.2f, \"freeMargin\": %.2f, \"margin\": %.2f, \"owner\": \"%s\", \"company\": \"%s\" }";
      }
-                    ~AccountProvider() {}
+                    ~CAccountProvider() {}
 public:
    string            GetAccount();
   };
 //+------------------------------------------------------------------+
 //| Build account info as JSON                                       |
 //+------------------------------------------------------------------+
-string::AccountProvider            GetAccount()
+string::CAccountProvider            GetAccount()
   {
    string name = account_info.Name();
    long login = account_info.Login();

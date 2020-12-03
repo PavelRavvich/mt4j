@@ -8,19 +8,19 @@
 //+------------------------------------------------------------------+
 //| HTTP Rest client                                                 |
 //+------------------------------------------------------------------+
-class RestClient
+class CRestClient
   {
    string            url_formatter;
    RestConfig        rest_config;
    RequestFactory *  request_factory;
 public:
-                     RestClient()
+                     CRestClient()
      {
       rest_config = { "http://127.0.0.1", 80, "Content-Type: application/json\r\n", 3000 };;
-      request_factory = new RequestFactory();
+      request_factory = RequestFactory();
       url_formatter = "%s:%.0f%s";
      }
-                    ~RestClient() { delete request_factory; }
+                    ~CRestClient() {}
 public:
    string            Connect(string inputs);
    string            GetSignals(string advisor_id, string strategy_name);
@@ -32,7 +32,7 @@ private:
 //+------------------------------------------------------------------+
 //| Bootstrap advisor register. Return advisor's UUID                |
 //+------------------------------------------------------------------+
-string::RestClient               Connect(string inputs)
+string::CRestClient               Connect(string inputs)
   {
    HttpRequest request;
    request.url = StringFormat(url_formatter, rest_config.host, rest_config.port, "/api/advisor/add");
@@ -52,7 +52,7 @@ string::RestClient               Connect(string inputs)
 //+------------------------------------------------------------------+
 //| Get trade signal request                                         |
 //+------------------------------------------------------------------+
-string::RestClient               GetSignals(string advisor_id, string strategy_name)
+string::CRestClient               GetSignals(string advisor_id, string strategy_name)
   {
    HttpRequest request;
    request.url = StringFormat(url_formatter, rest_config.host, rest_config.port, "/api/signal");
@@ -65,7 +65,7 @@ string::RestClient               GetSignals(string advisor_id, string strategy_n
 //+------------------------------------------------------------------+
 //| GET request low level defenition                                 |
 //+------------------------------------------------------------------+
-void::RestClient                   Get(HttpRequest &request, HttpResponse &response)
+void::CRestClient                   Get(HttpRequest &request, HttpResponse &response)
   {
    char responseBody[];
    uchar requestBody[];
@@ -78,7 +78,7 @@ void::RestClient                   Get(HttpRequest &request, HttpResponse &respo
 //+------------------------------------------------------------------+
 //| POST request low level defenition                                |
 //+------------------------------------------------------------------+
-void::RestClient                   Post(HttpRequest &request, HttpResponse &response)
+void::CRestClient                   Post(HttpRequest &request, HttpResponse &response)
   {
    char responseBody[];
    uchar requestBody[];

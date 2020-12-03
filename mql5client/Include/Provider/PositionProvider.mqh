@@ -9,20 +9,20 @@
 //+------------------------------------------------------------------+
 //| Provide positions as JSON                                        |
 //+------------------------------------------------------------------+
-class PositionProvider
+class CPositionProvider
   {
    string                 position_pattern;
    CPositionInfo *        position_info;
    CHistoryPositionInfo * history_info;
 public:
 
-                     PositionProvider()
+                     CPositionProvider()
      {
       position_info = PositionInfo();
       history_info = HistoryPositionInfo();
       position_pattern = "{ \"isHistory\": %s, \"type\": %s, \"magic\": %.0f, \"positionId\": %.0f, \"lot\": %.2f, \"stopLoss\": %.0f, \"takeProfit\": %.0f, \"openAt\": %.0f, \"closeAt\": %.0f, \"profit\": %.2f }";
      }
-                    ~PositionProvider() {}
+                    ~CPositionProvider() {}
 
 public:
    string            GetPositions();
@@ -36,7 +36,7 @@ private:
 //+------------------------------------------------------------------+
 //| Get all positions from history and open in one JSON array        |
 //+------------------------------------------------------------------+
-string::PositionProvider            GetPositions()
+string::CPositionProvider            GetPositions()
   {
    Position positions[];
    FetchPositions(positions);
@@ -59,7 +59,7 @@ string::PositionProvider            GetPositions()
 //+------------------------------------------------------------------+
 //| Collect all positions from history and currently open            |
 //+------------------------------------------------------------------+
-void::PositionProvider              FetchPositions(Position &positions[])
+void::CPositionProvider              FetchPositions(Position &positions[])
   {
    FetchOpenPositions(positions);
    FetchHistory(positions);
@@ -68,7 +68,7 @@ void::PositionProvider              FetchPositions(Position &positions[])
 //+------------------------------------------------------------------+
 //| Fetch currently open positions                                   |
 //+------------------------------------------------------------------+
-void::PositionProvider              FetchOpenPositions(Position &positions[])
+void::CPositionProvider              FetchOpenPositions(Position &positions[])
   {
    position_info.HistorySelect(0, TimeCurrent());
    for(int i = PositionsTotal() - 1; i >= 0; i--)
@@ -98,7 +98,7 @@ void::PositionProvider              FetchOpenPositions(Position &positions[])
 //+------------------------------------------------------------------+
 //| Fetch history of closed positions                                |
 //+------------------------------------------------------------------+
-void::PositionProvider              FetchHistory(Position &positions[])
+void::CPositionProvider              FetchHistory(Position &positions[])
   {
    history_info.HistorySelect(0, TimeCurrent());
    int total = history_info.PositionsTotal();
@@ -130,7 +130,7 @@ void::PositionProvider              FetchHistory(Position &positions[])
 //+------------------------------------------------------------------+
 //| Add position to array                                            |
 //+------------------------------------------------------------------+
-void::PositionProvider              AddPosition(Position &position, Position &positions[])
+void::CPositionProvider              AddPosition(Position &position, Position &positions[])
   {
    int size = ArraySize(positions);
    ArrayResize(positions, size + 1);

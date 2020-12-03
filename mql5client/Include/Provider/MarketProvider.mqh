@@ -5,17 +5,17 @@
 //+------------------------------------------------------------------+
 //| Provide rates from MT                                            |
 //+------------------------------------------------------------------+
-class MarketProvider
+class CMarketProvider
   {
    int               buffer_size;
    string            rates_formatter;
 public:
-                     MarketProvider(int _buffer_size = 20)
+                     CMarketProvider(int _buffer_size = 20)
      {
       buffer_size = _buffer_size;
       rates_formatter = "{ \"open\": %G, \"high\": %G, \"low\": %G, \"close\": %G, \"tickVolume\": %d, \"time\": %d, \"spread\": %d, \"realVolume\": %d }";
      }
-                    ~MarketProvider() {}
+                    ~CMarketProvider() {}
 public:
    string            GetRates();
 private:
@@ -25,7 +25,7 @@ private:
 //+------------------------------------------------------------------+
 //| Build JSON of all existed timeframes                             |
 //+------------------------------------------------------------------+
-string::MarketProvider            GetRates()
+string::CMarketProvider            GetRates()
   {
    string m1 = "\"M_1\": " + CopyMqlRates(PERIOD_M1) + ",";
    string m2 = "\"M_2\": " + CopyMqlRates(PERIOD_M2) + ",";
@@ -56,7 +56,7 @@ string::MarketProvider            GetRates()
 //+------------------------------------------------------------------+
 //| Copy rates of timeframe as JSON                                  |
 //+------------------------------------------------------------------+
-string::MarketProvider            CopyMqlRates(ENUM_TIMEFRAMES  timeframe)
+string::CMarketProvider            CopyMqlRates(ENUM_TIMEFRAMES  timeframe)
   {
    Bars(Symbol(), timeframe);
    string items = "";

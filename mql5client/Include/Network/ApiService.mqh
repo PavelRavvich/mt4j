@@ -8,19 +8,19 @@
 //+------------------------------------------------------------------+
 //| Service for call local or remote resources                       |
 //+------------------------------------------------------------------+
-class ApiService
+class CApiService
   {
    RestClient *      rest_client;
    CJAVal *          json_mapper;
    string            strategy;
    string            advisor_id;
 public:
-                     ApiService()
+                     CApiService()
      {
-      rest_client = new RestClient();
+      rest_client = RestClient();
       json_mapper = JsonMapper();
      }
-                    ~ApiService() { delete rest_client; }
+                    ~CApiService() {}
 public:
    string            Connect(string inputs);
    void              GetSignals(Signal &signal);
@@ -28,7 +28,7 @@ public:
 //+------------------------------------------------------------------+
 //| Connect MT advisor with server side. Return advisor's UUID       |
 //+------------------------------------------------------------------+
-string::ApiService Connect(string inputs)
+string::CApiService Connect(string inputs)
   {
    string responceBody = rest_client.Connect(inputs);
    json_mapper.Clear();
@@ -38,7 +38,7 @@ string::ApiService Connect(string inputs)
 //+------------------------------------------------------------------+
 //| Get signal as strategy result                                    |
 //+------------------------------------------------------------------+
-void::ApiService GetSignals(Signal &signals[])
+void::CApiService GetSignals(Signal &signals[])
   {
    string responceBody = rest_client.GetSignals(advisor_id, Strategy());
    json_mapper.Clear();

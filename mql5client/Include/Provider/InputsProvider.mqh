@@ -3,7 +3,7 @@
 //+------------------------------------------------------------------+
 //| Build JSON array from inputs.                                    |
 //+------------------------------------------------------------------+
-class InputsProvider
+class CInputsProvider
   {
    string            inputs;
    bool              is_builed;
@@ -13,7 +13,7 @@ class InputsProvider
    string            input_long_formatter;
    string            keys[];
 public:
-                     InputsProvider()
+                     CInputsProvider()
      {
       inputs = "";
       is_builed = false;
@@ -22,7 +22,7 @@ public:
       input_string_formatter = "{ \"key\": \"%s\", \"value\": \"%s\", \"type\": \"STRING\" }";
       input_double_formatter = "{ \"key\": \"%s\", \"value\": %.5f, \"type\": \"NUMBER\" }";
      }
-                    ~InputsProvider() {}
+                    ~CInputsProvider() {}
 
 public:
    string            Build();
@@ -43,7 +43,7 @@ private:
 //+------------------------------------------------------------------+
 //| Build inputs as JSON array. Can be called only ones.             |
 //+------------------------------------------------------------------+
-string::InputsProvider             Build()
+string::CInputsProvider             Build()
   {
    if(inputs == "")
      {
@@ -61,7 +61,7 @@ string::InputsProvider             Build()
 //+------------------------------------------------------------------+
 //| Get inputs as JSON array. Reqired call Build() before.           |
 //+------------------------------------------------------------------+
-string::InputsProvider             GetJsonInputs()
+string::CInputsProvider             GetJsonInputs()
   {
    if(!is_builed)
      {
@@ -74,7 +74,7 @@ string::InputsProvider             GetJsonInputs()
 //+------------------------------------------------------------------+
 //| Add string input                                                 |
 //+------------------------------------------------------------------+
-void::InputsProvider              InputString(string key, string value)
+void::CInputsProvider              InputString(string key, string value)
   {
    if(is_builed)
      {
@@ -95,7 +95,7 @@ void::InputsProvider              InputString(string key, string value)
 //+------------------------------------------------------------------+
 //| Add double input                                                 |
 //+------------------------------------------------------------------+
-void::InputsProvider              InputDouble(string key, double value)
+void::CInputsProvider              InputDouble(string key, double value)
   {
    if(is_builed)
      {
@@ -116,7 +116,7 @@ void::InputsProvider              InputDouble(string key, double value)
 //+------------------------------------------------------------------+
 //| Add long input                                                   |
 //+------------------------------------------------------------------+
-void::InputsProvider              InputLong(string key, long value)
+void::CInputsProvider              InputLong(string key, long value)
   {
    if(is_builed)
      {
@@ -137,7 +137,7 @@ void::InputsProvider              InputLong(string key, long value)
 //+------------------------------------------------------------------+
 //| Add int input                                                                 |
 //+------------------------------------------------------------------+
-void::InputsProvider              InputInteger(string key, int value)
+void::CInputsProvider              InputInteger(string key, int value)
   {
    InputLong(key, (long) value);
   }
@@ -145,7 +145,7 @@ void::InputsProvider              InputInteger(string key, int value)
 //+------------------------------------------------------------------+
 //| Add time datetime input                                          |
 //+------------------------------------------------------------------+
-void::InputsProvider              InputDatetime(string key, datetime date)
+void::CInputsProvider              InputDatetime(string key, datetime date)
   {
    InputLong(key, (long) date * 1000);
   }
@@ -153,7 +153,7 @@ void::InputsProvider              InputDatetime(string key, datetime date)
 //+------------------------------------------------------------------+
 //| Add time seconds input                                           |
 //+------------------------------------------------------------------+
-void::InputsProvider              InputTimeSeconds(string key, int seconds)
+void::CInputsProvider              InputTimeSeconds(string key, int seconds)
   {
    InputLong(key, (long) seconds * 1000);
   }
@@ -161,7 +161,7 @@ void::InputsProvider              InputTimeSeconds(string key, int seconds)
 //+------------------------------------------------------------------+
 //| Add time milliseconds input                                      |
 //+------------------------------------------------------------------+
-void::InputsProvider              InputTimeMilliseconds(string key, long milliseconds)
+void::CInputsProvider              InputTimeMilliseconds(string key, long milliseconds)
   {
    InputLong(key, milliseconds);
   }
@@ -169,7 +169,7 @@ void::InputsProvider              InputTimeMilliseconds(string key, long millise
 //+------------------------------------------------------------------+
 //| return inputs as string (not valid JSON just for logging and debug)|
 //+------------------------------------------------------------------+
-string::InputsProvider            ToString()
+string::CInputsProvider            ToString()
   {
    return inputs;
   }
@@ -177,7 +177,7 @@ string::InputsProvider            ToString()
 //+------------------------------------------------------------------+
 //| Add key                                                          |
 //+------------------------------------------------------------------+
-void::InputsProvider              AddKey(string key)
+void::CInputsProvider              AddKey(string key)
   {
    int size = ArraySize(keys);
    ArrayResize(keys, size + 1);
@@ -187,7 +187,7 @@ void::InputsProvider              AddKey(string key)
 //+------------------------------------------------------------------+
 //| Check kay already exist                                          |
 //+------------------------------------------------------------------+
-bool::InputsProvider              ContainKey(string key)
+bool::CInputsProvider              ContainKey(string key)
   {
    for(int i = 0; i < ArraySize(keys); i++)
       if(keys[i] == key)

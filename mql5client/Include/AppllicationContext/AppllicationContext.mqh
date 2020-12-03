@@ -5,21 +5,33 @@
 #include <Trade\AccountInfo.mqh>
 #include <Trade\PositionInfo.mqh>
 #include <Libs\HistoryPositionInfo.mqh>
+#include <Provider\PositionProvider.mqh>
+#include <Provider\MarketProvider.mqh>
 
-input long MagicNumber = 10000;
-input String Strategy = 10000;
+input long MagicNumber = 10000000;
+input String Strategy = "EXAMPLE";
 
 //+------------------------------------------------------------------+
 //| Appllication Context with object defenitions.                    |
 //+------------------------------------------------------------------+
+
+string Magic() { return MagicNumber; }
+string Strategy() { return Strategy; }
 
 CTrade *               Trade = NULL;
 CJAVal *               JsonMapper = NULL;
 CSymbolInfo *          SymbolInfo = NULL;
 CAccountInfo *         AccountInfo = NULL;
 CHistoryPositionInfo * HistoryInfo = NULL;
-CPositionInfo *        PositionInfo = NULL;
 
+CRestClient *          RestClient = NULL;
+CApiService *          ApiService = NULL;
+CPositionInfo *        PositionInfo = NULL;
+CInputsProvider *      InputsProvider = NULL;
+CMarketProvider *      MarketProvider = NULL;
+CRequestFactory *      RequestFactory = NULL;
+CAccountProvider *     AccountProvider = NULL;
+CPositionProvider *    PositionProvider = NULL;
 //+------------------------------------------------------------------+
 //| Context should destroy. Call in OnDeinit().                      |
 //+------------------------------------------------------------------+
@@ -87,5 +99,16 @@ CTrade * Trade()
    return Trade;
   }
 
-string Strategy() { return Strategy; }
-string Magic() { return MagicNumber; }
+CPositionProvider * PositionProvider() { return PositionProvider == NULL ? PositionProvider = new CPositionProvider() : PositionProvider; }
+
+CMarketProvider * MarketProvider() { return MarketProvider == NULL ? MarketProvider = new CMarketProvider() : MarketProvider; }
+
+CInputsProvider * InputsProvider() { return InputsProvider == NULL ? InputsProvider = new CInputsProvider() : InputsProvider; }
+
+CAccountProvider * AccountProvider() { return AccountProvider == NULL ? AccountProvider = new CAccountProvider() : AccountProvider; }
+
+CRestClient * RestClient() { return RestClient == NULL ? RestClient = new CRestClient() : RestClient; }
+
+CRequestFactory * RequestFactory() { return RequestFactory == NULL ? RequestFactory = new CRequestFactory() : RequestFactory; }
+
+CApiService * ApiService() { return ApiService == NULL ? ApiService = new CApiService() : ApiService; }
