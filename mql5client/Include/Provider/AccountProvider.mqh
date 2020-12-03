@@ -1,21 +1,21 @@
 #property strict
 
-#include <Transaction\AccountInfo.mqh>
+#include <ApplicationContext\ApplicationContext.mqh>
 
 //+------------------------------------------------------------------+
 //| Provide account info as JSON                                     |
 //+------------------------------------------------------------------+
 class AccountProvider
   {
-   CAccountInfo *    _account_info;
+   CAccountInfo *    account_info;
    string            _account_formatter;
 public:
                      AccountProvider()
      {
-      _account_info = new CAccountInfo();
+      account_info = AccountInfo();
       _account_formatter = "{ \"id\": %.0f, \"balance\": %.2f, \"freeMargin\": %.2f, \"margin\": %.2f, \"owner\": \"%s\", \"company\": \"%s\" }";
      }
-                    ~AccountProvider() { delete _account_info; }
+                    ~AccountProvider() {}
 public:
    string            GetAccount();
   };
@@ -24,12 +24,12 @@ public:
 //+------------------------------------------------------------------+
 string::AccountProvider            GetAccount()
   {
-   long login = _account_info.Login();
-   double balance =_account_info.Balance();
-   double freeMargin = _account_info.FreeMargin();
-   double margin = _account_info.Margin();
-   string name = _account_info.Name();
-   string company = _account_info.Company();
+   long login = account_info.Login();
+   double balance = account_info.Balance();
+   double freeMargin = account_info.FreeMargin();
+   double margin = account_info.Margin();
+   string name = account_info.Name();
+   string company = account_info.Company();
    return StringFormat(_account_formatter, login, balance, freeMargin, margin, name, company);
   }
 //+------------------------------------------------------------------+
