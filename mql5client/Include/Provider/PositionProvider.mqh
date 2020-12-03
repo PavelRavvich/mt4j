@@ -1,7 +1,7 @@
 #property strict
 
-#include <Libs\HistoryPositionInfo.mqh>
-#include <Trade\PositionInfo.mqh>
+#include <ApplicationContext\ApplicationContext.mqh>
+
 #include <Common\Structures.mqh>
 #include <Common\Utils.mqh>
 #include <Common\Enums.mqh>
@@ -13,15 +13,15 @@ class PositionProvider
   {
    long                   _magic;
    string                 _position_pattern;
-   CPositionInfo *        _position_info;
-   CHistoryPositionInfo * _history_info;
+   CPositionInfo *        position_info;
+   CHistoryPositionInfo * history_info;
 public:
 
                      PositionProvider(long magic)
      {
       _magic = magic;
-      _position_info = new CPositionInfo();
-      _history_info = new CHistoryPositionInfo();
+      position_info = PositionInfo();
+      history_info = HistoryPositionInfo();
       _position_pattern = "{ \"isHistory\": %s, \"type\": %s, \"magic\": %.0f, \"positionId\": %.0f, \"lot\": %.2f, \"stopLoss\": %.0f, \"takeProfit\": %.0f, \"openAt\": %.0f, \"closeAt\": %.0f, \"profit\": %.2f }";
      }
                     ~PositionProvider() {}
@@ -72,27 +72,27 @@ void::PositionProvider              FetchPositions(Position &positions[])
 //+------------------------------------------------------------------+
 void::PositionProvider              FetchOpenPositions(Position &positions[])
   {
-   _position_info.HistorySelect(0, TimeCurrent());
+   position_info.HistorySelect(0, TimeCurrent());
    for(int i = PositionsTotal() - 1; i >= 0; i--)
-      if(_position_info.SelectByIndex(i))
-         if(_position_info.Magic() == _magic)
+      if(position_info.SelectByIndex(i))
+         if(position_info.Magic() == _magic)
            {
             Position position;
             position.isHistory = false;
-            position.openAt = _position_info.TimeMsc();
-            position.positionId = _position_info.Ticket();
-            position.openPrice = _position_info.PriceOpen();
-            position.swap = NormalizeDouble(_position_info.Swap());
-            position.lot = NormalizeDouble(_position_info.Volume());
-            position.profit = NormalizeDouble(_position_info.Profit());
-            position.stopLoss = StopLossToPoint(_position_info.StopLoss(),
-                                                _position_info.PriceOpen(),
-                                                _position_info.PositionType());
-            position.takeProfit = TakeProfitToPoint(_position_info.TakeProfit(),
-                                                    _position_info.PriceOpen(),
-                                                    _position_info.PositionType());
-            position.commission = NormalizeDouble(_position_info.Commission());
-            position.type = _position_info.PositionType() == POSITION_TYPE_BUY ? LONG : SHORT;
+            position.openAt = position_info.TimeMsc();
+            position.positionId = position_info.Ticket();
+            position.openPrice = position_info.PriceOpen();
+            position.swap = NormalizeDouble(position_info.Swap());
+            position.lot = NormalizeDouble(position_info.Volume());
+            position.profit = NormalizeDouble(position_info.Profit());
+            position.stopLoss = StopLossToPoint(position_info.StopLoss(),
+                                                position_info.PriceOpen(),
+                                                position_info.PositionType());
+            position.takeProfit = TakeProfitToPoint(position_info.TakeProfit(),
+                                                    position_info.PriceOpen(),
+                                                    position_info.PositionType());
+            position.commission = NormalizeDouble(position_info.Commission());
+            position.type = position_info.PositionType() == POSITION_TYPE_BUY ? LONG : SHORT;
             AddPosition(position, positions);
            }
   }
@@ -102,28 +102,28 @@ void::PositionProvider              FetchOpenPositions(Position &positions[])
 //+------------------------------------------------------------------+
 void::PositionProvider              FetchHistory(Position &positions[])
   {
-   _history_info.HistorySelect(0, TimeCurrent());
-   int total = _history_info.PositionsTotal();
+   history_info.HistorySelect(0, TimeCurrent());
+   int total = history_info.PositionsTotal();
    for(int i = 0; i < total; i++)
      {
       //--- Select a closed position by its index in the list
-      if(_history_info.SelectByIndex(i))
+      if(history_info.SelectByIndex(i))
         {
          Position position;
          position.isHistory = true;
          position.magic = _magic;
-         position.openPrice = _history_info.PriceOpen();
-         position.closePrice = _history_info.PriceClose();
-         position.positionId = _history_info.Ticket();
-         position.openAt = _history_info.TimeOpenMsc();
-         position.closeAt = _history_info.TimeCloseMsc();
-         position.swap = NormalizeDouble(_history_info.Swap(), 2);
-         position.lot = NormalizeDouble(_history_info.Volume(), 2);
-         position.profit = NormalizeDouble(_history_info.Profit(), 2);
-         position.stopLoss = StopLossToPoint(_history_info.StopLoss());
-         position.takeProfit = TakeProfitToPoint(_history_info.TakeProfit());
-         position.commission = NormalizeDouble(_history_info.Commission(), 2);
-         position.type = _history_info.PositionType() == POSITION_TYPE_BUY ? LONG : SHORT;
+         position.openPrice = history_info.PriceOpen();
+         position.closePrice = history_info.PriceClose();
+         position.positionId = history_info.Ticket();
+         position.openAt = history_info.TimeOpenMsc();
+         position.closeAt = history_info.TimeCloseMsc();
+         position.swap = NormalizeDouble(history_info.Swap(), 2);
+         position.lot = NormalizeDouble(history_info.Volume(), 2);
+         position.profit = NormalizeDouble(history_info.Profit(), 2);
+         position.stopLoss = StopLossToPoint(history_info.StopLoss());
+         position.takeProfit = TakeProfitToPoint(history_info.TakeProfit());
+         position.commission = NormalizeDouble(history_info.Commission(), 2);
+         position.type = history_info.PositionType() == POSITION_TYPE_BUY ? LONG : SHORT;
          AddPosition(position, positions);
         }
      }
