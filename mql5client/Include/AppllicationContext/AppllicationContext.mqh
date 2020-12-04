@@ -23,10 +23,10 @@ CJAVal *               JsonMapper = NULL;
 CSymbolInfo *          SymbolInfo = NULL;
 CAccountInfo *         AccountInfo = NULL;
 CHistoryPositionInfo * HistoryInfo = NULL;
+CPositionInfo *        PositionInfo = NULL;
 
 CRestClient *          RestClient = NULL;
 CApiService *          ApiService = NULL;
-CPositionInfo *        PositionInfo = NULL;
 CInputsProvider *      InputsProvider = NULL;
 CMarketProvider *      MarketProvider = NULL;
 CRequestFactory *      RequestFactory = NULL;
@@ -43,6 +43,13 @@ void DestroyContext()
    delete AccountInfo;
    delete HistoryInfo;
    delete PositionInfo;
+   delete RestClient;
+   delete ApiService;
+   delete InputsProvider;
+   delete MarketProvider;
+   delete RequestFactory;
+   delete AccountProvider;
+   delete PositionProvider;
   }
 
 //+------------------------------------------------------------------+
