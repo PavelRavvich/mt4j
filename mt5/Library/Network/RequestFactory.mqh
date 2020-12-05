@@ -1,10 +1,6 @@
 #property strict
 
-#include <ApplicationContext\ApplicationContext.mqh>
-
-#include <Provider\MarketProvider.mqh>
-#include <Provider\AccountProvider.mqh>
-#include <Provider\PositionProvider.mqh>
+#include <Library\ApplicationContext\ApplicationContext.mqh>
 
 //+------------------------------------------------------------------+
 //| Factory http request's body                                      |

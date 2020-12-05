@@ -1,10 +1,6 @@
 #property strict
 
-#include <ApplicationContext\ApplicationContext.mqh>
-
-#include <Common\Structures.mqh>
-#include <Common\Utils.mqh>
-#include <Common\Enums.mqh>
+#include <Library\ApplicationContext\ApplicationContext.mqh>
 
 //+------------------------------------------------------------------+
 //| Provide positions as JSON                                        |

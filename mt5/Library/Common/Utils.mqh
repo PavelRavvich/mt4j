@@ -1,7 +1,7 @@
 #property strict
 
-#include <Common\Enums.mqh>
-#include <Common\Structures.mqh>
+#include <Library\Common\Enums.mqh>
+#include <Library\Common\Structures.mqh>
 
 string PositionTypeToString(PositionType type)
   {

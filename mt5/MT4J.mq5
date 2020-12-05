@@ -1,7 +1,7 @@
 #property strict
 
-#include <Common\Structures.mqh>
-#include <ApplicationContext\ApplicationContext.mqh>
+#include <Library\Common\Structures.mqh>
+#include <Library\ApplicationContext\ApplicationContext.mqh>
 
 input string UserInputs = "-------------------------------------";
 // Any user's inputs.

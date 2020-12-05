@@ -1,9 +1,6 @@
 #property strict
 
-#include <ApplicationContext\ApplicationContext.mqh>
-
-#include <Common\Structures.mqh>
-#include <Network\RequestFactory.mqh>
+#include <Library\ApplicationContext\ApplicationContext.mqh>
 
 //+------------------------------------------------------------------+
 //| HTTP Rest client                                                 |

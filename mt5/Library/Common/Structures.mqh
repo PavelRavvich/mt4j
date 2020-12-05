@@ -1,6 +1,6 @@
 #property strict
 
-#include <Common\Enums.mqh>
+#include <Library\Common\Enums.mqh>
 
 struct HttpResponse
   {
