@@ -1,9 +1,6 @@
 #property strict
 
-#include <ApplicationContext\ApplicationContext.mqh>
-
-#include <Common\Structures.mqh>
-#include <Network\RestClient.mqh>
+#include <Library\ApplicationContext\ApplicationContext.mqh>
 
 //+------------------------------------------------------------------+
 //| Service for call local or remote resources                       |

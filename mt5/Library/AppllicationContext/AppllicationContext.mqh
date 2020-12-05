@@ -4,12 +4,25 @@
 #include <Trade\SymbolInfo.mqh>
 #include <Trade\AccountInfo.mqh>
 #include <Trade\PositionInfo.mqh>
-#include <Libs\HistoryPositionInfo.mqh>
-#include <Provider\PositionProvider.mqh>
-#include <Provider\MarketProvider.mqh>
+
+#include <Library\Common\Utils.mqh>
+#include <Library\Common\Enums.mqh>
+#include <Library\Common\Structures.mqh>
+
+#include <Library\Helper\JAson.mqh>
+#include <Library\Helper\HistoryPositionInfo.mqh>
+
+#include <Library\Provider\PositionProvider.mqh>
+#include <Library\Provider\AccountProvider.mqh>
+#include <Library\Provider\MarketProvider.mqh>
+
+#include <Library\Network\RequestFactory.mqh>
+#include <Library\Network\RestClient.mqh>
+
 
 input long MagicNumber = 10000000;
 input String Strategy = "EXAMPLE";
+
 
 //+------------------------------------------------------------------+
 //| Appllication Context with object defenitions.                    |
