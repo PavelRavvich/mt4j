@@ -11,8 +11,6 @@ int OnInit()
   {
    InputsProvider().InputInteger("magic", Magic);
    InputsProvider().InputString("strategyName", StrategyName);
-   InputsProvider().InputInteger("stopLoss", StopLoss);
-   InputsProvider().InputInteger("takeProfit", TakeProfit);
    InputsProvider().InputDatetime("startTime", TimeCurrent());
    // Add inputs like example.
    string inputs = InputsProvider().Build();
