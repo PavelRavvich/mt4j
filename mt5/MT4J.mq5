@@ -1,6 +1,5 @@
 #property strict
 
-#include <Library\Common\Structures.mqh>
 #include <Library\ApplicationContext\ApplicationContext.mqh>
 
 input string UserInputs = "-------------------------------------";
@@ -10,16 +9,17 @@ string advisorUUID = NULL;
 
 int OnInit()
   {
-   InputsProvider().InputInteger("Magic", Magic);
-   InputsProvider().InputString("Strategy", Strategy);
-   InputsProvider().InputInteger("StopLoss", StopLoss);
-   InputsProvider().InputInteger("TakeProfit", TakeProfit);
-   InputsProvider().InputDatetime("StartTime", TimeCurrent());
+   InputsProvider().InputInteger("magic", Magic);
+   InputsProvider().InputString("strategyName", StrategyName);
+   InputsProvider().InputDatetime("startTime", TimeCurrent());
    // Add inputs like example.
    string inputs = InputsProvider().Build();
-   advisorUUID = apiService().Connect(inputs);
+   advisorUUID = ApiService().Connect(inputs);
    if(advisorUUID == NULL)
-      return (INIT_FAILED);
+      {
+       Alert("Connection fail. StrategyName not found. StrategyName should be equals to Java server side interface implementation Strategy.getName()");
+       return (INIT_FAILED);
+      }
    else
       Alert("Connection success. Advisor UUID: " + advisorUUID);
    return(INIT_SUCCEEDED);
@@ -30,6 +30,6 @@ void OnDeinit(const int reason) { DestroyContext(); }
 void OnTick()
   {
    Signal signals[];
-   apiService().GetSignals(signals);
-   signalExecutor().Execute(signals);
+   ApiService().GetSignals(signals);
+   SignalExecutor().Execute(signals);
   }
