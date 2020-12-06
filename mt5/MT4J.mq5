@@ -9,7 +9,7 @@ string advisorUUID = NULL;
 
 int OnInit()
   {
-   InputsProvider().InputInteger("magic", Magic);
+   InputsProvider().InputLong("magic", MagicNumber);
    InputsProvider().InputString("strategyName", StrategyName);
    InputsProvider().InputDatetime("startTime", TimeCurrent());
    // Add inputs like example.

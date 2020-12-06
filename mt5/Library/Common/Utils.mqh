@@ -24,7 +24,7 @@ string BoolToString(bool val)
 
 int TakeProfitToPoint(double takeProfit, double price, ENUM_POSITION_TYPE type)
   {
-   return type == POSITION_TYPE_BUY ? (takeProfit - price) / Point() : (price - takeProfit) / Point();
+   return (int) (type == POSITION_TYPE_BUY ? (takeProfit - price) / Point() : (price - takeProfit) / Point());
   }
 
 double TakeProfitToPrice(int takeProfit, double price, ENUM_POSITION_TYPE type)
@@ -34,7 +34,7 @@ double TakeProfitToPrice(int takeProfit, double price, ENUM_POSITION_TYPE type)
 
 int StopLossToPoint(double stopLoss, double price, ENUM_POSITION_TYPE type)
   {
-   return type == POSITION_TYPE_BUY ? (price - stopLoss) / Point() : (stopLoss - price) / Point();
+   return (int) (type == POSITION_TYPE_BUY ? (price - stopLoss) / Point() : (stopLoss - price) / Point());
   }
 
 double StopLossToPrice(double stopLoss, double price, ENUM_POSITION_TYPE type)
@@ -44,10 +44,10 @@ double StopLossToPrice(double stopLoss, double price, ENUM_POSITION_TYPE type)
 
 double Ask()
   {
-   return NormalizeDouble(SymbolInfoDouble(_symbolInfo.Name(), SYMBOL_ASK), Digits());
+   return NormalizeDouble(SymbolInfoDouble(Symbol(), SYMBOL_ASK), Digits());
   }
 
 double Bid()
   {
-   return NormalizeDouble(SymbolInfoDouble(_symbolInfo.Name(), SYMBOL_BID), Digits());
+   return NormalizeDouble(SymbolInfoDouble(Symbol(), SYMBOL_BID), Digits());
   }

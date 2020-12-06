@@ -9,13 +9,14 @@ class CRestClient
   {
    string            url_formatter;
    RestConfig        rest_config;
-   RequestFactory *  request_factory;
+   CRequestFactory * request_factory;
 public:
                      CRestClient()
      {
-      rest_config = { "http://127.0.0.1", 80, "Content-Type: application/json\r\n", 3000 };;
-      request_factory = RequestFactory();
       url_formatter = "%s:%.0f%s";
+      request_factory = RequestFactory();
+      RestConfig restConfig = { "http://127.0.0.1", 80, "Content-Type: application/json\r\n", 3000 };
+      rest_config = restConfig;
      }
                     ~CRestClient() {}
 public:
@@ -29,7 +30,7 @@ private:
 //+------------------------------------------------------------------+
 //| Bootstrap advisor register. Return advisor's UUID                |
 //+------------------------------------------------------------------+
-string::CRestClient               Connect(string inputs)
+string CRestClient::Connect(string inputs)
   {
    HttpRequest request;
    request.url = StringFormat(url_formatter, rest_config.host, rest_config.port, "/api/advisor/add");
@@ -49,7 +50,7 @@ string::CRestClient               Connect(string inputs)
 //+------------------------------------------------------------------+
 //| Get trade signal request                                         |
 //+------------------------------------------------------------------+
-string::CRestClient               GetSignals(string advisor_id, string strategy_name)
+string CRestClient::GetSignals(string advisor_id, string strategy_name)
   {
    HttpRequest request;
    request.url = StringFormat(url_formatter, rest_config.host, rest_config.port, "/api/signal");
@@ -62,7 +63,7 @@ string::CRestClient               GetSignals(string advisor_id, string strategy_
 //+------------------------------------------------------------------+
 //| GET request low level defenition                                 |
 //+------------------------------------------------------------------+
-void::CRestClient                   Get(HttpRequest &request, HttpResponse &response)
+void CRestClient::Get(HttpRequest &request, HttpResponse &response)
   {
    char responseBody[];
    uchar requestBody[];
@@ -75,7 +76,7 @@ void::CRestClient                   Get(HttpRequest &request, HttpResponse &resp
 //+------------------------------------------------------------------+
 //| POST request low level defenition                                |
 //+------------------------------------------------------------------+
-void::CRestClient                   Post(HttpRequest &request, HttpResponse &response)
+void CRestClient::Post(HttpRequest &request, HttpResponse &response)
   {
    char responseBody[];
    uchar requestBody[];
