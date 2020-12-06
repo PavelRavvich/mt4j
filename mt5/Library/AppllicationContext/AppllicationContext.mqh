@@ -1,27 +1,32 @@
 #property strict
 
+// Meta Trader classes.
 #include <Trade\Trade.mqh>
 #include <Trade\SymbolInfo.mqh>
 #include <Trade\AccountInfo.mqh>
 #include <Trade\PositionInfo.mqh>
 
+// Custom utils
 #include <Library\Common\Utils.mqh>
 #include <Library\Common\Enums.mqh>
 #include <Library\Common\Structures.mqh>
 
+// Helpers
 #include <Library\Helper\JAson.mqh>
 #include <Library\Helper\HistoryPositionInfo.mqh>
 
+// Providers
 #include <Library\Provider\PositionProvider.mqh>
 #include <Library\Provider\AccountProvider.mqh>
 #include <Library\Provider\MarketProvider.mqh>
 
+// Network
 #include <Library\Network\RequestFactory.mqh>
 #include <Library\Network\RestClient.mqh>
 
 
-input long MagicNumber = 10000000;
-input String Strategy = "EXAMPLE";
+input long MagicNumber    = 10000000;
+input String StrategyName = "EXAMPLE";
 
 
 //+------------------------------------------------------------------+
@@ -29,7 +34,7 @@ input String Strategy = "EXAMPLE";
 //+------------------------------------------------------------------+
 
 string Magic() { return MagicNumber; }
-string Strategy() { return Strategy; }
+string Strategy() { return StrategyName; }
 
 CTrade *               Trade = NULL;
 CJAVal *               JsonMapper = NULL;
@@ -64,39 +69,6 @@ void DestroyContext()
    delete AccountProvider;
    delete PositionProvider;
   }
-
-//+------------------------------------------------------------------+
-//| Singleton of CJAVal                                              |
-//+------------------------------------------------------------------+
-CJAVal *               JsonMapper()
-  { return JsonMapper == NULL ? JsonMapper = new CJAVal(NULL, jtUNDEF) : JsonMapper; }
-//+------------------------------------------------------------------+
-//| Singleton of CAccountInfo                                        |
-//+------------------------------------------------------------------+
-CAccountInfo *         AccountInfo()
-  { return AccountInfo == NULL ? AccountInfo = new CAccountInfo() : AccountInfo; }
-//+------------------------------------------------------------------+
-//| Singleton of CPositionInfo                                       |
-//+------------------------------------------------------------------+
-CPositionInfo *        PositionInfo()
-  { return PositionInfo == NULL ? PositionInfo = new CPositionInfo() : PositionInfo; }
-//+------------------------------------------------------------------+
-//| Singleton of CHistoryPositionInfo                                |
-//+------------------------------------------------------------------+
-CHistoryPositionInfo * HistoryInfo()
-  { return HistoryInfo == NULL ? HistoryInfo = new CHistoryPositionInfo() : HistoryInfo; }
-//+------------------------------------------------------------------+
-//| Singleton of CSymbolInfo                                         |
-//+------------------------------------------------------------------+
-CSymbolInfo *          SymbolInfo()
-  {
-   if(SymbolInfo != NULL)
-      return SymbolInfo;
-
-   SymbolInfo = new CSymbolInfo();
-   SymbolInfo.Name(Symbol());
-   return SymbolInfo;
-  }
 //+------------------------------------------------------------------+
 //| Singleton of CTrade                                              |
 //+------------------------------------------------------------------+
@@ -119,30 +91,69 @@ CTrade * Trade()
    return Trade;
   }
 //+------------------------------------------------------------------+
-//| Singleton of CPositionProvider                                   |
+//| Singleton of CJAVal                                              |
 //+------------------------------------------------------------------+
-CPositionProvider * PositionProvider() { return PositionProvider == NULL ? PositionProvider = new CPositionProvider() : PositionProvider; }
+CJAVal *               JsonMapper()
+  { return JsonMapper == NULL ? JsonMapper = new CJAVal(NULL, jtUNDEF) : JsonMapper; }
 //+------------------------------------------------------------------+
-//| Singleton of CMarketProvider                                     |
+//| Singleton of CSymbolInfo                                         |
 //+------------------------------------------------------------------+
-CMarketProvider * MarketProvider() { return MarketProvider == NULL ? MarketProvider = new CMarketProvider() : MarketProvider; }
+CSymbolInfo *          SymbolInfo()
+  {
+   if(SymbolInfo != NULL)
+      return SymbolInfo;
+
+   SymbolInfo = new CSymbolInfo();
+   SymbolInfo.Name(Symbol());
+   return SymbolInfo;
+  }
 //+------------------------------------------------------------------+
-//| Singleton of CInputsProvider                                     |
+//| Singleton of CAccountInfo                                        |
 //+------------------------------------------------------------------+
-CInputsProvider * InputsProvider() { return InputsProvider == NULL ? InputsProvider = new CInputsProvider() : InputsProvider; }
+CAccountInfo *         AccountInfo()
+  { return AccountInfo == NULL ? AccountInfo = new CAccountInfo() : AccountInfo; }
 //+------------------------------------------------------------------+
-//| Singleton of CAccountProvider                                    |
+//| Singleton of CHistoryPositionInfo                                |
 //+------------------------------------------------------------------+
-CAccountProvider * AccountProvider() { return AccountProvider == NULL ? AccountProvider = new CAccountProvider() : AccountProvider; }
+CHistoryPositionInfo * HistoryInfo()
+  { return HistoryInfo == NULL ? HistoryInfo = new CHistoryPositionInfo() : HistoryInfo; }
+//+------------------------------------------------------------------+
+//| Singleton of CPositionInfo                                       |
+//+------------------------------------------------------------------+
+CPositionInfo *        PositionInfo()
+  { return PositionInfo == NULL ? PositionInfo = new CPositionInfo() : PositionInfo; }
 //+------------------------------------------------------------------+
 //| Singleton of CRestClient                                         |
 //+------------------------------------------------------------------+
-CRestClient * RestClient() { return RestClient == NULL ? RestClient = new CRestClient() : RestClient; }
-//+------------------------------------------------------------------+
-//| Singleton of CRequestFactory                                     |
-//+------------------------------------------------------------------+
-CRequestFactory * RequestFactory() { return RequestFactory == NULL ? RequestFactory = new CRequestFactory() : RequestFactory; }
+CRestClient * RestClient()
+  { return RestClient == NULL ? RestClient = new CRestClient() : RestClient; }
 //+------------------------------------------------------------------+
 //| Singleton of CApiService                                         |
 //+------------------------------------------------------------------+
-CApiService * ApiService() { return ApiService == NULL ? ApiService = new CApiService() : ApiService; }
+CApiService * ApiService()
+  { return ApiService == NULL ? ApiService = new CApiService() : ApiService; }
+//+------------------------------------------------------------------+
+//| Singleton of CInputsProvider                                     |
+//+------------------------------------------------------------------+
+CInputsProvider * InputsProvider()
+  { return InputsProvider == NULL ? InputsProvider = new CInputsProvider() : InputsProvider; }
+//+------------------------------------------------------------------+
+//| Singleton of CMarketProvider                                     |
+//+------------------------------------------------------------------+
+CMarketProvider * MarketProvider()
+  { return MarketProvider == NULL ? MarketProvider = new CMarketProvider() : MarketProvider; }
+//+------------------------------------------------------------------+
+//| Singleton of CRequestFactory                                     |
+//+------------------------------------------------------------------+
+CRequestFactory * RequestFactory()
+  { return RequestFactory == NULL ? RequestFactory = new CRequestFactory() : RequestFactory; }
+//+------------------------------------------------------------------+
+//| Singleton of CAccountProvider                                    |
+//+------------------------------------------------------------------+
+CAccountProvider * AccountProvider()
+  { return AccountProvider == NULL ? AccountProvider = new CAccountProvider() : AccountProvider; }
+//+------------------------------------------------------------------+
+//| Singleton of CPositionProvider                                   |
+//+------------------------------------------------------------------+
+CPositionProvider * PositionProvider()
+  { return PositionProvider == NULL ? PositionProvider = new CPositionProvider() : PositionProvider; }
