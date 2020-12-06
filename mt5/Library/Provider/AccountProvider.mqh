@@ -22,7 +22,7 @@ public:
 //+------------------------------------------------------------------+
 //| Build account info as JSON                                       |
 //+------------------------------------------------------------------+
-string::CAccountProvider            GetAccount()
+string CAccountProvider::GetAccount()
   {
    string name = account_info.Name();
    long login = account_info.Login();

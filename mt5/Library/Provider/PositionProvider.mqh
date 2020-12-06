@@ -14,8 +14,8 @@ public:
 
                      CPositionProvider()
      {
+      history_info = HistoryInfo();
       position_info = PositionInfo();
-      history_info = HistoryPositionInfo();
       position_pattern = "{ \"isHistory\": %s, \"type\": %s, \"magic\": %.0f, \"positionId\": %.0f, \"lot\": %.2f, \"stopLoss\": %.0f, \"takeProfit\": %.0f, \"openAt\": %.0f, \"closeAt\": %.0f, \"profit\": %.2f }";
      }
                     ~CPositionProvider() {}
@@ -32,7 +32,7 @@ private:
 //+------------------------------------------------------------------+
 //| Get all positions from history and open in one JSON array        |
 //+------------------------------------------------------------------+
-string::CPositionProvider            GetPositions()
+string CPositionProvider::GetPositions()
   {
    Position positions[];
    FetchPositions(positions);
@@ -55,7 +55,7 @@ string::CPositionProvider            GetPositions()
 //+------------------------------------------------------------------+
 //| Collect all positions from history and currently open            |
 //+------------------------------------------------------------------+
-void::CPositionProvider              FetchPositions(Position &positions[])
+void CPositionProvider::FetchPositions(Position &positions[])
   {
    FetchOpenPositions(positions);
    FetchHistory(positions);
@@ -64,9 +64,8 @@ void::CPositionProvider              FetchPositions(Position &positions[])
 //+------------------------------------------------------------------+
 //| Fetch currently open positions                                   |
 //+------------------------------------------------------------------+
-void::CPositionProvider              FetchOpenPositions(Position &positions[])
+void CPositionProvider::FetchOpenPositions(Position &positions[])
   {
-   position_info.HistorySelect(0, TimeCurrent());
    for(int i = PositionsTotal() - 1; i >= 0; i--)
       if(position_info.SelectByIndex(i))
          if(position_info.Magic() == Magic())
@@ -76,16 +75,16 @@ void::CPositionProvider              FetchOpenPositions(Position &positions[])
             position.openAt = position_info.TimeMsc();
             position.positionId = position_info.Ticket();
             position.openPrice = position_info.PriceOpen();
-            position.swap = NormalizeDouble(position_info.Swap());
-            position.lot = NormalizeDouble(position_info.Volume());
-            position.profit = NormalizeDouble(position_info.Profit());
+            position.swap = NormalizeDouble(position_info.Swap(), 2);
+            position.lot = NormalizeDouble(position_info.Volume(), 2);
+            position.profit = NormalizeDouble(position_info.Profit(), 2);
             position.stopLoss = StopLossToPoint(position_info.StopLoss(),
                                                 position_info.PriceOpen(),
                                                 position_info.PositionType());
             position.takeProfit = TakeProfitToPoint(position_info.TakeProfit(),
                                                     position_info.PriceOpen(),
                                                     position_info.PositionType());
-            position.commission = NormalizeDouble(position_info.Commission());
+            position.commission = NormalizeDouble(position_info.Commission(), 2);
             position.type = position_info.PositionType() == POSITION_TYPE_BUY ? LONG : SHORT;
             AddPosition(position, positions);
            }
@@ -94,7 +93,7 @@ void::CPositionProvider              FetchOpenPositions(Position &positions[])
 //+------------------------------------------------------------------+
 //| Fetch history of closed positions                                |
 //+------------------------------------------------------------------+
-void::CPositionProvider              FetchHistory(Position &positions[])
+void CPositionProvider::FetchHistory(Position &positions[])
   {
    history_info.HistorySelect(0, TimeCurrent());
    int total = history_info.PositionsTotal();
@@ -114,10 +113,10 @@ void::CPositionProvider              FetchHistory(Position &positions[])
          position.swap = NormalizeDouble(history_info.Swap(), 2);
          position.lot = NormalizeDouble(history_info.Volume(), 2);
          position.profit = NormalizeDouble(history_info.Profit(), 2);
-         position.stopLoss = StopLossToPoint(history_info.StopLoss());
-         position.takeProfit = TakeProfitToPoint(history_info.TakeProfit());
          position.commission = NormalizeDouble(history_info.Commission(), 2);
          position.type = history_info.PositionType() == POSITION_TYPE_BUY ? LONG : SHORT;
+         position.stopLoss = StopLossToPoint(history_info.StopLoss(), history_info.PriceOpen(), history_info.PositionType());
+         position.takeProfit = TakeProfitToPoint(history_info.TakeProfit(), history_info.PriceOpen(), history_info.PositionType());
          AddPosition(position, positions);
         }
      }
@@ -126,7 +125,7 @@ void::CPositionProvider              FetchHistory(Position &positions[])
 //+------------------------------------------------------------------+
 //| Add position to array                                            |
 //+------------------------------------------------------------------+
-void::CPositionProvider              AddPosition(Position &position, Position &positions[])
+void CPositionProvider::AddPosition(Position &position, Position &positions[])
   {
    int size = ArraySize(positions);
    ArrayResize(positions, size + 1);

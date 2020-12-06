@@ -7,7 +7,7 @@
 //+------------------------------------------------------------------+
 class CApiService
   {
-   RestClient *      rest_client;
+   CRestClient *     rest_client;
    CJAVal *          json_mapper;
    string            strategy;
    string            advisor_id;
@@ -20,12 +20,12 @@ public:
                     ~CApiService() {}
 public:
    string            Connect(string inputs);
-   void              GetSignals(Signal &signal);
+   void              GetSignals(Signal &signals[]);
   };
 //+------------------------------------------------------------------+
 //| Connect MT advisor with server side. Return advisor's UUID       |
 //+------------------------------------------------------------------+
-string::CApiService Connect(string inputs)
+string CApiService::Connect(string inputs)
   {
    string responceBody = rest_client.Connect(inputs);
    json_mapper.Clear();
@@ -35,7 +35,7 @@ string::CApiService Connect(string inputs)
 //+------------------------------------------------------------------+
 //| Get signal as strategy result                                    |
 //+------------------------------------------------------------------+
-void::CApiService GetSignals(Signal &signals[])
+void CApiService::GetSignals(Signal &signals[])
   {
    string responceBody = rest_client.GetSignals(advisor_id, Strategy());
    json_mapper.Clear();

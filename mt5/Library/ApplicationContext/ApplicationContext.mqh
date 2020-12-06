@@ -19,21 +19,26 @@
 #include <Library\Provider\PositionProvider.mqh>
 #include <Library\Provider\AccountProvider.mqh>
 #include <Library\Provider\MarketProvider.mqh>
+#include <Library\Provider\InputsProvider.mqh>
 
 // Network
 #include <Library\Network\RequestFactory.mqh>
 #include <Library\Network\RestClient.mqh>
+#include <Library\Network\ApiService.mqh>
+
+// Excecutor
+#include <Library\Transaction\SignalExecutor.mqh>
 
 
 input long MagicNumber    = 10000000;
-input String StrategyName = "EXAMPLE";
+input string StrategyName = "EXAMPLE";
 
 
 //+------------------------------------------------------------------+
 //| Appllication Context with object defenitions.                    |
 //+------------------------------------------------------------------+
 
-string Magic() { return MagicNumber; }
+long Magic() { return MagicNumber; }
 string Strategy() { return StrategyName; }
 
 CTrade *               Trade = NULL;
@@ -48,6 +53,7 @@ CApiService *          ApiService = NULL;
 CInputsProvider *      InputsProvider = NULL;
 CMarketProvider *      MarketProvider = NULL;
 CRequestFactory *      RequestFactory = NULL;
+CSignalExecutor *      SignalExecutor = NULL;
 CAccountProvider *     AccountProvider = NULL;
 CPositionProvider *    PositionProvider = NULL;
 //+------------------------------------------------------------------+
@@ -66,6 +72,7 @@ void DestroyContext()
    delete InputsProvider;
    delete MarketProvider;
    delete RequestFactory;
+   delete SignalExecutor;
    delete AccountProvider;
    delete PositionProvider;
   }
@@ -147,6 +154,11 @@ CMarketProvider * MarketProvider()
 //+------------------------------------------------------------------+
 CRequestFactory * RequestFactory()
   { return RequestFactory == NULL ? RequestFactory = new CRequestFactory() : RequestFactory; }
+//+------------------------------------------------------------------+
+//| Singleton of CSignalExecutor                                     |
+//+------------------------------------------------------------------+
+CSignalExecutor * SignalExecutor()
+  { return SignalExecutor == NULL ? SignalExecutor = new CSignalExecutor() : SignalExecutor; }
 //+------------------------------------------------------------------+
 //| Singleton of CAccountProvider                                    |
 //+------------------------------------------------------------------+

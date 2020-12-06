@@ -5,19 +5,19 @@
 //+------------------------------------------------------------------+
 //| Execute all trade signals                                        |
 //+------------------------------------------------------------------+
-class SignalExecutor
+class CSignalExecutor
   {
    CTrade *          trade;
    CSymbolInfo *     symbol_info;
    CPositionInfo *   position_info;
 public:
-                     SignalExecutor()
+                     CSignalExecutor()
      {
       trade = Trade();
       symbol_info = SymbolInfo();
       position_info = PositionInfo();
      }
-                    ~SignalExecutor() {}
+                    ~CSignalExecutor() {}
 public:
    void              Execute(Signal &signals[]);
 private:
@@ -30,7 +30,7 @@ private:
 //+------------------------------------------------------------------+
 //| Executing all signals                                            |
 //+------------------------------------------------------------------+
-void SignalExecutor::Execute(Signal &signals[])
+void CSignalExecutor::Execute(Signal &signals[])
   {
    for(int i = 0; i < ArraySize(signals); i++)
      {
@@ -49,7 +49,7 @@ void SignalExecutor::Execute(Signal &signals[])
 //+------------------------------------------------------------------+
 //| Execute BUY                                                      |
 //+------------------------------------------------------------------+
-void SignalExecutor::Buy(Signal &signal)
+void CSignalExecutor::Buy(Signal &signal)
   {
    double ask = Ask();
    while(!trade.Buy(signal.lot, symbol_info.Name(), ask,
@@ -60,7 +60,7 @@ void SignalExecutor::Buy(Signal &signal)
 //+------------------------------------------------------------------+
 //| Execute SELL                                                     |
 //+------------------------------------------------------------------+
-void SignalExecutor::Sell(Signal &signal)
+void CSignalExecutor::Sell(Signal &signal)
   {
    double bid = Bid();
    while(!trade.Sell(signal.lot, symbol_info.Name(), bid,
@@ -71,10 +71,10 @@ void SignalExecutor::Sell(Signal &signal)
 //+------------------------------------------------------------------+
 //| Execute UPDATE                                                     |
 //+------------------------------------------------------------------+
-void SignalExecutor::Update(Signal &signal)
+void CSignalExecutor::Update(Signal &signal)
   {
-   double openPrice = 0;
-   ENUM_POSITION_TYPE type;
+   double openPrice = -1;
+   ENUM_POSITION_TYPE type = -1;
    for(int i = PositionsTotal() - 1; i >= 0; i--)
       if(position_info.SelectByIndex(i))
          if(position_info.Ticket() == signal.positionId)
@@ -83,9 +83,8 @@ void SignalExecutor::Update(Signal &signal)
             type = position_info.PositionType();
             break;
            }
-   if(openPrice == 0)
+   if(openPrice == -1 || type == -1)
       return;
-
 
    while(!trade.PositionModify(signal.positionId,
                                StopLossToPrice(signal.stopLoss, openPrice, type),
@@ -95,7 +94,7 @@ void SignalExecutor::Update(Signal &signal)
 //+------------------------------------------------------------------+
 //| Execute CLOSE                                                    |
 //+------------------------------------------------------------------+
-void SignalExecutor::Close(Signal &signal)
+void CSignalExecutor::Close(Signal &signal)
   {
    for(int i = PositionsTotal() - 1; i >= 0; i--)
       if(position_info.SelectByIndex(i))

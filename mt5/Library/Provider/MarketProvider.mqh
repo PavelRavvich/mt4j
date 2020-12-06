@@ -25,7 +25,7 @@ private:
 //+------------------------------------------------------------------+
 //| Build JSON of all existed timeframes                             |
 //+------------------------------------------------------------------+
-string::CMarketProvider            GetRates()
+string CMarketProvider::GetRates()
   {
    string m1 = "\"M_1\": " + CopyMqlRates(PERIOD_M1) + ",";
    string m2 = "\"M_2\": " + CopyMqlRates(PERIOD_M2) + ",";
@@ -56,7 +56,7 @@ string::CMarketProvider            GetRates()
 //+------------------------------------------------------------------+
 //| Copy rates of timeframe as JSON                                  |
 //+------------------------------------------------------------------+
-string::CMarketProvider            CopyMqlRates(ENUM_TIMEFRAMES  timeframe)
+string CMarketProvider::CopyMqlRates(ENUM_TIMEFRAMES  timeframe)
   {
    Bars(Symbol(), timeframe);
    string items = "";
