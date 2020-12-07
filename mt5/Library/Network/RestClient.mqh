@@ -69,7 +69,7 @@ void CRestClient::Get(HttpRequest &request, HttpResponse &response)
    uchar requestBody[];
    string responseHeaders;
    StringToCharArray(request.body, requestBody, 0, StringLen(request.body));
-   int status = WebRequest("POST", request.url, request.headers, rest_config.timeout, requestBody, responseBody, responseHeaders);
+   int status = WebRequest("GET", request.url, request.headers, rest_config.timeout, requestBody, responseBody, responseHeaders);
    response.body = CharArrayToString(responseBody, 0, WHOLE_ARRAY, CP_UTF8);
    response.status = status;
   }

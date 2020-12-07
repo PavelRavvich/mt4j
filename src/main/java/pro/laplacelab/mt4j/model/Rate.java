@@ -1,11 +1,13 @@
 package pro.laplacelab.mt4j.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.ZonedDateTime;
 
 @Data
 @Builder
@@ -16,9 +18,9 @@ import javax.validation.constraints.NotNull;
 public class Rate {
 
     @NotNull(message = "time required")
-    @NotBlank(message = "time can't be blank")
+    @JsonFormat(shape = JsonFormat.Shape.NUMBER, pattern = "ms")
     @JsonProperty("time")
-    private Long time;
+    private ZonedDateTime time;
 
     @NotNull(message = "open required")
     @NotBlank(message = "open can't be blank")

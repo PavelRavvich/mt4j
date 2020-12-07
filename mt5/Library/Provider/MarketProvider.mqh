@@ -67,7 +67,7 @@ string CMarketProvider::CopyMqlRates(ENUM_TIMEFRAMES  timeframe)
      {
       for(int i = 0; i < copied; i++)
         {
-         string item = StringFormat(rates_formatter, rates[i].open, rates[i].high, rates[i].low,
+         string item = StringFormat(rates_formatter, rates[i].open * 1000, rates[i].high, rates[i].low,
                                     rates[i].close, rates[i].tick_volume, rates[i].time,
                                     rates[i].spread, rates[i].real_volume);
          items += item;
