@@ -35,13 +35,13 @@ void CSignalExecutor::Execute(Signal &signals[])
    for(int i = 0; i < ArraySize(signals); i++)
      {
       Signal signal = signals[i];
-      if(signal.type == BUY)
+      if(signal.type == "BUY")
          Buy(signal);
-      if(signal.type == SELL)
+      if(signal.type == "SELL")
          Sell(signal);
-      if(signal.type == UPDATE)
+      if(signal.type == "UPDATE")
          Update(signal);
-      if(signal.type == CLOSE)
+      if(signal.type == "CLOSE")
          Close(signal);
      }
   }
