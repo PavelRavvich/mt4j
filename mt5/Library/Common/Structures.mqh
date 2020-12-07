@@ -27,7 +27,7 @@ struct Signal
   {
    long              positionId;
    string            advisorId;
-   SignalType        type;
+   string            type;
    double            lot;
    int               stopLoss;
    int               takeProfit;

@@ -44,9 +44,9 @@ void CApiService::GetSignals(Signal &signals[])
      {
       Signal signal;
       signal.lot = json_mapper[i]["lot"].ToDbl();
+      signal.type = json_mapper[i]["type"].ToStr();
       signal.advisorId = json_mapper[i]["id"].ToStr();
       signal.positionId = json_mapper[i]["positionId"].ToInt();
-      signal.type = (SignalType) json_mapper[i]["type"].ToStr();
       signal.stopLoss = (int) json_mapper[i]["stopLoss"].ToInt();
       signal.takeProfit = (int) json_mapper[i]["takeProfit"].ToInt();
       int size = ArraySize(signals);
