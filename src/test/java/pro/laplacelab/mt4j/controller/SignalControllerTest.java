@@ -17,6 +17,8 @@ import pro.laplacelab.mt4j.model.Rate;
 import pro.laplacelab.mt4j.model.Signal;
 import pro.laplacelab.mt4j.service.SignalService;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -41,8 +43,8 @@ public class SignalControllerTest {
         Market market = new Market();
         market.setAdvisorId(UUID.randomUUID());
         market.setRates(Map.of(
-                Timeframe.M_1, List.of(Rate.builder().time(1L).open(1D).high(1D).low(1D)
-                        .close(1D).tickVolume(1L).spread(1).realVolume(1L).build())));
+                Timeframe.M_1, List.of(Rate.builder().time(ZonedDateTime.now(ZoneId.of("UTC")))
+                        .open(1D).high(1D).low(1D).close(1D).tickVolume(1L).spread(1).realVolume(1L).build())));
         market.setAccount(
                 Account.builder()
                         .company("a").balance(1D).id(1L).freeMargin(1D).margin(1D).owner("T")
