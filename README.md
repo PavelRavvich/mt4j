@@ -2,38 +2,34 @@
 
 ## About
 
-MT4J is completely free open source software for integration between Meta Trader 5 and Java implemented through sync http requests.
+MT4J is software for integration between Meta Trader 5 and Java implemented through REST API.
 
-Using this app you can write trading strategies with Java instead of mql5 language. For implementation strategy logic you can 
-use already connected [ta4j] technical indicators library, or connect something else what you prefer using another maven artifact with `pom.xml` dependencies.
+Using this application you can write trading strategies with Java instead of mql5 language. For implementation strategy logic you can 
+use already connected [ta4j] technical indicators library, or connect something else what you prefer using another maven artifact with `pom.xml`.
 
-The local server based on Tomcat and use port **80**. Port can't be changed by specific Meta Trader 5 reason, see more in MQL5 documentation: [https://www.mql5.com/en/docs/network/webrequest][webrequest].
+The server based on Tomcat and use port **80** (default) or **443**. Ports range can't be changed by specific Meta Trader 5 reasons, see more in MQL5 documentation: [https://www.mql5.com/en/docs/network/webrequest][webrequest].
 
-MetaTrader 5 required permission in settings for send http requests to localhost, see more in MQL5 documentation: [https://www.mql5.com/en/docs/network][settings]
+MetaTrader 5 required enabling permission settings for send http requests to any hosts, see more in MQL5 documentation: [https://www.mql5.com/en/docs/network][settings]
 
 ## Installation
 ### Step 1. 
-Clone repository with `git clone https://github.com/triodjangopiter/mt4j.git` or download sources with GitHub web inteface.
+Clone repository with `git clone https://github.com/PavelRavvich/mt4j.git` or download sources with GitHub web interface.
 ### Step 2
-Copy library source folder from `mt5/Library` to `<META_TRADER_LOCATION>/MQL5/Include/`. 
-
-The target is `<META_TRADER_LOCATION>/MQL5/Include/Library` with all contained files.
+Copy library source folder from `mt5/Library/*` to `<META_TRADER_LOCATION>/MQL5/Include/Library/*`.
 
 ### Step 3
-Copy advisor source file from `mt5/MT4J.mq5` to `<META_TRADER_LOCATION>/MQL5/Experts/`. 
-
-The target is `<META_TRADER_LOCATION>/MQL5/Experts/MT4J.mq5` with all contained files.
+Copy advisor source file from `mt5/MT4J.mq5` to `<META_TRADER_LOCATION>/MQL5/Experts/MT4J.mq5`. 
 
 ### Step 4
 Compile Java sources, and run Spring Boot server in any convenient way.
 
 ### Strategy implementation principals
 
-After start server and run `MT4J.mq5` advisor on target chart you can start implementing strategy. Just implement interface `Strategy` and two method:
+For implement strategy, implement interface `Strategy` and for his two method:
 * `String getName()` - strategy identifier (Should be equals advisor input *StrategyName*). 
 
-You can have many strategies with different names, and no limited running `MT4J.mq5` simultaneously, and handle all of them with one server instance. For matching use advisor input *StrategyName*.
-You can see example of implemented strategy here: [https://github.com/triodjangopiter/mt4j/blob/master/src/main/java/pro/laplacelab/mt4j/example/Example.java][stategyExample]
+You can have many strategies with different names, and no limited running `MT4J.mq5` simultaneously, and handle all of them with one server instance. For matching use equal advisor input *StrategyName* and `String getName()` return value.
+You can see example of implemented strategy here: [https://github.com/PavelRavvich/mt4j/blob/master/src/main/java/pro/laplacelab/mt4j/example/Example.java][stategyExample]
 
 * ` List<Signal> apply(Advisor advisor, Map<Timeframe, List<Rate>> rates)` - strategy logic implementation. 
 
