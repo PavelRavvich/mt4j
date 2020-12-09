@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import pro.laplacelab.mt4j.enums.InputType;
 
 import javax.validation.constraints.NotEmpty;
@@ -16,7 +15,6 @@ import java.time.format.DateTimeFormatter;
 
 @Data
 @EqualsAndHashCode
-@NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Input {
@@ -42,6 +40,10 @@ public class Input {
 
     public Double asDouble() {
         return Double.valueOf(value);
+    }
+
+    public Boolean asBoolean() {
+        return Boolean.valueOf(value);
     }
 
     public LocalTime asLocalTime() {
