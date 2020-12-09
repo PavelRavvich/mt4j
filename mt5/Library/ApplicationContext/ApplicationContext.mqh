@@ -34,7 +34,9 @@ input long MagicNumber    = 10000000;
 input string StrategyName = "EXAMPLE";
 input int TransactionRetryPolicy = 10;
 input int RatesBufferSize = 20;
-
+input string Host = "http://127.0.0.1";
+input int Port = 80;
+input int Timeout = 3000;
 
 //+------------------------------------------------------------------+
 //| Appllication Context with object defenitions.                    |
@@ -44,6 +46,9 @@ long Magic() { return MagicNumber; }
 string Strategy() { return StrategyName; }
 int RatesBufferSize() { return RatesBufferSize; }
 int RetryPolicy() { return TransactionRetryPolicy; }
+int Port() { return Port; }
+string Host() { return Host; }
+int Timeout() { return Timeout; }
 
 CTrade *               Trade = NULL;
 CJAVal *               JsonMapper = NULL;
