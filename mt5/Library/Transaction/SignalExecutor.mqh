@@ -52,10 +52,12 @@ void CSignalExecutor::Execute(Signal &signals[])
 void CSignalExecutor::Buy(Signal &signal)
   {
    double ask = Ask();
-   while(!trade.Buy(signal.lot, symbol_info.Name(), ask,
+   int counter = 0;
+   while(counter++ < RetryPolicy() &&
+         !trade.Buy(signal.lot, symbol_info.Name(), ask,
                     StopLossToPrice(signal.stopLoss, ask, POSITION_TYPE_BUY),
                     TakeProfitToPrice(signal.takeProfit, ask, POSITION_TYPE_BUY)))
-     { Print(GetLastError());}
+     { Print(GetLastError()); }
   }
 //+------------------------------------------------------------------+
 //| Execute SELL                                                     |
@@ -63,7 +65,9 @@ void CSignalExecutor::Buy(Signal &signal)
 void CSignalExecutor::Sell(Signal &signal)
   {
    double bid = Bid();
-   while(!trade.Sell(signal.lot, symbol_info.Name(), bid,
+   int counter = 0;
+   while(counter++ < RetryPolicy() &&
+         !trade.Sell(signal.lot, symbol_info.Name(), bid,
                      StopLossToPrice(signal.stopLoss, bid, POSITION_TYPE_SELL),
                      TakeProfitToPrice(signal.takeProfit, bid, POSITION_TYPE_SELL)))
      { Print(GetLastError()); }
@@ -86,9 +90,11 @@ void CSignalExecutor::Update(Signal &signal)
    if(openPrice == -1 || type == -1)
       return;
 
-   while(!trade.PositionModify(signal.positionId,
-                               StopLossToPrice(signal.stopLoss, openPrice, type),
-                               TakeProfitToPrice(signal.takeProfit, openPrice, type)))
+   int counter = 0;
+   while(counter++ < RetryPolicy() &&
+         !trade.PositionModify(signal.positionId,
+                     StopLossToPrice(signal.stopLoss, openPrice, type),
+                     TakeProfitToPrice(signal.takeProfit, openPrice, type)))
      { Print(GetLastError()); }
   }
 //+------------------------------------------------------------------+
@@ -99,6 +105,9 @@ void CSignalExecutor::Close(Signal &signal)
    for(int i = PositionsTotal() - 1; i >= 0; i--)
       if(position_info.SelectByIndex(i))
          if(position_info.Ticket() == signal.positionId)
-            while(!trade.PositionClose(position_info.Ticket(), 100))
+           {
+            int counter = 0;
+            while(counter++ < RetryPolicy() && !trade.PositionClose(position_info.Ticket(), 100))
                Print(GetLastError());
+           }
   }

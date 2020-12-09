@@ -32,6 +32,7 @@
 
 input long MagicNumber    = 10000000;
 input string StrategyName = "EXAMPLE";
+input int TransactionRetryPolicy = 10;
 
 
 //+------------------------------------------------------------------+
@@ -40,6 +41,7 @@ input string StrategyName = "EXAMPLE";
 
 long Magic() { return MagicNumber; }
 string Strategy() { return StrategyName; }
+int RetryPolicy() { return TransactionRetryPolicy; }
 
 CTrade *               Trade = NULL;
 CJAVal *               JsonMapper = NULL;
