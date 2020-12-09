@@ -8,9 +8,10 @@ class CInputsProvider
    string            inputs;
    bool              is_builed;
    string            empty_inputs;
+   string            input_long_formatter;
    string            input_string_formatter;
    string            input_double_formatter;
-   string            input_long_formatter;
+   string            input_boolean_formatter;
    string            keys[];
 public:
                      CInputsProvider()
@@ -19,14 +20,16 @@ public:
       is_builed = false;
       empty_inputs = "[]";
       input_long_formatter = "{ \"key\": \"%s\", \"value\": %.0f, \"type\": \"NUMBER\" }";
-      input_string_formatter = "{ \"key\": \"%s\", \"value\": \"%s\", \"type\": \"STRING\" }";
       input_double_formatter = "{ \"key\": \"%s\", \"value\": %.5f, \"type\": \"NUMBER\" }";
+      input_boolean_formatter = "{ \"key\": \"%s\", \"value\": %s, \"type\": \"BOOLEAN\" }";
+      input_string_formatter = "{ \"key\": \"%s\", \"value\": \"%s\", \"type\": \"STRING\" }";
      }
                     ~CInputsProvider() {}
 
 public:
    string            Build();
    string            GetJsonInputs();
+   void              InputBoolean(string key, bool value);
    void              InputString(string key, string value);
    void              InputDouble(string key, double value);
    void              InputLong(string key, long value);
@@ -69,6 +72,27 @@ string CInputsProvider::GetJsonInputs()
       return empty_inputs;
      }
    return inputs;
+  }
+
+//+------------------------------------------------------------------+
+//| Add boolean input                                                |
+//+------------------------------------------------------------------+
+void CInputsProvider::InputBoolean(string key, bool value)
+  {
+   if(is_builed)
+     {
+      Alert("Build() already done. Method Build() can be called only once.");
+      return;
+     }
+
+   if(ContainKey(key))
+     {
+      Alert(StringFormat("Error add input property! Key: %s already exist.", key));
+      return;
+     }
+
+   AddKey(key);
+   inputs = inputs + StringFormat(input_boolean_formatter, key, value ? "true" : "false") + ", ";
   }
 
 //+------------------------------------------------------------------+

@@ -22,7 +22,8 @@ public class AdvisorTest extends BaseTestPreparation {
         final Advisor advisor = new Advisor(1L, List.of(
                 new Input("key1", "val", InputType.STRING),
                 new Input("key2", "1", InputType.NUMBER),
-                new Input("key3", "10:00", InputType.DATETIME)));
+                new Input("key3", "10:00", InputType.DATETIME),
+                new Input("key4", "true", InputType.BOOLEAN)));
         assertEquals(Long.valueOf(1), advisor.getMagic());
         assertEquals("val",
                 advisor.getInput("key1").orElseThrow().asString());
@@ -30,7 +31,8 @@ public class AdvisorTest extends BaseTestPreparation {
                 advisor.getInput("key2").orElseThrow().asDouble());
         assertEquals(LocalTime.parse("10:00"),
                 advisor.getInput("key3").orElseThrow().asLocalTime());
-
+        assertEquals(true,
+                advisor.getInput("key4").orElseThrow().asBoolean());
     }
 
     @Test

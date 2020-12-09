@@ -40,18 +40,17 @@ public class AdvisorServiceImplTest {
         Advisor save = advisorService.add(
                 new Advisor(1L, List.of(
                         new Input("key1", "val", InputType.STRING),
-                        new Input("key2", "1", InputType.NUMBER)
+                        new Input("key2", "1", InputType.NUMBER),
+                        new Input("key3", "true", InputType.BOOLEAN)
                 ))
         );
         Advisor advisor = advisorService.get(save.getId()).orElseThrow();
-        assertEquals(InputType.STRING,
-                advisor.getInput("key1").orElseThrow().getType());
-        assertEquals("val",
-                advisor.getInput("key1").orElseThrow().asString());
-        assertEquals(InputType.NUMBER,
-                advisor.getInput("key2").orElseThrow().getType());
-        assertEquals(Double.valueOf("1"),
-                advisor.getInput("key2").orElseThrow().asDouble());
+        assertEquals(InputType.STRING, advisor.getInput("key1").orElseThrow().getType());
+        assertEquals("val", advisor.getInput("key1").orElseThrow().asString());
+        assertEquals(InputType.NUMBER, advisor.getInput("key2").orElseThrow().getType());
+        assertEquals(Double.valueOf("1"), advisor.getInput("key2").orElseThrow().asDouble());
+        assertEquals(InputType.BOOLEAN, advisor.getInput("key3").orElseThrow().getType());
+        assertEquals(true, advisor.getInput("key3").orElseThrow().asBoolean());
     }
 
 }
