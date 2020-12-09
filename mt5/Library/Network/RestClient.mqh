@@ -15,8 +15,10 @@ public:
      {
       url_formatter = "%s:%.0f%s";
       request_factory = RequestFactory();
-      RestConfig restConfig = { "http://127.0.0.1", 80, "Content-Type: application/json\r\n", 3000 };
-      rest_config = restConfig;
+      rest_config.host = Host();
+      rest_config.port = Port();
+      rest_config.timeout = Timeout();
+      rest_config.headers = "Content-Type: application/json\r\n";
      }
                     ~CRestClient() {}
 public:
