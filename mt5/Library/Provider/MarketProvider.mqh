@@ -10,9 +10,9 @@ class CMarketProvider
    int               buffer_size;
    string            rates_formatter;
 public:
-                     CMarketProvider(int _buffer_size = 20)
+                     CMarketProvider()
      {
-      buffer_size = _buffer_size;
+      buffer_size = RatesBufferSize();
       rates_formatter = "{ \"open\": %G, \"high\": %G, \"low\": %G, \"close\": %G, \"tickVolume\": %d, \"time\": %d, \"spread\": %d, \"realVolume\": %d }";
      }
                     ~CMarketProvider() {}
