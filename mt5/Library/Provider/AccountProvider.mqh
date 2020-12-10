@@ -7,22 +7,28 @@
 //+------------------------------------------------------------------+
 class CAccountProvider
   {
+private:
    CAccountInfo *    account_info;
    string            account_formatter;
 public:
-                     CAccountProvider()
-     {
+                     CAccountProvider(void);
+                    ~CAccountProvider(void) {}
+public:
+   string            GetAccount(void);
+  };
+
+//+------------------------------------------------------------------+
+//| Default constructor                                              |
+//+------------------------------------------------------------------+
+CAccountProvider::CAccountProvider(void)
+  {
       account_info = AccountInfo();
       account_formatter = "{ \"id\": %.0f, \"balance\": %.2f, \"freeMargin\": %.2f, \"margin\": %.2f, \"owner\": \"%s\", \"company\": \"%s\" }";
-     }
-                    ~CAccountProvider() {}
-public:
-   string            GetAccount();
-  };
+  }
 //+------------------------------------------------------------------+
 //| Build account info as JSON                                       |
 //+------------------------------------------------------------------+
-string CAccountProvider::GetAccount()
+string CAccountProvider::GetAccount(void)
   {
    string name = account_info.Name();
    long login = account_info.Login();

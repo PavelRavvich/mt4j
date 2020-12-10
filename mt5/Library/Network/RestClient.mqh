@@ -7,20 +7,13 @@
 //+------------------------------------------------------------------+
 class CRestClient
   {
-   string            url_formatter;
+private:
    RestConfig        rest_config;
+   string            url_formatter;
    CRequestFactory * request_factory;
 public:
-                     CRestClient()
-     {
-      url_formatter = "%s:%.0f%s";
-      request_factory = RequestFactory();
-      rest_config.host = Host();
-      rest_config.port = Port();
-      rest_config.timeout = Timeout();
-      rest_config.headers = "Content-Type: application/json\r\n";
-     }
-                    ~CRestClient() {}
+                     CRestClient(void);
+                    ~CRestClient(void) {}
 public:
    string            Connect(string inputs);
    string            GetSignals(string advisor_id, string strategy_name);
@@ -29,6 +22,18 @@ private:
    void              Get(HttpRequest &request, HttpResponse &response);
   };
 
+//+------------------------------------------------------------------+
+//| Default constructor                                              |
+//+------------------------------------------------------------------+
+CRestClient::CRestClient(void)
+  {
+   url_formatter = "%s:%.0f%s";
+   rest_config.host = Host();
+   rest_config.port = Port();
+   rest_config.timeout = Timeout();
+   request_factory = RequestFactory();
+   rest_config.headers = "Content-Type: application/json\r\n";
+  }
 //+------------------------------------------------------------------+
 //| Bootstrap advisor register. Return advisor's UUID                |
 //+------------------------------------------------------------------+

@@ -7,23 +7,27 @@
 //+------------------------------------------------------------------+
 class CRequestFactory
   {
+private:
    CMarketProvider *   market_provider;
    CAccountProvider *  account_provider;
    CPositionProvider * position_provider;
 public:
-                     CRequestFactory()
-     {
-      market_provider = MarketProvider();
-      account_provider = AccountProvider();
-      position_provider = PositionProvider();
-     }
-                    ~CRequestFactory() {}
-
+                     CRequestFactory(void);
+                    ~CRequestFactory(void) {}
 public:
    string            GetAddAdvisorRequestBody(string inputs);
    string            GetSignalRequestBody(string advisor_id, string strategy_name);
   };
 
+//+------------------------------------------------------------------+
+//| Default constructor                                              |
+//+------------------------------------------------------------------+
+CRequestFactory::CRequestFactory(void)
+  {
+   market_provider = MarketProvider();
+   account_provider = AccountProvider();
+   position_provider = PositionProvider();
+  }
 //+------------------------------------------------------------------+
 //| Build requests body for register advisor                         |
 //+------------------------------------------------------------------+

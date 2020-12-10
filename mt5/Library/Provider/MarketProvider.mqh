@@ -7,25 +7,30 @@
 //+------------------------------------------------------------------+
 class CMarketProvider
   {
+private:
    int               buffer_size;
    string            rates_formatter;
 public:
-                     CMarketProvider()
-     {
-      buffer_size = RatesBufferSize();
-      rates_formatter = "{ \"open\": %G, \"high\": %G, \"low\": %G, \"close\": %G, \"tickVolume\": %d, \"time\": %d, \"spread\": %d, \"realVolume\": %d }";
-     }
-                    ~CMarketProvider() {}
+                     CMarketProvider(void);
+                    ~CMarketProvider(void) {}
 public:
-   string            GetRates();
+   string            GetRates(void);
 private:
    string            CopyMqlRates(ENUM_TIMEFRAMES  timeframe);
   };
 
 //+------------------------------------------------------------------+
+//| Default constructor                                              |
+//+------------------------------------------------------------------+
+CMarketProvider::CMarketProvider(void)
+  {
+   buffer_size = RatesBufferSize();
+   rates_formatter = "{ \"open\": %G, \"high\": %G, \"low\": %G, \"close\": %G, \"tickVolume\": %d, \"time\": %d, \"spread\": %d, \"realVolume\": %d }";
+  }
+//+------------------------------------------------------------------+
 //| Build JSON of all existed timeframes                             |
 //+------------------------------------------------------------------+
-string CMarketProvider::GetRates()
+string CMarketProvider::GetRates(void)
   {
    string m1 = "\"M_1\": " + CopyMqlRates(PERIOD_M1) + ",";
    string m2 = "\"M_2\": " + CopyMqlRates(PERIOD_M2) + ",";
@@ -51,8 +56,6 @@ string CMarketProvider::GetRates()
    return "{" + m1 + m2 + m3 + m4 + m5 + m6 + m10 + m12 + m15 + m20 + m30
           + h1 + h2 + h3 + h4 + h6 + h8 + h12 + d1 + w1 + mn1 + "}";
   }
-
-
 //+------------------------------------------------------------------+
 //| Copy rates of timeframe as JSON                                  |
 //+------------------------------------------------------------------+

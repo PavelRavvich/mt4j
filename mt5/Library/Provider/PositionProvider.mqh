@@ -7,21 +7,15 @@
 //+------------------------------------------------------------------+
 class CPositionProvider
   {
-   string                 position_pattern;
-   CPositionInfo *        position_info;
+private:
    CHistoryPositionInfo * history_info;
+   CPositionInfo *        position_info;
+   string                 position_pattern;
 public:
-
-                     CPositionProvider()
-     {
-      history_info = HistoryInfo();
-      position_info = PositionInfo();
-      position_pattern = "{ \"isHistory\": %s, \"type\": %s, \"magic\": %.0f, \"positionId\": %.0f, \"lot\": %.2f, \"stopLoss\": %.0f, \"takeProfit\": %.0f, \"openAt\": %.0f, \"closeAt\": %.0f, \"profit\": %.2f }";
-     }
-                    ~CPositionProvider() {}
-
+                     CPositionProvider(void);
+                    ~CPositionProvider(void) {}
 public:
-   string            GetPositions();
+   string            GetPositions(void);
 private:
    void              FetchPositions(Position &positions[]);
    void              FetchOpenPositions(Position &positions[]);
@@ -30,9 +24,18 @@ private:
   };
 
 //+------------------------------------------------------------------+
+//| Default constructor                                              |
+//+------------------------------------------------------------------+
+CPositionProvider::CPositionProvider(void)
+  {
+   history_info = HistoryInfo();
+   position_info = PositionInfo();
+   position_pattern = "{ \"isHistory\": %s, \"type\": %s, \"magic\": %.0f, \"positionId\": %.0f, \"lot\": %.2f, \"stopLoss\": %.0f, \"takeProfit\": %.0f, \"openAt\": %.0f, \"closeAt\": %.0f, \"profit\": %.2f }";
+  }
+//+------------------------------------------------------------------+
 //| Get all positions from history and open in one JSON array        |
 //+------------------------------------------------------------------+
-string CPositionProvider::GetPositions()
+string CPositionProvider::GetPositions(void)
   {
    Position positions[];
    FetchPositions(positions);
@@ -51,7 +54,6 @@ string CPositionProvider::GetPositions()
 
    return "[" + items + "]";
   }
-
 //+------------------------------------------------------------------+
 //| Collect all positions from history and currently open            |
 //+------------------------------------------------------------------+
@@ -60,7 +62,6 @@ void CPositionProvider::FetchPositions(Position &positions[])
    FetchOpenPositions(positions);
    FetchHistory(positions);
   }
-
 //+------------------------------------------------------------------+
 //| Fetch currently open positions                                   |
 //+------------------------------------------------------------------+
@@ -89,7 +90,6 @@ void CPositionProvider::FetchOpenPositions(Position &positions[])
             AddPosition(position, positions);
            }
   }
-
 //+------------------------------------------------------------------+
 //| Fetch history of closed positions                                |
 //+------------------------------------------------------------------+
@@ -121,7 +121,6 @@ void CPositionProvider::FetchHistory(Position &positions[])
         }
      }
   }
-
 //+------------------------------------------------------------------+
 //| Add position to array                                            |
 //+------------------------------------------------------------------+
