@@ -7,21 +7,27 @@
 //+------------------------------------------------------------------+
 class CApiService
   {
+private:
    CRestClient *     rest_client;
    CJAVal *          json_mapper;
    string            strategy;
    string            advisor_id;
 public:
-                     CApiService()
-     {
-      rest_client = RestClient();
-      json_mapper = JsonMapper();
-     }
-                    ~CApiService() {}
+                     CApiService(void);
+                    ~CApiService(void) {}
 public:
    string            Connect(string inputs);
    void              GetSignals(Signal &signals[]);
   };
+
+//+------------------------------------------------------------------+
+//| Default constructor                                              |
+//+------------------------------------------------------------------+
+CApiService::CApiService(void)
+  {
+   rest_client = RestClient();
+   json_mapper = JsonMapper();
+  }
 //+------------------------------------------------------------------+
 //| Connect MT advisor with server side. Return advisor's UUID       |
 //+------------------------------------------------------------------+
