@@ -31,11 +31,11 @@ public class Example implements Strategy {
         buyStrategyConditions.add(
                 new StrategyCondition() {
                     @Override
-                    public Boolean is(Advisor advisor, Map<Timeframe, List<Rate>> rates) {
-                        List<Rate> ratesOneMin = rates.get(Timeframe.M_1);
+                    public Boolean is(final Advisor advisor, final Map<Timeframe, List<Rate>> rates) {
+                        final List<Rate> ratesOneMin = rates.get(Timeframe.M_1);
                         int size = ratesOneMin.size();
-                        Rate last = ratesOneMin.get(size - 1);
-                        Rate prev = ratesOneMin.get(size - 2);
+                        final Rate last = ratesOneMin.get(size - 1);
+                        final Rate prev = ratesOneMin.get(size - 2);
                         return last.getHigh() > prev.getHigh();
                     }
                 }
@@ -46,12 +46,12 @@ public class Example implements Strategy {
     public List<Signal> apply(final Advisor advisor, final Map<Timeframe, List<Rate>> rates) {
         List<Signal> signals = new ArrayList<>();
 
-        boolean isBuy = buyStrategyConditions.stream()
+        final boolean isBuy = buyStrategyConditions.stream()
                 .allMatch(buyStrategyCondition ->
                         buyStrategyCondition.is(advisor, rates));
 
         if (isBuy) {
-            Signal buy = new Signal(advisor.getId(), SignalType.BUY, 0.01D, 100, 100);
+            final Signal buy = new Signal(advisor.getId(), SignalType.BUY, 0.01D, 100, 100);
             signals.add(buy);
         }
 
