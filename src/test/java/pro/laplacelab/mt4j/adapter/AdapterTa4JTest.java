@@ -24,7 +24,7 @@ import static org.junit.Assert.assertEquals;
 @SpringBootTest
 @WebAppConfiguration
 @RunWith(SpringRunner.class)
-public class AdapterTA4JTest {
+public class AdapterTa4JTest {
 
     @Autowired
     Adapter<Duration, BarSeries> adapterTA4J;

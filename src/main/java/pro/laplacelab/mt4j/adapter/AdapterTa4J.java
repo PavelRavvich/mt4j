@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class AdapterTA4J implements Adapter<Duration, BarSeries> {
+public class AdapterTa4J implements Adapter<Duration, BarSeries> {
 
     private final Map<Timeframe, Duration> timeframeMap = new HashMap<>();
 
@@ -63,7 +63,7 @@ public class AdapterTA4J implements Adapter<Duration, BarSeries> {
         final Duration duration = timeframeMap.get(timeframe);
         final List<Bar> bars = new ArrayList<>(20);
         for (Rate rate : rates) {
-            final BaseBar build = BaseBar
+            final BaseBar bar = BaseBar
                     .builder(DoubleNum::valueOf, Double.class)
                     .volume(Double.valueOf(rate.getTickVolume()))
                     .closePrice(rate.getClose())
@@ -73,7 +73,7 @@ public class AdapterTA4J implements Adapter<Duration, BarSeries> {
                     .endTime(rate.getTime())
                     .timePeriod(duration)
                     .build();
-            bars.add(build);
+            bars.add(bar);
         }
         return new BaseBarSeries(bars);
     }
