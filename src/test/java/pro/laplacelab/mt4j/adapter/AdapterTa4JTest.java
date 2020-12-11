@@ -27,7 +27,7 @@ import static org.junit.Assert.assertEquals;
 public class AdapterTa4JTest {
 
     @Autowired
-    Adapter<Duration, BarSeries> adapterTA4J;
+    Adapter<Duration, BarSeries> adapterTa4J;
 
     Map<Timeframe, List<Rate>> ratesMap = new HashMap<>(
             Map.of(Timeframe.M_1, List.of(Rate.builder().close(0.1D).low(0.1D).high(0.1D)
@@ -36,7 +36,7 @@ public class AdapterTa4JTest {
 
     @Test
     public void whenMapSuccessThenAllDataConvert() {
-        final Map<Duration, BarSeries> map = adapterTA4J.map(ratesMap);
+        final Map<Duration, BarSeries> map = adapterTa4J.map(ratesMap);
         final Rate rate = ratesMap.get(Timeframe.M_1).iterator().next();
         final BaseBar expectedBar = BaseBar
                 .builder(DoubleNum::valueOf, Double.class)
@@ -57,7 +57,7 @@ public class AdapterTa4JTest {
 
     @Test(expected = NullPointerException.class)
     public void whenParamNullThenThrowNullPointerException() {
-        adapterTA4J.map(null);
+        adapterTa4J.map(null);
     }
 
 }
