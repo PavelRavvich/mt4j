@@ -17,7 +17,7 @@ import java.util.function.BiFunction;
  * 2. Implement strategy logic inside apply method.
  * 3. Strategy implementation is Spring component, @Service or @Component required.
  *
- * @see pro.laplacelab.mt4j.example.Example
+ * @see pro.laplacelab.mt4j.strategy.Example
  */
 public interface Strategy
         extends BiFunction<Advisor, Map<Timeframe, List<Rate>>, List<Signal>> {
