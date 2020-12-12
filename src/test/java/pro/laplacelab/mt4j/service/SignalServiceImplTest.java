@@ -10,10 +10,10 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import pro.laplacelab.mt4j.BaseTestPreparation;
 import pro.laplacelab.mt4j.enums.InputType;
 import pro.laplacelab.mt4j.enums.SignalType;
-import pro.laplacelab.mt4j.example.Example;
 import pro.laplacelab.mt4j.exception.AdvisorNotFoundException;
 import pro.laplacelab.mt4j.exception.StrategyNotFoundException;
 import pro.laplacelab.mt4j.model.*;
+import pro.laplacelab.mt4j.strategy.Example;
 
 import java.util.*;
 
