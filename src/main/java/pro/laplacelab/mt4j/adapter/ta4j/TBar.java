@@ -1,7 +1,6 @@
 package pro.laplacelab.mt4j.adapter.ta4j;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import org.ta4j.core.Bar;
 import org.ta4j.core.BaseBar;
@@ -10,18 +9,25 @@ import org.ta4j.core.num.Num;
 import java.time.Duration;
 import java.time.ZonedDateTime;
 
-@Data
-@Builder
+@AllArgsConstructor
 @EqualsAndHashCode
 public class TBar implements Bar {
 
-    private BaseBar baseBar;
+    private final BaseBar baseBar;
 
-    private Integer spread;
+    private final int spread;
+
+    public static TBarBuilder builder() {
+        return new TBarBuilder();
+    }
 
     @Override
     public Num getOpenPrice() {
         return baseBar.getOpenPrice();
+    }
+
+    public int getSpread() {
+        return spread;
     }
 
     @Override

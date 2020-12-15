@@ -8,7 +8,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.ta4j.core.Bar;
 import org.ta4j.core.BarSeries;
-import org.ta4j.core.BaseBar;
 import org.ta4j.core.num.DoubleNum;
 import pro.laplacelab.mt4j.adapter.ta4j.TBar;
 import pro.laplacelab.mt4j.enums.Timeframe;
@@ -42,12 +41,20 @@ public class TAdapterTest {
 
     @Test(expected = UnsupportedOperationException.class)
     public void whenCallAddTradeThenThrowUnsupportedOperationException() {
-        TBar.builder().build().addTrade(DoubleNum.valueOf(1D), DoubleNum.valueOf(1D));
+        TBar.builder()
+                .timePeriod(Duration.ofMinutes(1))
+                .endTime(ZonedDateTime.now())
+                .build()
+                .addTrade(DoubleNum.valueOf(1D), DoubleNum.valueOf(1D));
     }
 
     @Test(expected = UnsupportedOperationException.class)
     public void whenCallAddPriceThenThrowUnsupportedOperationException() {
-        TBar.builder().build().addPrice(DoubleNum.valueOf(1D));
+        TBar.builder()
+                .timePeriod(Duration.ofMinutes(1))
+                .endTime(ZonedDateTime.now())
+                .build()
+                .addPrice(DoubleNum.valueOf(1D));
     }
 
     @Test
@@ -56,17 +63,14 @@ public class TAdapterTest {
         final Rate rate = ratesMap.get(Timeframe.M_1).iterator().next();
         TBar expected = TBar
                 .builder()
+                .volume(Double.valueOf(rate.getTickVolume()))
+                .timePeriod(Duration.ofMinutes(1))
+                .closePrice(rate.getClose())
+                .openPrice(rate.getOpen())
+                .highPrice(rate.getHigh())
+                .lowPrice(rate.getLow())
+                .endTime(rate.getTime())
                 .spread(1)
-                .baseBar(BaseBar
-                        .builder(DoubleNum::valueOf, Double.class)
-                        .volume(Double.valueOf(rate.getTickVolume()))
-                        .timePeriod(Duration.ofMinutes(1))
-                        .closePrice(rate.getClose())
-                        .openPrice(rate.getOpen())
-                        .highPrice(rate.getHigh())
-                        .lowPrice(rate.getLow())
-                        .endTime(rate.getTime())
-                        .build())
                 .build();
 
         final Bar actualBar = map.entrySet().iterator().next().getValue().getBar(0);
