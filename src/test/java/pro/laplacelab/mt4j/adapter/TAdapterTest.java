@@ -35,6 +35,21 @@ public class TAdapterTest {
                                     .open(0.1D).realVolume(1L).spread(1).tickVolume(1L)
                                     .time(ZonedDateTime.now()).build())));
 
+    @Test(expected = NullPointerException.class)
+    public void whenParamNullThenThrowNullPointerException() {
+        ta4jAdapter.map(null);
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void whenCallAddTradeThenThrowUnsupportedOperationException() {
+        TBar.builder().build().addTrade(DoubleNum.valueOf(1D), DoubleNum.valueOf(1D));
+    }
+
+    @Test(expected = UnsupportedOperationException.class)
+    public void whenCallAddPriceThenThrowUnsupportedOperationException() {
+        TBar.builder().build().addPrice(DoubleNum.valueOf(1D));
+    }
+
     @Test
     public void whenMapSuccessThenAllDataConvert() {
         final Map<Duration, BarSeries> map = ta4jAdapter.map(ratesMap);
@@ -53,16 +68,24 @@ public class TAdapterTest {
                         .endTime(rate.getTime())
                         .build())
                 .build();
+
         final Bar actualBar = map.entrySet().iterator().next().getValue().getBar(0);
         final Duration actualDuration = map.keySet().iterator().next();
 
         assertEquals(expected, actualBar);
         assertEquals(Duration.ofMinutes(1), actualDuration);
+        assertEquals(expected.getVolume(), actualBar.getVolume());
+        assertEquals(expected.getTrades(), actualBar.getTrades());
+        assertEquals(expected.getAmount(), actualBar.getAmount());
+        assertEquals(expected.getEndTime(), actualBar.getEndTime());
+        assertEquals(expected.getEndTime(), actualBar.getEndTime());
+        assertEquals(expected.getLowPrice(), actualBar.getLowPrice());
+        assertEquals(expected.getOpenPrice(), actualBar.getOpenPrice());
+        assertEquals(expected.getHighPrice(), actualBar.getHighPrice());
+        assertEquals(expected.getBeginTime(), actualBar.getBeginTime());
+        assertEquals(expected.getClosePrice(), actualBar.getClosePrice());
+        assertEquals(expected.getTimePeriod(), actualBar.getTimePeriod());
     }
 
-    @Test(expected = NullPointerException.class)
-    public void whenParamNullThenThrowNullPointerException() {
-        ta4jAdapter.map(null);
-    }
 
 }
