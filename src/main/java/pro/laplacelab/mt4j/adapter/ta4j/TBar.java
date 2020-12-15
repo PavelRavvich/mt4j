@@ -71,11 +71,11 @@ public class TBar implements Bar {
 
     @Override
     public void addTrade(final Num tradeVolume, final Num tradePrice) {
-        baseBar.addTrade(tradeVolume, tradePrice);
+        throw new UnsupportedOperationException("addTrade() not implemented for the while");
     }
 
     @Override
     public void addPrice(final Num price) {
-        baseBar.addPrice(price);
+        throw new UnsupportedOperationException("addPrice() not implemented for the while");
     }
 }
