@@ -7,6 +7,7 @@ import org.ta4j.core.BarSeries;
 import pro.laplacelab.mt4j.Strategy;
 import pro.laplacelab.mt4j.StrategyCondition;
 import pro.laplacelab.mt4j.adapter.Adapter;
+import pro.laplacelab.mt4j.adapter.ta4j.TBar;
 import pro.laplacelab.mt4j.enums.SignalType;
 import pro.laplacelab.mt4j.enums.Timeframe;
 import pro.laplacelab.mt4j.model.Advisor;
@@ -29,20 +30,18 @@ public class Example implements Strategy {
     @Getter
     public final String name = "EXAMPLE";
 
-    private final List<StrategyCondition<Timeframe, Rate>> buyStrategyConditions = new LinkedList<>();
+    private final List<StrategyCondition<Duration, BarSeries>> buyStrategyConditions = new LinkedList<>();
 
     @PostConstruct
     public void init() {
         buyStrategyConditions.add(
-                new StrategyCondition<Timeframe, Rate>() {
-                    @Override
-                    public Boolean is(final Advisor advisor, final Map<Timeframe, List<Rate>> rates) {
-                        final List<Rate> ratesOneMin = rates.get(Timeframe.M_1);
-                        int size = ratesOneMin.size();
-                        final Rate last = ratesOneMin.get(size - 1);
-                        final Rate prev = ratesOneMin.get(size - 2);
-                        return last.getHigh() > prev.getHigh();
-                    }
+                (advisor, rates) -> {
+                    final BarSeries ratesM1 = rates.get(Duration.ofMinutes(1));
+                    final int endIndex = ratesM1.getEndIndex();
+                    final TBar lastBar = (TBar) ratesM1.getBar(endIndex);
+                    final TBar prevBar = (TBar) ratesM1.getBar(endIndex - 1);
+                    return lastBar.getSpread() < 20 &&
+                            lastBar.getHighPrice().isGreaterThan(prevBar.getHighPrice());
                 }
         );
     }
@@ -51,12 +50,11 @@ public class Example implements Strategy {
     public List<Signal> apply(final Advisor advisor, final Map<Timeframe, List<Rate>> rates) {
         /* Handle barSeries with ta4j lib. */
         final Map<Duration, BarSeries> barSeries = adapterTa4J.map(rates);
-
-        /* Handle original Meta Trader Rates. */
+        /* Handle data with StrategyCondition. */
         final List<Signal> signals = new ArrayList<>();
         final boolean isBuy = buyStrategyConditions.stream()
                 .allMatch(buyStrategyCondition ->
-                        buyStrategyCondition.is(advisor, rates));
+                        buyStrategyCondition.is(advisor, adapterTa4J.map(rates)));
         if (isBuy) {
             final Signal buy = new Signal(advisor.getId(), SignalType.BUY, 0.01D, 100, 100);
             signals.add(buy);
