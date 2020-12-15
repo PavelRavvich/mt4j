@@ -4,9 +4,7 @@ import lombok.NonNull;
 import org.springframework.stereotype.Component;
 import org.ta4j.core.Bar;
 import org.ta4j.core.BarSeries;
-import org.ta4j.core.BaseBar;
 import org.ta4j.core.BaseBarSeries;
-import org.ta4j.core.num.DoubleNum;
 import pro.laplacelab.mt4j.adapter.Adapter;
 import pro.laplacelab.mt4j.enums.Timeframe;
 import pro.laplacelab.mt4j.model.Rate;
@@ -66,16 +64,13 @@ public class TAdapter implements Adapter<Duration, BarSeries> {
         for (Rate rate : rates) {
             bars.add(TBar.builder()
                     .spread(rate.getSpread())
-                    .baseBar(BaseBar
-                            .builder(DoubleNum::valueOf, Double.class)
-                            .volume(Double.valueOf(rate.getTickVolume()))
-                            .closePrice(rate.getClose())
-                            .openPrice(rate.getOpen())
-                            .highPrice(rate.getHigh())
-                            .lowPrice(rate.getLow())
-                            .endTime(rate.getTime())
-                            .timePeriod(duration)
-                            .build())
+                    .volume(Double.valueOf(rate.getTickVolume()))
+                    .closePrice(rate.getClose())
+                    .openPrice(rate.getOpen())
+                    .highPrice(rate.getHigh())
+                    .lowPrice(rate.getLow())
+                    .endTime(rate.getTime())
+                    .timePeriod(duration)
                     .build()
             );
         }
