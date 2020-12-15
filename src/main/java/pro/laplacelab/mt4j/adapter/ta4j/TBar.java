@@ -15,7 +15,7 @@ import java.time.ZonedDateTime;
 @EqualsAndHashCode
 public class TBar implements Bar {
 
-    BaseBar baseBar;
+    private BaseBar baseBar;
 
     private Integer spread;
 
@@ -70,12 +70,12 @@ public class TBar implements Bar {
     }
 
     @Override
-    public void addTrade(Num tradeVolume, Num tradePrice) {
+    public void addTrade(final Num tradeVolume, final Num tradePrice) {
         baseBar.addTrade(tradeVolume, tradePrice);
     }
 
     @Override
-    public void addPrice(Num price) {
+    public void addPrice(final Num price) {
         baseBar.addPrice(price);
     }
 }
