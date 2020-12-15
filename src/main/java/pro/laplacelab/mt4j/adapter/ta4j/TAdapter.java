@@ -1,4 +1,4 @@
-package pro.laplacelab.mt4j.adapter;
+package pro.laplacelab.mt4j.adapter.ta4j;
 
 import lombok.NonNull;
 import org.springframework.stereotype.Component;
@@ -7,6 +7,7 @@ import org.ta4j.core.BarSeries;
 import org.ta4j.core.BaseBar;
 import org.ta4j.core.BaseBarSeries;
 import org.ta4j.core.num.DoubleNum;
+import pro.laplacelab.mt4j.adapter.Adapter;
 import pro.laplacelab.mt4j.enums.Timeframe;
 import pro.laplacelab.mt4j.model.Rate;
 
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class AdapterTa4J implements Adapter<Duration, BarSeries> {
+public class TAdapter implements Adapter<Duration, BarSeries> {
 
     private final Map<Timeframe, Duration> timeframeMap = new HashMap<>();
 
@@ -63,17 +64,20 @@ public class AdapterTa4J implements Adapter<Duration, BarSeries> {
         final Duration duration = timeframeMap.get(timeframe);
         final List<Bar> bars = new ArrayList<>(20);
         for (Rate rate : rates) {
-            final BaseBar bar = BaseBar
-                    .builder(DoubleNum::valueOf, Double.class)
-                    .volume(Double.valueOf(rate.getTickVolume()))
-                    .closePrice(rate.getClose())
-                    .openPrice(rate.getOpen())
-                    .highPrice(rate.getHigh())
-                    .lowPrice(rate.getLow())
-                    .endTime(rate.getTime())
-                    .timePeriod(duration)
-                    .build();
-            bars.add(bar);
+            bars.add(TBar.builder()
+                    .spread(rate.getSpread())
+                    .baseBar(BaseBar
+                            .builder(DoubleNum::valueOf, Double.class)
+                            .volume(Double.valueOf(rate.getTickVolume()))
+                            .closePrice(rate.getClose())
+                            .openPrice(rate.getOpen())
+                            .highPrice(rate.getHigh())
+                            .lowPrice(rate.getLow())
+                            .endTime(rate.getTime())
+                            .timePeriod(duration)
+                            .build())
+                    .build()
+            );
         }
         return new BaseBarSeries(bars);
     }
