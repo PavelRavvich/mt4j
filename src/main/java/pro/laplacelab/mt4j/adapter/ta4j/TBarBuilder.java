@@ -62,7 +62,7 @@ public class TBarBuilder {
     }
 
     public TBar build() {
-        return new TBar(BaseBar
+        final BaseBar baseBar = BaseBar
                 .builder()
                 .timePeriod(timePeriod)
                 .endTime(endTime)
@@ -71,6 +71,7 @@ public class TBarBuilder {
                 .lowPrice(lowPrice)
                 .closePrice(closePrice)
                 .volume(volume)
-                .build(), spread);
+                .build();
+        return new TBar(baseBar, spread, new TBarComparator());
     }
 }

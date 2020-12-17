@@ -2,6 +2,7 @@ package pro.laplacelab.mt4j.adapter.ta4j;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
+import lombok.Setter;
 import org.ta4j.core.Bar;
 import org.ta4j.core.BaseBar;
 import org.ta4j.core.num.Num;
@@ -10,12 +11,15 @@ import java.time.Duration;
 import java.time.ZonedDateTime;
 
 @AllArgsConstructor
-@EqualsAndHashCode
-public class TBar implements Bar {
+@EqualsAndHashCode(exclude = "comparator")
+public class TBar implements Bar, Spreadable, Comparable<TBar> {
 
     private final BaseBar baseBar;
 
     private final int spread;
+
+    @Setter
+    private TBarComparator comparator;
 
     public static TBarBuilder builder() {
         return new TBarBuilder();
@@ -26,6 +30,7 @@ public class TBar implements Bar {
         return baseBar.getOpenPrice();
     }
 
+    @Override
     public int getSpread() {
         return spread;
     }
@@ -84,4 +89,10 @@ public class TBar implements Bar {
     public void addPrice(final Num price) {
         throw new UnsupportedOperationException("addPrice() not implemented for the while");
     }
+
+    @Override
+    public int compareTo(final TBar bar) {
+        return comparator.compare(bar, this);
+    }
+
 }
