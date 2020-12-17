@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.ta4j.core.Bar;
 import org.ta4j.core.BarSeries;
 import org.ta4j.core.num.DoubleNum;
 import pro.laplacelab.mt4j.adapter.ta4j.TBar;
@@ -61,7 +60,7 @@ public class TAdapterTest {
     public void whenMapSuccessThenAllDataConvert() {
         final Map<Duration, BarSeries> map = ta4jAdapter.map(ratesMap);
         final Rate rate = ratesMap.get(Timeframe.M_1).iterator().next();
-        TBar expected = TBar
+        final TBar expected = TBar
                 .builder()
                 .volume(Double.valueOf(rate.getTickVolume()))
                 .timePeriod(Duration.ofMinutes(1))
@@ -73,7 +72,7 @@ public class TAdapterTest {
                 .spread(1)
                 .build();
 
-        final Bar actualBar = map.entrySet().iterator().next().getValue().getBar(0);
+        final TBar actualBar = (TBar) map.entrySet().iterator().next().getValue().getBar(0);
         final Duration actualDuration = map.keySet().iterator().next();
 
         assertEquals(expected, actualBar);
