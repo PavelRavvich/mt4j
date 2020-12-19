@@ -2,6 +2,7 @@ package pro.laplacelab.mt4j.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import pro.laplacelab.mt4j.exception.DuplicateAdvisorException;
 import pro.laplacelab.mt4j.model.Advisor;
 
 import javax.validation.constraints.NotNull;
@@ -19,6 +20,9 @@ public class AdvisorServiceImpl implements AdvisorService {
     @Override
     public Advisor add(final @NotNull Advisor advisor) {
         log.debug("Attempt to build Advisor from source: {}", advisor);
+        if (advisors.values().stream().anyMatch(item -> item.getMagic().equals(advisor.getMagic()))) {
+            throw new DuplicateAdvisorException(advisor.getMagic());
+        }
         final Advisor save = new Advisor(advisor.getMagic(), advisor.getInputs());
         advisors.put(save.getId(), save);
         log.debug("Add advisor: {}", save);
