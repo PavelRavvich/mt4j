@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import pro.laplacelab.mt4j.enums.InputType;
 
 import javax.validation.constraints.NotEmpty;
@@ -14,7 +13,6 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 @Data
-@EqualsAndHashCode
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Input {
