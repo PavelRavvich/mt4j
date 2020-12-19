@@ -28,7 +28,7 @@ public class TAdapterTest {
     @Autowired
     Adapter<Duration, BarSeries> ta4jAdapter;
 
-    Map<Timeframe, List<Rate>> ratesMap = new HashMap<>(
+    final Map<Timeframe, List<Rate>> ratesMap = new HashMap<>(
             Map.of(Timeframe.M_1, List.of(Rate.builder().close(0.1D).low(0.1D).high(0.1D)
                                     .open(0.1D).realVolume(1L).spread(1).tickVolume(1L)
                                     .time(ZonedDateTime.now()).build())));

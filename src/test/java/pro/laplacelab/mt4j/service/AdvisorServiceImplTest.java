@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import pro.laplacelab.mt4j.enums.InputType;
+import pro.laplacelab.mt4j.exception.DuplicateAdvisorException;
 import pro.laplacelab.mt4j.model.Advisor;
 import pro.laplacelab.mt4j.model.Input;
 
@@ -23,10 +24,16 @@ public class AdvisorServiceImplTest {
     @Autowired
     AdvisorService advisorService;
 
+    @Test(expected = DuplicateAdvisorException.class)
+    public void whenAddAdvisorWithExistedMagicNumberThenThrowDuplicateAdvisorException() {
+        advisorService.add(new Advisor(1L, List.of()));
+        advisorService.add(new Advisor(1L, List.of()));
+    }
+
     @Test
     public void whenAddSuccessThenReturnAdvisorWithId() {
         Advisor advisor = advisorService.add(
-                new Advisor(1L, List.of(
+                new Advisor(2L, List.of(
                         new Input("key1", "val", InputType.STRING),
                         new Input("key2", "val", InputType.STRING)
                 ))
@@ -38,7 +45,7 @@ public class AdvisorServiceImplTest {
     @Test
     public void whenAddSuccessThenAdvisorInputsSaved() {
         Advisor save = advisorService.add(
-                new Advisor(1L, List.of(
+                new Advisor(3L, List.of(
                         new Input("key1", "val", InputType.STRING),
                         new Input("key2", "1", InputType.NUMBER),
                         new Input("key3", "true", InputType.BOOLEAN)
@@ -52,5 +59,4 @@ public class AdvisorServiceImplTest {
         assertEquals(InputType.BOOLEAN, advisor.getInput("key3").orElseThrow().getType());
         assertEquals(true, advisor.getInput("key3").orElseThrow().asBoolean());
     }
-
 }
