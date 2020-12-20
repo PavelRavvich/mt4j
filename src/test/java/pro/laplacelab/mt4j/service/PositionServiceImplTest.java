@@ -39,8 +39,9 @@ public class PositionServiceImplTest extends BaseTestPreparation {
         final Position position = new Position(PositionType.LONG, positionId, lot, stopLoss,
                 takeProfit, openPrice, closePrice, openAt, closeAt, profit, swap, commission);
         when(advisorService.get(advisor.getId())).thenReturn(Optional.of(advisor));
-        positionService.add(advisor.getId(), position);
+        final Position addedPosition = positionService.add(advisor.getId(), position);
 
+        assertEquals(position, addedPosition);
         verify(advisor, times(1)).addPosition(position);
         verify(advisorService, times(1)).get(advisor.getId());
     }
@@ -60,13 +61,13 @@ public class PositionServiceImplTest extends BaseTestPreparation {
 
         when(advisorService.get(advisor.getId())).thenReturn(Optional.of(advisor));
         positionService.add(advisor.getId(), origin);
-        final Position update = new Position(PositionType.LONG, positionId, 0.1, stopLoss, takeProfit,
+        final Position update = new Position(PositionType.LONG, positionId, 0.2, stopLoss, takeProfit,
                 openPrice, closePrice, openAt, closeAt, profit, swap, commission);
-        positionService.update(advisor.getId(), update);
+        final Position updatedPosition = positionService.update(advisor.getId(), update);
 
+        assertEquals(origin, updatedPosition);
         verify(advisor, times(1)).updatePosition(update);
         verify(advisorService, times(2)).get(advisor.getId());
-        assertEquals(Double.valueOf(0.1), advisor.getPositions().get(0).getLot());
     }
 
     @Test(expected = AdvisorNotFoundException.class)
@@ -83,8 +84,10 @@ public class PositionServiceImplTest extends BaseTestPreparation {
                 takeProfit, openPrice, closePrice, openAt, closeAt, profit, swap, commission);
         when(advisorService.get(advisor.getId())).thenReturn(Optional.of(advisor));
         positionService.add(advisor.getId(), position);
-        positionService.history(advisor.getId(), position);
 
+        final Position historizedPosition = positionService.history(advisor.getId(), position);
+
+        assertEquals(historizedPosition, position);
         verify(advisor, times(1)).toHistory(position);
         verify(advisor, times(1)).updatePosition(position);
         verify(advisorService, times(2)).get(advisor.getId());
