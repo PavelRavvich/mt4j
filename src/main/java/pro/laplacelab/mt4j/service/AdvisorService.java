@@ -6,6 +6,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface AdvisorService {
-    Optional<Advisor> get(UUID uuid);
+    Optional<Advisor> findByAdvisorId(UUID uuid);
     Advisor add(final Advisor advisor);
 }
