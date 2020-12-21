@@ -1,6 +1,8 @@
 package pro.laplacelab.mt4j.controller;
 
+import lombok.SneakyThrows;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -28,6 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(SignalController.class)
 @RunWith(SpringRunner.class)
+@DisplayName("Test Signal controller")
 public class SignalControllerTest {
 
     @Autowired
@@ -39,28 +42,32 @@ public class SignalControllerTest {
     private final JsonMapper mapper = new JsonMapper();
 
     @Test
-    public void testGetSignal() throws Exception {
-        Market market = new Market();
-        market.setAdvisorId(UUID.randomUUID());
-        market.setRates(Map.of(
-                Timeframe.M_1, List.of(Rate.builder().time(ZonedDateTime.now(ZoneId.of("UTC")))
-                        .open(1D).high(1D).low(1D).close(1D).tickVolume(1L).spread(1).realVolume(1L).build())));
-        market.setAccount(
-                Account.builder()
+    @SneakyThrows
+    @DisplayName("When get signal request then SignalService#onTick() called")
+    public void whenGetSignalThenSignalServiceCalledOnTick() {
+        // given
+        final Market market = Market
+                .builder()
+                .positions(List.of())
+                .strategyName("TEST")
+                .advisorId(UUID.randomUUID())
+                .account(Account.builder()
                         .company("a").balance(1D).id(1L).freeMargin(1D).margin(1D).owner("T")
-                        .build());
-        market.setPositions(List.of());
-        market.setStrategyName("TEST");
-        final String requestJson = mapper.toJson(market);
-        List<Signal> signals = List.of(new Signal());
+                        .build())
+                .rates(Map.of(
+                        Timeframe.M_1, List.of(Rate.builder().time(ZonedDateTime.now(ZoneId.of("UTC")))
+                                .open(1D).high(1D).low(1D).close(1D).tickVolume(1L).spread(1).realVolume(1L).build())))
+                .build();
 
+        when(signalService.onTick(market)).thenReturn(List.of(new Signal()));
+
+        // when
         mockMvc.perform(MockMvcRequestBuilders.get("/api/signal")
-                .content(requestJson)
+                .content(mapper.toJson(market))
                 .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk());
 
-        when(signalService.onTick(market)).thenReturn(signals);
+        // then
         verify(signalService, times(1)).onTick(market);
     }
-
 }

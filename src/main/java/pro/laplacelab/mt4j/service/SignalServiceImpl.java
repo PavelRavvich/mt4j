@@ -26,7 +26,7 @@ public class SignalServiceImpl implements SignalService {
     public List<Signal> onTick(final @NotNull Market market) {
         log.debug("Market request: {}", market);
         final Advisor advisor = advisorService
-                .get(market.getAdvisorId())
+                .findByAdvisorId(market.getAdvisorId())
                 .orElseThrow(AdvisorNotFoundException::new);
         final Strategy strategy = strategyService
                 .findByName(market.getStrategyName())

@@ -17,7 +17,7 @@ public class PositionServiceImpl implements PositionService {
 
     @Override
     public Position add(final @NotNull UUID advisorId, final @NotNull Position position) {
-        final Advisor advisor = advisorService.get(advisorId)
+        final Advisor advisor = advisorService.findByAdvisorId(advisorId)
                 .orElseThrow(AdvisorNotFoundException::new);
         advisor.addPosition(position);
         return position;
@@ -25,7 +25,7 @@ public class PositionServiceImpl implements PositionService {
 
     @Override
     public Position update(final @NotNull UUID advisorId, final @NotNull Position position) {
-        final Advisor advisor = advisorService.get(advisorId)
+        final Advisor advisor = advisorService.findByAdvisorId(advisorId)
                 .orElseThrow(AdvisorNotFoundException::new);
         advisor.updatePosition(position);
         return position;
@@ -33,7 +33,7 @@ public class PositionServiceImpl implements PositionService {
 
     @Override
     public Position history(final @NotNull UUID advisorId, final @NotNull Position position) {
-        final Advisor advisor = advisorService.get(advisorId)
+        final Advisor advisor = advisorService.findByAdvisorId(advisorId)
                 .orElseThrow(AdvisorNotFoundException::new);
         advisor.updatePosition(position);
         advisor.toHistory(position);

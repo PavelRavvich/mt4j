@@ -1,7 +1,9 @@
 package pro.laplacelab.mt4j.controller;
 
+import lombok.SneakyThrows;
 import org.assertj.core.util.Lists;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -21,6 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(AdvisorController.class)
 @RunWith(SpringRunner.class)
+@DisplayName("Test Advisor controller")
 public class AdvisorControllerTest {
 
     @Autowired
@@ -32,16 +35,20 @@ public class AdvisorControllerTest {
     private final JsonMapper mapper = new JsonMapper();
 
     @Test
-    public void testAddAdvisor() throws Exception {
+    @SneakyThrows
+    @DisplayName("When advisor successfully added then AdvisorService called AdvisorService#add()")
+    public void whenAdvisorSuccessfullyAddedThenAdvisorServiceCallAdd() {
+        // given
         final Advisor advisor = new Advisor(1L, Lists.emptyList());
-        final String requestJson = mapper.toJson(advisor);
+        when(advisorService.findByAdvisorId(advisor.getId())).thenReturn(Optional.of(advisor));
 
+        // when
         mockMvc.perform(MockMvcRequestBuilders.post("/api/advisor/add")
-                .content(requestJson)
+                .content(mapper.toJson(advisor))
                 .contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk());
 
-        when(advisorService.get(advisor.getId())).thenReturn(Optional.of(advisor));
+        // then
         verify(advisorService, times(1)).add(advisor);
     }
 

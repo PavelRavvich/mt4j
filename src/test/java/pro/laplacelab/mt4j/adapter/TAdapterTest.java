@@ -1,6 +1,7 @@
 package pro.laplacelab.mt4j.adapter;
 
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,23 +24,21 @@ import static org.junit.Assert.assertEquals;
 @SpringBootTest
 @WebAppConfiguration
 @RunWith(SpringRunner.class)
+@DisplayName("Test ta4j rates mapper")
 public class TAdapterTest {
 
     @Autowired
     Adapter<Duration, BarSeries> ta4jAdapter;
 
-    final Map<Timeframe, List<Rate>> ratesMap = new HashMap<>(
-            Map.of(Timeframe.M_1, List.of(Rate.builder().close(0.1D).low(0.1D).high(0.1D)
-                                    .open(0.1D).realVolume(1L).spread(1).tickVolume(1L)
-                                    .time(ZonedDateTime.now()).build())));
-
     @Test(expected = NullPointerException.class)
-    public void whenParamNullThenThrowNullPointerException() {
+    @DisplayName("When rates is null then throw NullPointerException")
+    public void whenRatesIsNullThenThrowNullPointerException() {
         ta4jAdapter.map(null);
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void whenCallAddTradeThenThrowUnsupportedOperationException() {
+    @DisplayName("When try to use unsupported TBar#addTrade() then throw UnsupportedOperationException")
+    public void whenCallUnsupportedAddTradeThenThrowUnsupportedOperationException() {
         TBar.builder()
                 .timePeriod(Duration.ofMinutes(1))
                 .endTime(ZonedDateTime.now())
@@ -48,7 +47,8 @@ public class TAdapterTest {
     }
 
     @Test(expected = UnsupportedOperationException.class)
-    public void whenCallAddPriceThenThrowUnsupportedOperationException() {
+    @DisplayName("When try to use unsupported TBar#addPrice() then throw UnsupportedOperationException")
+    public void whenCallUnsupportedAddPriceThenThrowUnsupportedOperationException() {
         TBar.builder()
                 .timePeriod(Duration.ofMinutes(1))
                 .endTime(ZonedDateTime.now())
@@ -57,11 +57,16 @@ public class TAdapterTest {
     }
 
     @Test
+    @DisplayName("When rates successfully mapped one bar from MetaTrader5 to mt4j format")
     public void whenMapSuccessThenAllDataConvert() {
-        final Map<Duration, BarSeries> map = ta4jAdapter.map(ratesMap);
+        // given
+        final Map<Timeframe, List<Rate>> ratesMap = new HashMap<>(
+                Map.of(Timeframe.M_1, List.of(Rate.builder().close(0.1D).low(0.1D).high(0.1D)
+                        .open(0.1D).realVolume(1L).spread(1).tickVolume(1L)
+                        .time(ZonedDateTime.now()).build())));
+
         final Rate rate = ratesMap.get(Timeframe.M_1).iterator().next();
-        final TBar expected = TBar
-                .builder()
+        final TBar expected = TBar.builder()
                 .volume(Double.valueOf(rate.getTickVolume()))
                 .timePeriod(Duration.ofMinutes(1))
                 .closePrice(rate.getClose())
@@ -72,11 +77,13 @@ public class TAdapterTest {
                 .spread(1)
                 .build();
 
+        // when
+        final Map<Duration, BarSeries> map = ta4jAdapter.map(ratesMap);
         final TBar actualBar = (TBar) map.entrySet().iterator().next().getValue().getBar(0);
-        final Duration actualDuration = map.keySet().iterator().next();
 
+        // then
         assertEquals(expected, actualBar);
-        assertEquals(Duration.ofMinutes(1), actualDuration);
+        assertEquals(Duration.ofMinutes(1), map.keySet().iterator().next());
         assertEquals(expected.getVolume(), actualBar.getVolume());
         assertEquals(expected.getTrades(), actualBar.getTrades());
         assertEquals(expected.getAmount(), actualBar.getAmount());
@@ -89,6 +96,4 @@ public class TAdapterTest {
         assertEquals(expected.getClosePrice(), actualBar.getClosePrice());
         assertEquals(expected.getTimePeriod(), actualBar.getTimePeriod());
     }
-
-
 }

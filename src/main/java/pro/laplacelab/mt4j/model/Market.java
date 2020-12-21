@@ -2,10 +2,7 @@ package pro.laplacelab.mt4j.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import pro.laplacelab.mt4j.enums.Timeframe;
 
 import javax.validation.constraints.NotBlank;
@@ -16,6 +13,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode

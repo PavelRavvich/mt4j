@@ -30,7 +30,7 @@ public class AdvisorServiceImpl implements AdvisorService {
     }
 
     @Override
-    public Optional<Advisor> get(final @NotNull UUID advisorId) {
+    public Optional<Advisor> findByAdvisorId(final @NotNull UUID advisorId) {
         return Optional.ofNullable(advisors.get(advisorId));
     }
 
