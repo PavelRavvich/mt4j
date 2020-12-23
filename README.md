@@ -158,7 +158,7 @@ Can contain 3 position types:
 ]
 ```
 
-###Technical indicator data adapter.
+### Technical indicator data adapter.
 For mapping data from origin request data sources to you're a technical indicator's library format you can use `Adapter` interface,
 example of implementation you can see in `pro.laplace.adapter.ta4j.TAdapter.java`.
 
