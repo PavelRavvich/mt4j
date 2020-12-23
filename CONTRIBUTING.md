@@ -1,4 +1,4 @@
-##For features and bugs use the same pipeline.
+## For features and bugs use the same pipeline.
 
 1. Create issue with maximum detailed description.
 2. Create brunch with name `feature/<issue-number>`.
