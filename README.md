@@ -58,6 +58,11 @@ _Request:_
             "key": "propName2",
             "value": 10,
             "type": "NUMBER"
+        },
+        {
+            "key": "propName3",
+            "value": true,
+            "type": "BOOLEAN"
         }
     ]
 }
@@ -66,25 +71,7 @@ _Request:_
 _Response:_
 ```json
 {
-    "id": "c4eb34e4-c9c3-4b7e-856d-d5d00588464d",
-    "magic": 100000,
-    "inputs": [
-        {
-            "key": "propName1",
-            "value": "str",
-            "type": "STRING"
-        },
-        {
-            "key": "propName2",
-            "value": "10:00",
-            "type": "TIME"
-        },
-        {
-            "key": "propName3",
-            "value": 10,
-            "type": "NUMBER"
-        }
-    ]
+    "id": "c4eb34e4-c9c3-4b7e-856d-d5d00588464d"
 }
 ```
 
@@ -114,7 +101,11 @@ _Request:_
             "stopLoss": 100,
             "takeProfit": 100,
             "openAt": 16384394738,
+            "openPrice": 1.23,
+            "closePrice": 1.23,
             "closeAt": 16384394738,
+            "swap": 1.23,
+            "commission": 1.23,
             "profit": 123.45
         }
     ],
@@ -166,7 +157,10 @@ Can contain 3 position types:
     }
 ]
 ```
-    
+
+###Technical indicator data adapter.
+For mapping data from origin request data sources to you're a technical indicator's library format you can use `Adapter` interface,
+example of implementation you can see in `pro.laplace.adapter.ta4j.TAdapter.java`.
 
 
 [webrequest]: https://www.mql5.com/en/docs/network/webrequest
