@@ -15,8 +15,8 @@ public:
                      CRequestFactory(void);
                     ~CRequestFactory(void) {}
 public:
-   string            GetAddAdvisorRequestBody(string inputs);
-   string            GetSignalRequestBody(string advisor_id, string strategy_name);
+   string            GetAddAdvisorRequestBody(const string inputs);
+   string            GetSignalRequestBody(const string advisor_id, string strategy_name);
   };
 
 //+------------------------------------------------------------------+
@@ -31,7 +31,7 @@ CRequestFactory::CRequestFactory(void)
 //+------------------------------------------------------------------+
 //| Build requests body for register advisor                         |
 //+------------------------------------------------------------------+
-string CRequestFactory::GetAddAdvisorRequestBody(string inputs)
+string CRequestFactory::GetAddAdvisorRequestBody(const string inputs)
   {
    return "{ \"magic\": " + (string) Magic() + ", \"inputs\": " + inputs + " }";
   }
@@ -39,7 +39,7 @@ string CRequestFactory::GetAddAdvisorRequestBody(string inputs)
 //+------------------------------------------------------------------+
 //| Build request body for fetch signal from remote resource         |
 //+------------------------------------------------------------------+
-string CRequestFactory::GetSignalRequestBody(string advisor_id, string strategy_name)
+string CRequestFactory::GetSignalRequestBody(const string advisor_id, const string strategy_name)
   {
    return "{ \"advisorId\": \"" +  advisor_id + "\", \"strategyName\": \"" + strategy_name +
           "\", \"rates\": " + market_provider.GetRates() +

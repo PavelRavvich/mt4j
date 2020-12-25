@@ -17,10 +17,10 @@ public:
 public:
    void              Execute(Signal &signals[]);
 private:
-   void              Buy(Signal &signal);
-   void              Sell(Signal &signal);
-   void              Close(Signal &signal);
-   void              Update(Signal &signal);
+   void              Buy(const Signal &signal);
+   void              Sell(const Signal &signal);
+   void              Close(const Signal &signal);
+   void              Update(const Signal &signal);
   };
 
 //+------------------------------------------------------------------+
@@ -35,7 +35,7 @@ CSignalExecutor::CSignalExecutor(void)
 //+------------------------------------------------------------------+
 //| Executing all signals                                            |
 //+------------------------------------------------------------------+
-void CSignalExecutor::Execute(Signal &signals[])
+void CSignalExecutor::Execute(const Signal &signals[])
   {
    for(int i = 0; i < ArraySize(signals); i++)
      {
@@ -54,7 +54,7 @@ void CSignalExecutor::Execute(Signal &signals[])
 //+------------------------------------------------------------------+
 //| Execute BUY                                                      |
 //+------------------------------------------------------------------+
-void CSignalExecutor::Buy(Signal &signal)
+void CSignalExecutor::Buy(const Signal &signal)
   {
    double ask = Ask();
    int counter = 0;
@@ -67,7 +67,7 @@ void CSignalExecutor::Buy(Signal &signal)
 //+------------------------------------------------------------------+
 //| Execute SELL                                                     |
 //+------------------------------------------------------------------+
-void CSignalExecutor::Sell(Signal &signal)
+void CSignalExecutor::Sell(const Signal &signal)
   {
    double bid = Bid();
    int counter = 0;
@@ -80,7 +80,7 @@ void CSignalExecutor::Sell(Signal &signal)
 //+------------------------------------------------------------------+
 //| Execute UPDATE                                                     |
 //+------------------------------------------------------------------+
-void CSignalExecutor::Update(Signal &signal)
+void CSignalExecutor::Update(const Signal &signal)
   {
    double openPrice = -1;
    ENUM_POSITION_TYPE type = -1;
@@ -105,7 +105,7 @@ void CSignalExecutor::Update(Signal &signal)
 //+------------------------------------------------------------------+
 //| Execute CLOSE                                                    |
 //+------------------------------------------------------------------+
-void CSignalExecutor::Close(Signal &signal)
+void CSignalExecutor::Close(const Signal &signal)
   {
    for(int i = PositionsTotal() - 1; i >= 0; i--)
       if(position_info.SelectByIndex(i))

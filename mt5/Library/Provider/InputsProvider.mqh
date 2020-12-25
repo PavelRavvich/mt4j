@@ -20,14 +20,14 @@ public:
 public:
    string            Build(void);
    string            GetJsonInputs(void);
-   void              InputBoolean(string key, bool value);
-   void              InputString(string key, string value);
-   void              InputDouble(string key, double value);
-   void              InputLong(string key, long value);
-   void              InputInteger(string key, int value);
-   void              InputDatetime(string key, datetime date);
-   void              InputTimeSeconds(string key, int seconds);
-   void              InputTimeMilliseconds(string key, long milliseconds);
+   void              InputBoolean(const string key, const bool value);
+   void              InputString(const string key, const string value);
+   void              InputDouble(const string key, const double value);
+   void              InputLong(const string key, const long value);
+   void              InputInteger(const string key, const int value);
+   void              InputDatetime(const string key, const datetime date);
+   void              InputTimeSeconds(const string key, const int seconds);
+   void              InputTimeMilliseconds(const string key, const long milliseconds);
    string            ToString(void);
 private:
    void              AddKey(string key);
@@ -79,7 +79,7 @@ string CInputsProvider::GetJsonInputs(void)
 //+------------------------------------------------------------------+
 //| Add boolean input                                                |
 //+------------------------------------------------------------------+
-void CInputsProvider::InputBoolean(string key, bool value)
+void CInputsProvider::InputBoolean(const string key, const bool value)
   {
    if(is_builed)
      {
@@ -99,7 +99,7 @@ void CInputsProvider::InputBoolean(string key, bool value)
 //+------------------------------------------------------------------+
 //| Add string input                                                 |
 //+------------------------------------------------------------------+
-void CInputsProvider::InputString(string key, string value)
+void CInputsProvider::InputString(const string key, const string value)
   {
    if(is_builed)
      {
@@ -119,7 +119,7 @@ void CInputsProvider::InputString(string key, string value)
 //+------------------------------------------------------------------+
 //| Add double input                                                 |
 //+------------------------------------------------------------------+
-void CInputsProvider::InputDouble(string key, double value)
+void CInputsProvider::InputDouble(const string key, const double value)
   {
    if(is_builed)
      {
@@ -139,7 +139,7 @@ void CInputsProvider::InputDouble(string key, double value)
 //+------------------------------------------------------------------+
 //| Add long input                                                   |
 //+------------------------------------------------------------------+
-void CInputsProvider::InputLong(string key, long value)
+void CInputsProvider::InputLong(const string key, const long value)
   {
    if(is_builed)
      {
@@ -159,28 +159,28 @@ void CInputsProvider::InputLong(string key, long value)
 //+------------------------------------------------------------------+
 //| Add int input                                                                 |
 //+------------------------------------------------------------------+
-void CInputsProvider::InputInteger(string key, int value)
+void CInputsProvider::InputInteger(const string key, const int value)
   {
    InputLong(key, (long) value);
   }
 //+------------------------------------------------------------------+
 //| Add time datetime input                                          |
 //+------------------------------------------------------------------+
-void CInputsProvider::InputDatetime(string key, datetime date)
+void CInputsProvider::InputDatetime(const string key, const datetime date)
   {
    InputLong(key, (long) date * 1000);
   }
 //+------------------------------------------------------------------+
 //| Add time seconds input                                           |
 //+------------------------------------------------------------------+
-void CInputsProvider::InputTimeSeconds(string key, int seconds)
+void CInputsProvider::InputTimeSeconds(const string key, const int seconds)
   {
    InputLong(key, (long) seconds * 1000);
   }
 //+------------------------------------------------------------------+
 //| Add time milliseconds input                                      |
 //+------------------------------------------------------------------+
-void CInputsProvider::InputTimeMilliseconds(string key, long milliseconds)
+void CInputsProvider::InputTimeMilliseconds(const string key, const long milliseconds)
   {
    InputLong(key, milliseconds);
   }
@@ -194,7 +194,7 @@ string CInputsProvider::ToString(void)
 //+------------------------------------------------------------------+
 //| Add key                                                          |
 //+------------------------------------------------------------------+
-void CInputsProvider::AddKey(string key)
+void CInputsProvider::AddKey(const string key)
   {
    int size = ArraySize(keys);
    ArrayResize(keys, size + 1);
@@ -203,7 +203,7 @@ void CInputsProvider::AddKey(string key)
 //+------------------------------------------------------------------+
 //| Check kay already exist                                          |
 //+------------------------------------------------------------------+
-bool CInputsProvider::ContainKey(string key)
+bool CInputsProvider::ContainKey(const string key)
   {
    for(int i = 0; i < ArraySize(keys); i++)
       if(keys[i] == key)

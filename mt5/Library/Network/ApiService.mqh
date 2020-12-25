@@ -31,7 +31,7 @@ CApiService::CApiService(void)
 //+------------------------------------------------------------------+
 //| Connect MT advisor with server side. Return advisor's UUID       |
 //+------------------------------------------------------------------+
-string CApiService::Connect(string inputs)
+string CApiService::Connect(const string inputs)
   {
    string responceBody = rest_client.Connect(inputs);
    json_mapper.Clear();
@@ -41,7 +41,7 @@ string CApiService::Connect(string inputs)
 //+------------------------------------------------------------------+
 //| Get signal as strategy result                                    |
 //+------------------------------------------------------------------+
-void CApiService::GetSignals(Signal &signals[])
+void CApiService::GetSignals(const Signal &signals[])
   {
    string responceBody = rest_client.GetSignals(advisor_id, Strategy());
    json_mapper.Clear();
