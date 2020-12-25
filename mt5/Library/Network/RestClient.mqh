@@ -15,11 +15,11 @@ public:
                      CRestClient(void);
                     ~CRestClient(void) {}
 public:
-   string            Connect(string inputs);
-   string            GetSignals(string advisor_id, string strategy_name);
+   string            Connect(const string inputs);
+   string            GetSignals(const string advisor_id, const string strategy_name);
 private:
-   void              Post(HttpRequest &request, HttpResponse &response);
-   void              Get(HttpRequest &request, HttpResponse &response);
+   void              Post(const HttpRequest &request, const HttpResponse &response);
+   void              Get(const HttpRequest &request, const HttpResponse &response);
   };
 
 //+------------------------------------------------------------------+
@@ -37,7 +37,7 @@ CRestClient::CRestClient(void)
 //+------------------------------------------------------------------+
 //| Bootstrap advisor register. Return advisor's UUID                |
 //+------------------------------------------------------------------+
-string CRestClient::Connect(string inputs)
+string CRestClient::Connect(const string inputs)
   {
    HttpRequest request;
    request.url = StringFormat(url_formatter, rest_config.host, rest_config.port, "/api/advisor/add");
@@ -57,7 +57,7 @@ string CRestClient::Connect(string inputs)
 //+------------------------------------------------------------------+
 //| Get trade signal request                                         |
 //+------------------------------------------------------------------+
-string CRestClient::GetSignals(string advisor_id, string strategy_name)
+string CRestClient::GetSignals(const string advisor_id, const string strategy_name)
   {
    HttpRequest request;
    request.url = StringFormat(url_formatter, rest_config.host, rest_config.port, "/api/signal");
@@ -70,7 +70,7 @@ string CRestClient::GetSignals(string advisor_id, string strategy_name)
 //+------------------------------------------------------------------+
 //| GET request low level defenition                                 |
 //+------------------------------------------------------------------+
-void CRestClient::Get(HttpRequest &request, HttpResponse &response)
+void CRestClient::Get(const HttpRequest &request, const HttpResponse &response)
   {
    char responseBody[];
    uchar requestBody[];
@@ -83,7 +83,7 @@ void CRestClient::Get(HttpRequest &request, HttpResponse &response)
 //+------------------------------------------------------------------+
 //| POST request low level defenition                                |
 //+------------------------------------------------------------------+
-void CRestClient::Post(HttpRequest &request, HttpResponse &response)
+void CRestClient::Post(const HttpRequest &request, const HttpResponse &response)
   {
    char responseBody[];
    uchar requestBody[];

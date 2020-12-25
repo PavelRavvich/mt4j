@@ -16,7 +16,7 @@ public:
 public:
    string            GetRates(void);
 private:
-   string            CopyMqlRates(ENUM_TIMEFRAMES  timeframe);
+   string            CopyMqlRates(const ENUM_TIMEFRAMES  timeframe);
   };
 
 //+------------------------------------------------------------------+
@@ -59,7 +59,7 @@ string CMarketProvider::GetRates(void)
 //+------------------------------------------------------------------+
 //| Copy rates of timeframe as JSON                                  |
 //+------------------------------------------------------------------+
-string CMarketProvider::CopyMqlRates(ENUM_TIMEFRAMES  timeframe)
+string CMarketProvider::CopyMqlRates(const ENUM_TIMEFRAMES  timeframe)
   {
    Bars(Symbol(), timeframe);
    string items = "";
