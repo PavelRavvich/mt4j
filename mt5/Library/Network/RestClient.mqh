@@ -57,7 +57,7 @@ string CRestClient::Connect(const string inputs)
 //+------------------------------------------------------------------+
 //| Get trade signal request                                         |
 //+------------------------------------------------------------------+
-string CRestClient::GetSignals(const string advisor_id, const string strategy_name)
+string CRestClient::GetSignals(string advisor_id, const string strategy_name)
   {
    HttpRequest request;
    request.url = StringFormat(url_formatter, rest_config.host, rest_config.port, "/api/signal");
@@ -70,7 +70,7 @@ string CRestClient::GetSignals(const string advisor_id, const string strategy_na
 //+------------------------------------------------------------------+
 //| GET request low level defenition                                 |
 //+------------------------------------------------------------------+
-void CRestClient::Get(const HttpRequest &request, const HttpResponse &response)
+void CRestClient::Get(HttpRequest &request, HttpResponse &response)
   {
    char responseBody[];
    uchar requestBody[];
@@ -83,7 +83,7 @@ void CRestClient::Get(const HttpRequest &request, const HttpResponse &response)
 //+------------------------------------------------------------------+
 //| POST request low level defenition                                |
 //+------------------------------------------------------------------+
-void CRestClient::Post(const HttpRequest &request, const HttpResponse &response)
+void CRestClient::Post(HttpRequest &request, HttpResponse &response)
   {
    char responseBody[];
    uchar requestBody[];
