@@ -18,8 +18,8 @@ public:
    string            Connect(const string inputs);
    string            GetSignals(const string advisor_id, const string strategy_name);
 private:
-   void              Post(const HttpRequest &request, const HttpResponse &response);
-   void              Get(const HttpRequest &request, const HttpResponse &response);
+   void              Post(HttpRequest &request, HttpResponse &response);
+   void              Get(HttpRequest &request, HttpResponse &response);
   };
 
 //+------------------------------------------------------------------+

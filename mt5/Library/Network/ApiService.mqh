@@ -16,7 +16,7 @@ public:
                      CApiService(void);
                     ~CApiService(void) {}
 public:
-   string            Connect(string inputs);
+   string            Connect(const string inputs);
    void              GetSignals(Signal &signals[]);
   };
 
@@ -41,7 +41,7 @@ string CApiService::Connect(const string inputs)
 //+------------------------------------------------------------------+
 //| Get signal as strategy result                                    |
 //+------------------------------------------------------------------+
-void CApiService::GetSignals(const Signal &signals[])
+void CApiService::GetSignals(Signal &signals[])
   {
    string responceBody = rest_client.GetSignals(advisor_id, Strategy());
    json_mapper.Clear();
