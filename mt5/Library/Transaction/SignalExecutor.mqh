@@ -15,7 +15,7 @@ public:
                      CSignalExecutor(void);
                     ~CSignalExecutor(void) {}
 public:
-   void              Execute(Signal &signals[]);
+   void              Execute(const Signal &signals[]);
 private:
    void              Buy(const Signal &signal);
    void              Sell(const Signal &signal);

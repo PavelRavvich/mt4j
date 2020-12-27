@@ -17,10 +17,10 @@ public:
 public:
    string            GetPositions(void);
 private:
-   void              FetchPositions(const Position &positions[]);
-   void              FetchOpenPositions(const Position &positions[]);
-   void              FetchHistory(const Position &positions[]);
-   void              AddPosition(const Position &position, Position &positions[]);
+   void              FetchPositions(Position &positions[]);
+   void              FetchOpenPositions(Position &positions[]);
+   void              FetchHistory(Position &positions[]);
+   void              AddPosition(Position &position, Position &positions[]);
   };
 
 //+------------------------------------------------------------------+
@@ -57,7 +57,7 @@ string CPositionProvider::GetPositions(void)
 //+------------------------------------------------------------------+
 //| Collect all positions from history and currently open            |
 //+------------------------------------------------------------------+
-void CPositionProvider::FetchPositions(const Position &positions[])
+void CPositionProvider::FetchPositions(Position &positions[])
   {
    FetchOpenPositions(positions);
    FetchHistory(positions);
@@ -65,7 +65,7 @@ void CPositionProvider::FetchPositions(const Position &positions[])
 //+------------------------------------------------------------------+
 //| Fetch currently open positions                                   |
 //+------------------------------------------------------------------+
-void CPositionProvider::FetchOpenPositions(const Position &positions[])
+void CPositionProvider::FetchOpenPositions(Position &positions[])
   {
    for(int i = PositionsTotal() - 1; i >= 0; i--)
       if(position_info.SelectByIndex(i))
@@ -93,7 +93,7 @@ void CPositionProvider::FetchOpenPositions(const Position &positions[])
 //+------------------------------------------------------------------+
 //| Fetch history of closed positions                                |
 //+------------------------------------------------------------------+
-void CPositionProvider::FetchHistory(const Position &positions[])
+void CPositionProvider::FetchHistory(Position &positions[])
   {
    history_info.HistorySelect(0, TimeCurrent());
    int total = history_info.PositionsTotal();
@@ -124,7 +124,7 @@ void CPositionProvider::FetchHistory(const Position &positions[])
 //+------------------------------------------------------------------+
 //| Add position to array                                            |
 //+------------------------------------------------------------------+
-void CPositionProvider::AddPosition(const Position &position, const Position &positions[])
+void CPositionProvider::AddPosition(Position &position, Position &positions[])
   {
    int size = ArraySize(positions);
    ArrayResize(positions, size + 1);
