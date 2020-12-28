@@ -68,27 +68,26 @@ void CPositionProvider::FetchPositions(Position &positions[])
 void CPositionProvider::FetchOpenPositions(Position &positions[])
   {
    for(int i = PositionsTotal() - 1; i >= 0; i--)
-      if(position_info.SelectByIndex(i))
-         if(position_info.Magic() == Magic())
-           {
-            Position position;
-            position.isHistory = false;
-            position.openAt = position_info.TimeMsc();
-            position.positionId = position_info.Ticket();
-            position.openPrice = position_info.PriceOpen();
-            position.swap = NormalizeDouble(position_info.Swap(), 2);
-            position.lot = NormalizeDouble(position_info.Volume(), 2);
-            position.profit = NormalizeDouble(position_info.Profit(), 2);
-            position.stopLoss = StopLossToPoint(position_info.StopLoss(),
-                                                position_info.PriceOpen(),
-                                                position_info.PositionType());
-            position.takeProfit = TakeProfitToPoint(position_info.TakeProfit(),
-                                                    position_info.PriceOpen(),
-                                                    position_info.PositionType());
-            position.commission = NormalizeDouble(position_info.Commission(), 2);
-            position.type = position_info.PositionType() == POSITION_TYPE_BUY ? LONG : SHORT;
-            AddPosition(position, positions);
-           }
+      if(position_info.SelectByIndex(i) && position_info.Magic() == Magic())
+        {
+         Position position;
+         position.isHistory = false;
+         position.openAt = position_info.TimeMsc();
+         position.positionId = position_info.Ticket();
+         position.openPrice = position_info.PriceOpen();
+         position.swap = NormalizeDouble(position_info.Swap(), 2);
+         position.lot = NormalizeDouble(position_info.Volume(), 2);
+         position.profit = NormalizeDouble(position_info.Profit(), 2);
+         position.stopLoss = StopLossToPoint(position_info.StopLoss(),
+                                             position_info.PriceOpen(),
+                                             position_info.PositionType());
+         position.takeProfit = TakeProfitToPoint(position_info.TakeProfit(),
+                                                 position_info.PriceOpen(),
+                                                 position_info.PositionType());
+         position.commission = NormalizeDouble(position_info.Commission(), 2);
+         position.type = position_info.PositionType() == POSITION_TYPE_BUY ? LONG : SHORT;
+         AddPosition(position, positions);
+        }
   }
 //+------------------------------------------------------------------+
 //| Fetch history of closed positions                                |
@@ -99,8 +98,7 @@ void CPositionProvider::FetchHistory(Position &positions[])
    int total = history_info.PositionsTotal();
    for(int i = 0; i < total; i++)
      {
-      //--- Select a closed position by its index in the list
-      if(history_info.SelectByIndex(i)) // todo magicNumber check https://github.com/PavelRavvich/mt4j/issues/187
+      if(history_info.SelectByIndex(i) && history_info.Magic() == Magic())
         {
          Position position;
          position.isHistory = true;
