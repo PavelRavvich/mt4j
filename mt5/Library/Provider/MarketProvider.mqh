@@ -69,7 +69,7 @@ string CMarketProvider::CopyMqlRates(const ENUM_TIMEFRAMES  timeframe)
    if(copied == buffer_size)
      {
       for(int i = 0; i < copied; i++)
-        {
+        { // todo fix open https://github.com/PavelRavvich/mt4j/issues/190
          string item = StringFormat(rates_formatter, rates[i].open * 1000, rates[i].high, rates[i].low,
                                     rates[i].close, rates[i].tick_volume, rates[i].time,
                                     rates[i].spread, rates[i].real_volume);
