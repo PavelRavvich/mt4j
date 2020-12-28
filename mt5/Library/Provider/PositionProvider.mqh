@@ -30,7 +30,7 @@ CPositionProvider::CPositionProvider(void)
   {
    history_info = HistoryInfo();
    position_info = PositionInfo();
-   position_pattern = "{ \"isHistory\": %s, \"type\": %s, \"magic\": %.0f, \"positionId\": %.0f, \"lot\": %.2f, \"stopLoss\": %.0f, \"takeProfit\": %.0f, \"openAt\": %.0f, \"closeAt\": %.0f, \"profit\": %.2f }";
+   position_pattern = "{ \"isHistory\": %s, \"type\": \"%s\", \"magic\": %.0f, \"positionId\": %.0f, \"lot\": %.2f, \"stopLoss\": %.0f, \"takeProfit\": %.0f, \"openAt\": %.0f, \"closeAt\": %.0f, \"profit\": %.2f }";
   }
 //+------------------------------------------------------------------+
 //| Get all positions from history and open in one JSON array        |
@@ -100,7 +100,7 @@ void CPositionProvider::FetchHistory(Position &positions[])
    for(int i = 0; i < total; i++)
      {
       //--- Select a closed position by its index in the list
-      if(history_info.SelectByIndex(i))
+      if(history_info.SelectByIndex(i)) // todo magicNumber check https://github.com/PavelRavvich/mt4j/issues/187
         {
          Position position;
          position.isHistory = true;
