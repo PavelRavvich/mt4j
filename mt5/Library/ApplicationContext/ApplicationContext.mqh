@@ -22,6 +22,7 @@
 #include <Library\Provider\InputsProvider.mqh>
 
 // Network
+#include <Library\Network\ExceptionInterceptor.mqh>
 #include <Library\Network\RequestFactory.mqh>
 #include <Library\Network\RestClient.mqh>
 #include <Library\Network\ApiService.mqh>
@@ -50,21 +51,22 @@ int Port() { return Port; }
 string Host() { return Host; }
 int Timeout() { return Timeout; }
 
-CTrade *               Trade = NULL;
-CJAVal *               JsonMapper = NULL;
-CSymbolInfo *          SymbolInfo = NULL;
-CAccountInfo *         AccountInfo = NULL;
-CHistoryPositionInfo * HistoryInfo = NULL;
-CPositionInfo *        PositionInfo = NULL;
+CTrade *                   Trade = NULL;
+CJAVal *                   JsonMapper = NULL;
+CSymbolInfo *              SymbolInfo = NULL;
+CAccountInfo *             AccountInfo = NULL;
+CHistoryPositionInfo *     HistoryInfo = NULL;
+CPositionInfo *            PositionInfo = NULL;
 
-CRestClient *          RestClient = NULL;
-CApiService *          ApiService = NULL;
-CInputsProvider *      InputsProvider = NULL;
-CMarketProvider *      MarketProvider = NULL;
-CRequestFactory *      RequestFactory = NULL;
-CSignalExecutor *      SignalExecutor = NULL;
-CAccountProvider *     AccountProvider = NULL;
-CPositionProvider *    PositionProvider = NULL;
+CRestClient *              RestClient = NULL;
+CApiService *              ApiService = NULL;
+CInputsProvider *          InputsProvider = NULL;
+CMarketProvider *          MarketProvider = NULL;
+CRequestFactory *          RequestFactory = NULL;
+CSignalExecutor *          SignalExecutor = NULL;
+CAccountProvider *         AccountProvider = NULL;
+CPositionProvider *        PositionProvider = NULL;
+CExceptionInterceptor *    ExceptionInterceptor = NULL;
 //+------------------------------------------------------------------+
 //| Context should destroy. Call in OnDeinit().                      |
 //+------------------------------------------------------------------+
@@ -84,6 +86,7 @@ void DestroyContext()
    delete SignalExecutor;
    delete AccountProvider;
    delete PositionProvider;
+   delete ExceptionInterceptor;
   }
 //+------------------------------------------------------------------+
 //| Singleton of CTrade                                              |
@@ -178,3 +181,8 @@ CAccountProvider * AccountProvider()
 //+------------------------------------------------------------------+
 CPositionProvider * PositionProvider()
   { return PositionProvider == NULL ? PositionProvider = new CPositionProvider() : PositionProvider; }
+//+------------------------------------------------------------------+
+//| Singleton of CExeptionInterceptior                               |
+//+------------------------------------------------------------------+
+CExceptionInterceptor * ExceptionInterceptor()
+  { return ExceptionInterceptor == NULL ? ExceptionInterceptor = new CExceptionInterceptor() : ExceptionInterceptor; }

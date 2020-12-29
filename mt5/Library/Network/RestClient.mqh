@@ -8,9 +8,10 @@
 class CRestClient
   {
 private:
-   RestConfig        rest_config;
-   string            url_formatter;
-   CRequestFactory * request_factory;
+   RestConfig              rest_config;
+   string                  url_formatter;
+   CRequestFactory *       request_factory;
+   CExceptionInterceptor * exception_interceptor;
 public:
                      CRestClient(void);
                     ~CRestClient(void) {}
@@ -32,6 +33,7 @@ CRestClient::CRestClient(void)
    rest_config.port = Port();
    rest_config.timeout = Timeout();
    request_factory = RequestFactory();
+   exception_interceptor = ExceptionInterceptor();
    rest_config.headers = "Content-Type: application/json\r\n";
   }
 //+------------------------------------------------------------------+
@@ -79,6 +81,7 @@ void CRestClient::Get(HttpRequest &request, HttpResponse &response)
    int status = WebRequest("GET", request.url, request.headers, rest_config.timeout, requestBody, responseBody, responseHeaders);
    response.body = CharArrayToString(responseBody, 0, WHOLE_ARRAY, CP_UTF8);
    response.status = status;
+   exception_interceptor.Intercept(response);
   }
 //+------------------------------------------------------------------+
 //| POST request low level defenition                                |
@@ -92,5 +95,6 @@ void CRestClient::Post(HttpRequest &request, HttpResponse &response)
    int status = WebRequest("POST", request.url, request.headers, rest_config.timeout, requestBody, responseBody, responseHeaders);
    response.body = CharArrayToString(responseBody, 0, WHOLE_ARRAY, CP_UTF8);
    response.status = status;
+   exception_interceptor.Intercept(response);
   }
 //+------------------------------------------------------------------+
