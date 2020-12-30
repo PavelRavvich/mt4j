@@ -14,7 +14,7 @@ private:
    CExceptionInterceptor * exception_interceptor;
 public:
                      CRestClient(void);
-                    ~CRestClient(void) {}
+                    ~CRestClient(void);
 public:
    string            Connect(const string inputs);
    string            GetSignals(const string advisor_id, const string strategy_name);
@@ -36,6 +36,10 @@ CRestClient::CRestClient(void)
    exception_interceptor = ExceptionInterceptor();
    rest_config.headers = "Content-Type: application/json\r\n";
   }
+//+------------------------------------------------------------------+
+//| Destructor                                                       |
+//+------------------------------------------------------------------+
+CRestClient::~CRestClient(void) {}
 //+------------------------------------------------------------------+
 //| Bootstrap advisor register. Return advisor's UUID                |
 //+------------------------------------------------------------------+

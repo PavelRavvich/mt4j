@@ -13,7 +13,7 @@ private:
    CPositionInfo *   position_info;
 public:
                      CSignalExecutor(void);
-                    ~CSignalExecutor(void) {}
+                    ~CSignalExecutor(void);
 public:
    void              Execute(const Signal &signals[]);
 private:
@@ -27,11 +27,15 @@ private:
 //| Default constructor                                              |
 //+------------------------------------------------------------------+
 CSignalExecutor::CSignalExecutor(void)
-     {
-      trade = Trade();
-      symbol_info = SymbolInfo();
-      position_info = PositionInfo();
-     }
+  {
+   trade = Trade();
+   symbol_info = SymbolInfo();
+   position_info = PositionInfo();
+  }
+//+------------------------------------------------------------------+
+//| Destructor                                                       |
+//+------------------------------------------------------------------+
+CSignalExecutor::~CSignalExecutor(void) {}
 //+------------------------------------------------------------------+
 //| Executing all signals                                            |
 //+------------------------------------------------------------------+
@@ -50,7 +54,6 @@ void CSignalExecutor::Execute(const Signal &signals[])
          Close(signal);
      }
   }
-
 //+------------------------------------------------------------------+
 //| Execute BUY                                                      |
 //+------------------------------------------------------------------+

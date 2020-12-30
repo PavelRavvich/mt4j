@@ -16,7 +16,7 @@ private:
    string            keys[];
 public:
                      CInputsProvider(void);
-                    ~CInputsProvider(void) {}
+                    ~CInputsProvider(void);
 public:
    string            Build(void);
    string            GetJsonInputs(void);
@@ -47,6 +47,10 @@ CInputsProvider::CInputsProvider(void)
    input_boolean_formatter = "{ \"key\": \"%s\", \"value\": %s, \"type\": \"BOOLEAN\" }";
    input_string_formatter = "{ \"key\": \"%s\", \"value\": \"%s\", \"type\": \"STRING\" }";
   }
+//+------------------------------------------------------------------+
+//| Destructor                                                       |
+//+------------------------------------------------------------------+
+CInputsProvider::~CInputsProvider(void) {}
 //+------------------------------------------------------------------+
 //| Build inputs as JSON array. Can be called only ones.             |
 //+------------------------------------------------------------------+

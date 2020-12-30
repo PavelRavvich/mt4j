@@ -12,7 +12,7 @@ private:
    string            rates_formatter;
 public:
                      CMarketProvider(void);
-                    ~CMarketProvider(void) {}
+                    ~CMarketProvider(void);
 public:
    string            GetRates(void);
 private:
@@ -27,6 +27,10 @@ CMarketProvider::CMarketProvider(void)
    buffer_size = RatesBufferSize();
    rates_formatter = "{ \"open\": %G, \"high\": %G, \"low\": %G, \"close\": %G, \"tickVolume\": %d, \"time\": %d, \"spread\": %d, \"realVolume\": %d }";
   }
+//+------------------------------------------------------------------+
+//| Destructor                                                       |
+//+------------------------------------------------------------------+
+CMarketProvider::~CMarketProvider(void) {}
 //+------------------------------------------------------------------+
 //| Build JSON of all existed timeframes                             |
 //+------------------------------------------------------------------+

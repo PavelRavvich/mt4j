@@ -14,7 +14,7 @@ private:
    string            advisor_id;
 public:
                      CApiService(void);
-                    ~CApiService(void) {}
+                    ~CApiService(void);
 public:
    string            Connect(const string inputs);
    void              GetSignals(Signal &signals[]);
@@ -28,6 +28,10 @@ CApiService::CApiService(void)
    rest_client = RestClient();
    json_mapper = JsonMapper();
   }
+//+------------------------------------------------------------------+
+//| Destructor                                                       |
+//+------------------------------------------------------------------+
+CApiService::~CApiService(void) {}
 //+------------------------------------------------------------------+
 //| Connect MT advisor with server side. Return advisor's UUID       |
 //+------------------------------------------------------------------+
