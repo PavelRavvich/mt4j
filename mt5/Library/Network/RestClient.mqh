@@ -47,13 +47,6 @@ string CRestClient::Connect(const string inputs)
    request.headers = rest_config.headers;
    HttpResponse response;
    Post(request, response);
-   if(response.status != 200)
-     {
-      Alert(StringFormat("Connection to Advisor: %.0f failed", Magic()));
-      ExpertRemove();
-     }
-   else
-      Alert(StringFormat("Connection to Advisor: %.0f success", Magic()));
    return response.body;
   }
 //+------------------------------------------------------------------+
