@@ -13,7 +13,7 @@ private:
    CPositionProvider * position_provider;
 public:
                      CRequestFactory(void);
-                    ~CRequestFactory(void) {}
+                    ~CRequestFactory(void);
 public:
    string            GetAddAdvisorRequestBody(const string inputs);
    string            GetSignalRequestBody(const string advisor_id, string strategy_name);
@@ -28,6 +28,10 @@ CRequestFactory::CRequestFactory(void)
    account_provider = AccountProvider();
    position_provider = PositionProvider();
   }
+//+------------------------------------------------------------------+
+//| Destructor                                                       |
+//+------------------------------------------------------------------+
+CRequestFactory::~CRequestFactory(void) {}
 //+------------------------------------------------------------------+
 //| Build requests body for register advisor                         |
 //+------------------------------------------------------------------+

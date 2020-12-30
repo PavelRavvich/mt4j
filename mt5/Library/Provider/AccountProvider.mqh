@@ -12,7 +12,7 @@ private:
    string            account_formatter;
 public:
                      CAccountProvider(void);
-                    ~CAccountProvider(void) {}
+                    ~CAccountProvider(void);
 public:
    string            GetAccount(void);
   };
@@ -25,6 +25,10 @@ CAccountProvider::CAccountProvider(void)
       account_info = AccountInfo();
       account_formatter = "{ \"id\": %.0f, \"balance\": %.2f, \"freeMargin\": %.2f, \"margin\": %.2f, \"owner\": \"%s\", \"company\": \"%s\" }";
   }
+//+------------------------------------------------------------------+
+//| Destructor                                                       |
+//+------------------------------------------------------------------+
+CAccountProvider::~CAccountProvider(void) {}
 //+------------------------------------------------------------------+
 //| Build account info as JSON                                       |
 //+------------------------------------------------------------------+
