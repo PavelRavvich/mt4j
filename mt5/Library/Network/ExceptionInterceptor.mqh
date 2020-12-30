@@ -11,7 +11,7 @@ private:
    CJAVal *          json_mapper;
 public:
                      CExceptionInterceptor(void);
-                    ~CExceptionInterceptor(void) {}
+                    ~CExceptionInterceptor(void);
 public:
    void CExceptionInterceptor::Intercept(HttpResponse &response);
   };
@@ -20,6 +20,10 @@ public:
 //| Default constructor                                              |
 //+------------------------------------------------------------------+
 CExceptionInterceptor::CExceptionInterceptor(void) { json_mapper = JsonMapper(); }
+//+------------------------------------------------------------------+
+//| Destructor                                                       |
+//+------------------------------------------------------------------+
+CExceptionInterceptor::~CExceptionInterceptor(void) {}
 //+------------------------------------------------------------------+
 //| Deafault exception interceptor.                                  |
 //+------------------------------------------------------------------+

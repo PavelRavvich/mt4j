@@ -13,7 +13,7 @@ private:
    string                 position_pattern;
 public:
                      CPositionProvider(void);
-                    ~CPositionProvider(void) {}
+                    ~CPositionProvider(void);
 public:
    string            GetPositions(void);
 private:
@@ -32,6 +32,10 @@ CPositionProvider::CPositionProvider(void)
    position_info = PositionInfo();
    position_pattern = "{ \"isHistory\": %s, \"type\": \"%s\", \"magic\": %.0f, \"positionId\": %.0f, \"lot\": %.2f, \"stopLoss\": %.0f, \"takeProfit\": %.0f, \"openAt\": %.0f, \"closeAt\": %.0f, \"profit\": %.2f }";
   }
+//+------------------------------------------------------------------+
+//| Destructor                                                       |
+//+------------------------------------------------------------------+
+CPositionProvider::~CPositionProvider(void) {}
 //+------------------------------------------------------------------+
 //| Get all positions from history and open in one JSON array        |
 //+------------------------------------------------------------------+
