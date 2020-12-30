@@ -1,12 +1,11 @@
 package pro.laplacelab.mt4j.model;
 
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import pro.laplacelab.mt4j.BaseTestPreparation;
 import pro.laplacelab.mt4j.enums.SignalType;
 import pro.laplacelab.mt4j.exception.InvalidSignalException;
-
-import static org.junit.Assert.assertEquals;
 
 @DisplayName("Signal entity test")
 public class SignalTest extends BaseTestPreparation {
@@ -33,38 +32,38 @@ public class SignalTest extends BaseTestPreparation {
     @DisplayName("When Signal Close build successful then state saved")
     public void whenSignalCloseBuildSuccessfulThenStateSaved() {
         // when
-        Signal signal = new Signal(advisorId, SignalType.CLOSE, positionId);
+        final Signal signal = new Signal(advisorId, SignalType.CLOSE, positionId);
 
         // then
-        assertEquals(SignalType.CLOSE, signal.getType());
-        assertEquals(positionId, signal.getPositionId());
-        assertEquals(advisorId, signal.getAdvisorId());
+        Assertions.assertEquals(SignalType.CLOSE, signal.getType());
+        Assertions.assertEquals(positionId, signal.getPositionId());
+        Assertions.assertEquals(advisorId, signal.getAdvisorId());
     }
 
     @Test
     @DisplayName("When Signal Buy build successful then state saved")
     public void whenSignalBuyBuildSuccessfulThenStateSaved() {
         // when
-        Signal signal = new Signal(advisorId, SignalType.BUY, lot, stopLoss, takeProfit);
+        final Signal signal = new Signal(advisorId, SignalType.BUY, lot, stopLoss, takeProfit);
 
         // then
-        assertEquals(SignalType.BUY, signal.getType());
-        assertEquals(advisorId, signal.getAdvisorId());
-        assertEquals(stopLoss, signal.getStopLoss());
-        assertEquals(takeProfit, signal.getTakeProfit());
+        Assertions.assertEquals(SignalType.BUY, signal.getType());
+        Assertions.assertEquals(advisorId, signal.getAdvisorId());
+        Assertions.assertEquals(stopLoss, signal.getStopLoss());
+        Assertions.assertEquals(takeProfit, signal.getTakeProfit());
     }
 
     @Test
     @DisplayName("When Signal Sell build successful then state saved")
     public void whenSignalSellBuildSuccessfulThenStateSaved() {
         // when
-        Signal signal = new Signal(advisorId, SignalType.SELL, lot, stopLoss, takeProfit);
+        final Signal signal = new Signal(advisorId, SignalType.SELL, lot, stopLoss, takeProfit);
 
         // then
-        assertEquals(SignalType.SELL, signal.getType());
-        assertEquals(advisorId, signal.getAdvisorId());
-        assertEquals(stopLoss, signal.getStopLoss());
-        assertEquals(takeProfit, signal.getTakeProfit());
+        Assertions.assertEquals(SignalType.SELL, signal.getType());
+        Assertions.assertEquals(advisorId, signal.getAdvisorId());
+        Assertions.assertEquals(stopLoss, signal.getStopLoss());
+        Assertions.assertEquals(takeProfit, signal.getTakeProfit());
     }
 
 
@@ -72,15 +71,15 @@ public class SignalTest extends BaseTestPreparation {
     @DisplayName("When Update Sell build successful then state saved")
     public void whenSignalUpdateBuildSuccessfulThenStateSaved() {
         // when
-        Signal signal = new Signal(advisorId, SignalType.UPDATE,
+        final Signal signal = new Signal(advisorId, SignalType.UPDATE,
                 positionId, lot, stopLoss, takeProfit);
 
         // then
-        assertEquals(SignalType.UPDATE, signal.getType());
-        assertEquals(positionId, signal.getPositionId());
-        assertEquals(takeProfit, signal.getTakeProfit());
-        assertEquals(advisorId, signal.getAdvisorId());
-        assertEquals(stopLoss, signal.getStopLoss());
-        assertEquals(lot, signal.getLot());
+        Assertions.assertEquals(SignalType.UPDATE, signal.getType());
+        Assertions.assertEquals(positionId, signal.getPositionId());
+        Assertions.assertEquals(takeProfit, signal.getTakeProfit());
+        Assertions.assertEquals(advisorId, signal.getAdvisorId());
+        Assertions.assertEquals(stopLoss, signal.getStopLoss());
+        Assertions.assertEquals(lot, signal.getLot());
     }
 }

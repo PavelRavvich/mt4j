@@ -1,6 +1,7 @@
 package pro.laplacelab.mt4j.service;
 
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +14,6 @@ import pro.laplacelab.mt4j.model.Advisor;
 import pro.laplacelab.mt4j.model.Input;
 
 import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 @SpringBootTest
 @WebAppConfiguration
@@ -46,8 +44,8 @@ public class AdvisorServiceImplTest {
         final Advisor savedAdvisor = advisorService.add(advisor);
 
         // then
-        assertNotNull(savedAdvisor);
-        assertNotNull(savedAdvisor.getId());
+        Assertions.assertNotNull(savedAdvisor);
+        Assertions.assertNotNull(savedAdvisor.getId());
     }
 
     @Test
@@ -65,11 +63,11 @@ public class AdvisorServiceImplTest {
 
         //then
         final Advisor fined = advisorService.findByAdvisorId(added.getId()).orElseThrow();
-        assertEquals(InputType.STRING, fined.getInput("key1").orElseThrow().getType());
-        assertEquals("val", fined.getInput("key1").orElseThrow().asString());
-        assertEquals(InputType.NUMBER, fined.getInput("key2").orElseThrow().getType());
-        assertEquals(Double.valueOf("1"), fined.getInput("key2").orElseThrow().asDouble());
-        assertEquals(InputType.BOOLEAN, fined.getInput("key3").orElseThrow().getType());
-        assertEquals(true, fined.getInput("key3").orElseThrow().asBoolean());
+        Assertions.assertEquals(InputType.STRING, fined.getInput("key1").orElseThrow().getType());
+        Assertions.assertEquals("val", fined.getInput("key1").orElseThrow().asString());
+        Assertions.assertEquals(InputType.NUMBER, fined.getInput("key2").orElseThrow().getType());
+        Assertions.assertEquals(Double.valueOf("1"), fined.getInput("key2").orElseThrow().asDouble());
+        Assertions.assertEquals(InputType.BOOLEAN, fined.getInput("key3").orElseThrow().getType());
+        Assertions.assertEquals(true, fined.getInput("key3").orElseThrow().asBoolean());
     }
 }

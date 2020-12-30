@@ -1,6 +1,7 @@
 package pro.laplacelab.mt4j.model;
 
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import pro.laplacelab.mt4j.BaseTestPreparation;
 import pro.laplacelab.mt4j.enums.InputType;
@@ -12,9 +13,6 @@ import pro.laplacelab.mt4j.exception.PositionNotFoundException;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 @DisplayName("Advisor entity test")
 public class AdvisorTest extends BaseTestPreparation {
@@ -30,14 +28,14 @@ public class AdvisorTest extends BaseTestPreparation {
                 new Input("key4", "true", InputType.BOOLEAN)));
 
         // then
-        assertEquals(Long.valueOf(1), advisor.getMagic());
-        assertEquals("val",
+        Assertions.assertEquals(Long.valueOf(1), advisor.getMagic());
+        Assertions.assertEquals("val",
                 advisor.getInput("key1").orElseThrow().asString());
-        assertEquals(Double.valueOf("1"),
+        Assertions.assertEquals(Double.valueOf("1"),
                 advisor.getInput("key2").orElseThrow().asDouble());
-        assertEquals(LocalTime.parse("10:00"),
+        Assertions.assertEquals(LocalTime.parse("10:00"),
                 advisor.getInput("key3").orElseThrow().asLocalTime());
-        assertEquals(true,
+        Assertions.assertEquals(true,
                 advisor.getInput("key4").orElseThrow().asBoolean());
     }
 
@@ -55,7 +53,7 @@ public class AdvisorTest extends BaseTestPreparation {
         final Position expected = advisor.findPositionById(positionId).orElseThrow();
 
         // then
-        assertEquals(position, expected);
+        Assertions.assertEquals(position, expected);
     }
 
     @Test(expected = DuplicatePositionException.class)
@@ -88,8 +86,8 @@ public class AdvisorTest extends BaseTestPreparation {
         final Position history = advisor.findHistoryById(positionId).orElseThrow();
 
         // then
-        assertTrue(origin.isEmpty());
-        assertEquals(history, position);
+        Assertions.assertTrue(origin.isEmpty());
+        Assertions.assertEquals(history, position);
     }
 
     @Test(expected = PositionNotFoundException.class)
@@ -134,14 +132,14 @@ public class AdvisorTest extends BaseTestPreparation {
         final Position expected = advisor.findPositionById(positionId).orElseThrow();
 
         // then
-        assertEquals(newLot, expected.getLot());
-        assertEquals(newSwap, expected.getSwap());
-        assertEquals(newProfit, expected.getProfit());
-        assertEquals(newCloseAt, expected.getCloseAt());
-        assertEquals(newStopLoss, expected.getStopLoss());
-        assertEquals(newCommission, expected.getCommission());
-        assertEquals(newClosePrice, expected.getClosePrice());
-        assertEquals(newTakeProfit, expected.getTakeProfit());
+        Assertions.assertEquals(newLot, expected.getLot());
+        Assertions.assertEquals(newSwap, expected.getSwap());
+        Assertions.assertEquals(newProfit, expected.getProfit());
+        Assertions.assertEquals(newCloseAt, expected.getCloseAt());
+        Assertions.assertEquals(newStopLoss, expected.getStopLoss());
+        Assertions.assertEquals(newCommission, expected.getCommission());
+        Assertions.assertEquals(newClosePrice, expected.getClosePrice());
+        Assertions.assertEquals(newTakeProfit, expected.getTakeProfit());
     }
 
     @Test(expected = PositionNotFoundException.class)
@@ -175,7 +173,7 @@ public class AdvisorTest extends BaseTestPreparation {
         advisor.toHistory(profit);
 
         // then
-        assertEquals(0, advisor.countDropdown());
+        Assertions.assertEquals(0, advisor.countDropdown());
     }
 
     @Test
@@ -192,7 +190,7 @@ public class AdvisorTest extends BaseTestPreparation {
         advisor.toHistory(position);
 
         // then
-        assertEquals(1, advisor.countDropdown());
+        Assertions.assertEquals(1, advisor.countDropdown());
     }
 
     @Test(expected = DuplicateInputException.class)
