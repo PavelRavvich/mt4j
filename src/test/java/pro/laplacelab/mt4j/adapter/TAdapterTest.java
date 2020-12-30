@@ -1,6 +1,7 @@
 package pro.laplacelab.mt4j.adapter;
 
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,6 @@ import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static org.junit.Assert.assertEquals;
 
 @SpringBootTest
 @WebAppConfiguration
@@ -82,18 +81,18 @@ public class TAdapterTest {
         final TBar actualBar = (TBar) map.entrySet().iterator().next().getValue().getBar(0);
 
         // then
-        assertEquals(expected, actualBar);
-        assertEquals(Duration.ofMinutes(1), map.keySet().iterator().next());
-        assertEquals(expected.getVolume(), actualBar.getVolume());
-        assertEquals(expected.getTrades(), actualBar.getTrades());
-        assertEquals(expected.getAmount(), actualBar.getAmount());
-        assertEquals(expected.getEndTime(), actualBar.getEndTime());
-        assertEquals(expected.getEndTime(), actualBar.getEndTime());
-        assertEquals(expected.getLowPrice(), actualBar.getLowPrice());
-        assertEquals(expected.getOpenPrice(), actualBar.getOpenPrice());
-        assertEquals(expected.getHighPrice(), actualBar.getHighPrice());
-        assertEquals(expected.getBeginTime(), actualBar.getBeginTime());
-        assertEquals(expected.getClosePrice(), actualBar.getClosePrice());
-        assertEquals(expected.getTimePeriod(), actualBar.getTimePeriod());
+        Assertions.assertEquals(expected, actualBar);
+        Assertions.assertEquals(Duration.ofMinutes(1), map.keySet().iterator().next());
+        Assertions.assertEquals(expected.getVolume(), actualBar.getVolume());
+        Assertions.assertEquals(expected.getTrades(), actualBar.getTrades());
+        Assertions.assertEquals(expected.getAmount(), actualBar.getAmount());
+        Assertions.assertEquals(expected.getEndTime(), actualBar.getEndTime());
+        Assertions.assertEquals(expected.getEndTime(), actualBar.getEndTime());
+        Assertions.assertEquals(expected.getLowPrice(), actualBar.getLowPrice());
+        Assertions.assertEquals(expected.getOpenPrice(), actualBar.getOpenPrice());
+        Assertions.assertEquals(expected.getHighPrice(), actualBar.getHighPrice());
+        Assertions.assertEquals(expected.getBeginTime(), actualBar.getBeginTime());
+        Assertions.assertEquals(expected.getClosePrice(), actualBar.getClosePrice());
+        Assertions.assertEquals(expected.getTimePeriod(), actualBar.getTimePeriod());
     }
 }

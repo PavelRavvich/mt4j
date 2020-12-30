@@ -1,6 +1,7 @@
 package pro.laplacelab.mt4j.service;
 
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +11,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import pro.laplacelab.mt4j.Strategy;
 
 import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @WebAppConfiguration
@@ -28,12 +27,12 @@ public class StrategyServiceImplTest {
     @Test
     @DisplayName("When strategy not found then return empty optional")
     public void whenStrategyNotFoundThenReturnEmptyOptional() {
-        assertEquals(strategyService.findByName("NOT_EXISTED_STRATEGY"), Optional.empty());
+        Assertions.assertEquals(strategyService.findByName("NOT_EXISTED_STRATEGY"), Optional.empty());
     }
 
     @Test
     @DisplayName("When strategy exist then return optional strategy")
     public void whenStrategyExistThenReturnOptionalStrategy() {
-        assertEquals(Optional.of(this.exampleStrategy), strategyService.findByName("EXAMPLE"));
+        Assertions.assertEquals(Optional.of(this.exampleStrategy), strategyService.findByName("EXAMPLE"));
     }
 }

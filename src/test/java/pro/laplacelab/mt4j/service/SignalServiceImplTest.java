@@ -1,6 +1,7 @@
 package pro.laplacelab.mt4j.service;
 
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,6 @@ import pro.laplacelab.mt4j.strategy.Example;
 
 import java.util.*;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 
@@ -59,7 +59,7 @@ public class SignalServiceImplTest extends BaseTestPreparation {
         // then
         verify(advisorService, times(1)).findByAdvisorId(advisor.getId());
         verify(strategyService, times(1)).findByName(market.getStrategyName());
-        assertEquals(signals, result);
+        Assertions.assertEquals(signals, result);
     }
 
     @Test(expected = AdvisorNotFoundException.class)
