@@ -1,12 +1,11 @@
 package pro.laplacelab.mt4j.adapter.ta4j;
 
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 
 import java.time.Duration;
 import java.time.ZonedDateTime;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Test bars comparing")
 public class TBarComparatorTest {
@@ -26,7 +25,7 @@ public class TBarComparatorTest {
         final int actual = tBarComparator.compare(bar1, bar2);
 
         // then
-        assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual);
     }
 
     @Test
@@ -43,6 +42,6 @@ public class TBarComparatorTest {
         final int actual = bar1.compareTo(bar2);
 
         // then
-        assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual);
     }
 }

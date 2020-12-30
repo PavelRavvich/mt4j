@@ -1,6 +1,7 @@
 package pro.laplacelab.mt4j.service;
 
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,6 @@ import pro.laplacelab.mt4j.model.Position;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
@@ -48,7 +48,7 @@ public class PositionServiceImplTest extends BaseTestPreparation {
         final Position addedPosition = positionService.add(advisor.getId(), position);
 
         // then
-        assertEquals(position, addedPosition);
+        Assertions.assertEquals(position, addedPosition);
         verify(advisor, times(1)).addPosition(position);
         verify(advisorService, times(1)).findByAdvisorId(advisor.getId());
     }
@@ -77,7 +77,7 @@ public class PositionServiceImplTest extends BaseTestPreparation {
         final Position updatedPosition = positionService.update(advisor.getId(), update);
 
         // then
-        assertEquals(update, updatedPosition);
+        Assertions.assertEquals(update, updatedPosition);
         verify(advisor, times(1)).updatePosition(update);
         verify(advisorService, times(2)).findByAdvisorId(advisor.getId());
     }
@@ -104,7 +104,7 @@ public class PositionServiceImplTest extends BaseTestPreparation {
         final Position historizedPosition = positionService.history(advisor.getId(), position);
 
         // then
-        assertEquals(historizedPosition, position);
+        Assertions.assertEquals(historizedPosition, position);
         verify(advisor, times(1)).toHistory(position);
         verify(advisor, times(1)).updatePosition(position);
         verify(advisorService, times(2)).findByAdvisorId(advisor.getId());

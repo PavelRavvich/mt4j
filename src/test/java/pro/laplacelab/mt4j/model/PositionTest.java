@@ -1,11 +1,10 @@
 package pro.laplacelab.mt4j.model;
 
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import pro.laplacelab.mt4j.BaseTestPreparation;
 import pro.laplacelab.mt4j.enums.PositionType;
-
-import static org.junit.Assert.assertEquals;
 
 @DisplayName("Position entity test")
 public class PositionTest extends BaseTestPreparation {
@@ -17,16 +16,16 @@ public class PositionTest extends BaseTestPreparation {
         final Position position = new Position(PositionType.LONG, positionId, lot, stopLoss,
                 takeProfit, openPrice, closePrice, openAt, closeAt, profit, swap, commission);
         //then
-        assertEquals(PositionType.LONG, position.getType());
-        assertEquals(positionId, position.getPositionId());
-        assertEquals(takeProfit, position.getTakeProfit());
-        assertEquals(commission, position.getCommission());
-        assertEquals(closePrice, position.getClosePrice());
-        assertEquals(openPrice, position.getOpenPrice());
-        assertEquals(stopLoss, position.getStopLoss());
-        assertEquals(closeAt, position.getCloseAt());
-        assertEquals(openAt, position.getOpenAt());
-        assertEquals(swap, position.getSwap());
-        assertEquals(lot, position.getLot());
+        Assertions.assertEquals(PositionType.LONG, position.getType());
+        Assertions.assertEquals(positionId, position.getPositionId());
+        Assertions.assertEquals(takeProfit, position.getTakeProfit());
+        Assertions.assertEquals(commission, position.getCommission());
+        Assertions.assertEquals(closePrice, position.getClosePrice());
+        Assertions.assertEquals(openPrice, position.getOpenPrice());
+        Assertions.assertEquals(stopLoss, position.getStopLoss());
+        Assertions.assertEquals(closeAt, position.getCloseAt());
+        Assertions.assertEquals(openAt, position.getOpenAt());
+        Assertions.assertEquals(swap, position.getSwap());
+        Assertions.assertEquals(lot, position.getLot());
     }
 }
